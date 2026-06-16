@@ -1,6 +1,6 @@
 # WLAN EPN 2026-A — Portal de estudio completo
 
-Sitio estático con **todo el material WLAN**, no solo tramas:
+Sitio estático con **todo el material del curso WLAN**:
 
 | Sección | Contenido |
 |---------|-----------|
