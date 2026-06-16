@@ -471,6 +471,24 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 @media print{nav.sidebar,.topbar,#totop,#panel-float,.modal-overlay,#progress-top,.tema-tabs,.tema-actions{display:none!important}
   main{margin-left:0;max-width:100%}.tema{opacity:1!important;transform:none!important;break-inside:avoid}}
 </style>
+<script>
+(function(){
+  function revealHashTarget(){
+    var id=(location.hash||'').replace(/^#/,'');
+    if(!id)return;
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.classList.add('visible');
+    el.style.opacity='1';
+    el.style.transform='none';
+    var h2=el.querySelector('h2');
+    if(h2){var t=document.getElementById('top-title');if(t)t.textContent=h2.textContent;}
+  }
+  document.addEventListener('DOMContentLoaded',revealHashTarget);
+  window.addEventListener('hashchange',revealHashTarget);
+  if(document.readyState!=='loading')revealHashTarget();
+})();
+</script>
 </head>
 <body>
 <div id="progress-top"><i></i></div>
