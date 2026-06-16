@@ -12,9 +12,13 @@ Sitio estático con **todo el material del curso WLAN**:
 
 1. [Render Dashboard](https://dashboard.render.com/) → **New** → **Static Site**
 2. Conectar repo `kevin19925/wlan-guia-epn-2026a`
-3. **Build command:** (vacío)
-4. **Publish directory:** `.` (raíz)
-5. Deploy
+3. **Build command:** (vacío o `echo ok`)
+4. **Publish directory:** `.` (raíz del repo)
+5. **Branch:** `main` · Auto-Deploy: **On Commit**
+6. Tras cada push, en **Events** debe aparecer *Deploy live*. Si ves HTML viejo: **Manual Deploy** → *Deploy latest commit* y abre con **Ctrl+F5**.
+7. Comprueba versión: `https://wlan-guia-epn-2026a.onrender.com/version.txt`
+
+**Headers (recomendado en Dashboard → Headers):** `/*` → `Cache-Control: no-cache, must-revalidate`
 
 ## Actualizar contenido
 

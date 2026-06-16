@@ -1,12 +1,15 @@
-# Render — Static Site
+# Render — Static Site (Blueprint opcional)
 # https://render.com/docs/static-sites
 services:
   - type: web
     name: wlan-guia-epn-2026a
     runtime: static
     staticPublishPath: .
-    buildCommand: echo "Portal WLAN EPN 2026-A — sitio estatico listo"
+    buildCommand: echo "WLAN EPN 2026-A static site"
     headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=86400
       - path: /*
         name: Cache-Control
-        value: public, max-age=600
+        value: no-cache, must-revalidate

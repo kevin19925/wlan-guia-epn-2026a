@@ -5553,6 +5553,12 @@ function boot() {
     }
   });
 }
-document.addEventListener('DOMContentLoaded', boot);
+document.addEventListener('DOMContentLoaded', function() {
+  function start() {
+    if (typeof katex === 'undefined') { setTimeout(start, 40); return; }
+    boot();
+  }
+  start();
+});
 </script>
 </body></html>

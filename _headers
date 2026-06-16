@@ -1,0 +1,9 @@
+# Render / CDN — HTML sin caché agresiva
+/
+  Cache-Control: no-cache, must-revalidate
+/guia/*
+  Cache-Control: no-cache, must-revalidate
+/pages/*
+  Cache-Control: no-cache, must-revalidate
+/assets/*
+  Cache-Control: public, max-age=86400

@@ -179,8 +179,10 @@ a:hover { text-decoration: underline; }
 .page-content table.dat th { background: var(--surface2); }
 .page-content blockquote.quote { border-left: 3px solid var(--accent); padding: .5rem 1rem; margin: .75rem 0; color: var(--muted); background: rgba(59,130,246,.08); border-radius: 0 8px 8px 0; }
 .page-content code { background: var(--surface2); padding: .1rem .35rem; border-radius: 4px; font-size: .88em; }
-.page-content .formula-card { background: var(--surface2); border-radius: 8px; padding: .75rem 1rem; margin: .75rem 0; overflow-x: auto; }
-.page-content .math-inline { white-space: nowrap; }
+.page-content .formula-card { background: var(--surface2); border-radius: 8px; padding: .75rem 1rem; margin: .75rem 0; overflow-x: auto; border: 1px solid rgba(56,189,248,.15); }
+.page-content .formula-inner { display: flex; justify-content: center; align-items: center; min-height: 2.5rem; }
+.page-content .formula-card math, .page-content .math-inline math { color: var(--text); font-size: 1.08em; }
+.page-content .katex { color: var(--text); font-size: 1.1em; }
 .page-title { font-size: 1.75rem; margin-bottom: .25rem; }
 .page-desc { color: var(--muted); margin-bottom: 1.5rem; }
 .site-footer { text-align: center; padding: 2rem; color: var(--muted); font-size: .8rem; border-top: 1px solid rgba(255,255,255,.06); }
