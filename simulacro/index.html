@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Simulación examen WLAN EPN 2026-A — quiz, flashcards, ejercicios P3"/>
+<title>WLAN EPN 2026-A — Simulación de examen</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Literata:opsz,wght@7..72,400;7..72,600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0b1120;--bg2:#111827;--bg3:#1a2332;--glass:rgba(17,24,39,.88);
+  --ink:#eef2f7;--ink2:#a8b4c4;--muted:#6b7c93;
+  --accent:#38bdf8;--accent2:#7dd3fc;--accent-dark:#0284c7;
+  --accent-g:linear-gradient(135deg,#0ea5e9,#38bdf8);
+  --ok:#34d399;--ok2:#6ee7b7;--warn:#fbbf24;--dng:#f87171;
+  --border:rgba(148,163,184,.14);--border2:rgba(148,163,184,.22);
+  --formula-bg:#131c2e;--glow:0 0 32px rgba(56,189,248,.12);
+  --sw:280px;--top:60px;
+  --sans:'Inter',system-ui,sans-serif;--serif:'Literata',Georgia,serif;--mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);--r:14px;
+  --frame-fc:#1d4ed8;--frame-dur:#2563eb;--frame-addr:#3b82f6;--frame-seq:#60a5fa;
+  --frame-body:#0d9488;--frame-fcs:#d97706;--frame-phy:#0891b2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--top) + 20px)}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.65;font-size:15px;
+  background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(14,165,233,.12),transparent),
+  radial-gradient(ellipse 50% 40% at 100% 0%,rgba(56,189,248,.06),transparent)}
+a{color:var(--accent2);text-decoration:none}
+#progress-top{position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;background:transparent}
+#progress-top i{display:block;height:100%;width:0;background:var(--accent-g);transition:width .15s var(--ease);box-shadow:0 0 12px rgba(56,189,248,.6)}
+.layout{display:flex;min-height:100vh}
+nav.sidebar{width:var(--sw);background:var(--glass);backdrop-filter:blur(16px);border-right:1px solid var(--border);
+  position:fixed;inset:0 auto 0 0;overflow-y:auto;z-index:200;padding:0 0 24px;
+  scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.sidebar-head{padding:20px 18px 16px;border-bottom:1px solid var(--border)}
+.sidebar-head h1{font-size:.95rem;color:#fff;font-weight:700;line-height:1.35}
+.sidebar-head .brand-sub{font-size:.72rem;color:var(--muted);font-weight:400;margin-top:4px}
+.progress-ring-wrap{display:flex;align-items:center;gap:12px;margin-top:14px;padding:10px 12px;
+  background:var(--bg3);border-radius:10px;border:1px solid var(--border)}
+.progress-ring{position:relative;width:44px;height:44px;flex-shrink:0}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring circle{fill:none;stroke-width:3}
+.progress-ring .bg{stroke:var(--border2)}
+.progress-ring .fg{stroke:url(#grad);stroke-linecap:round;transition:stroke-dashoffset .5s var(--ease)}
+.progress-ring .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:.62rem;font-weight:700;color:var(--accent2)}
+.progress-label{font-size:.72rem;color:var(--ink2);line-height:1.4}
+.progress-label strong{color:var(--ok2);display:block;font-size:.78rem}
+.search-wrap{padding:12px 14px}
+.search-wrap input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  padding:10px 12px 10px 36px;color:var(--ink);font-size:.82rem;font-family:var(--sans);
+  transition:border-color .2s,box-shadow .2s}
+.search-wrap input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,189,248,.2)}
+.search-wrap{position:relative}
+.search-wrap::before{content:'⌕';position:absolute;left:26px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:1rem;pointer-events:none}
+.nav-links{padding:8px 10px}
+.nav-links a{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:.78rem;color:var(--ink2);
+  border-radius:10px;transition:all .2s var(--ease);border:1px solid transparent}
+.nav-links a:hover{background:var(--bg3);color:var(--ink);border-color:var(--border)}
+.nav-links a.on{background:rgba(14,165,233,.12);color:#fff;border-color:rgba(56,189,248,.28)}
+.nav-links a.done .nav-check{color:var(--ok);opacity:1}
+.nav-links a .nav-num{font-family:var(--mono);font-size:.65rem;color:var(--muted);width:22px;flex-shrink:0}
+.nav-links a.on .nav-num{color:var(--accent2)}
+.nav-check{margin-left:auto;font-size:.75rem;opacity:.25;transition:opacity .2s}
+.nav-links a.priority{border-left:2px solid var(--warn)}
+.nav-section{padding:14px 16px 6px;font-size:.62rem;color:var(--muted);text-transform:uppercase;
+letter-spacing:.08em;font-weight:700;border-top:1px solid var(--border);margin-top:6px}
+.nav-section:first-of-type{border-top:none;margin-top:0}
+.nav-links a.nav-home{margin-bottom:4px;font-weight:600}
+.siglas-grid.compact .sigla-card{padding:8px 10px}
+.siglas-grid.compact .sigla-card .sig{font-size:.85rem}
+.nav-home{font-weight:700!important;color:var(--ok2)!important}
+.sidebar-actions{padding:12px 14px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border);margin-top:8px}
+.sbtn{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border-radius:10px;
+  border:1px solid var(--border);background:var(--bg3);color:var(--ink);font-size:.78rem;font-weight:600;
+  cursor:pointer;transition:all .2s var(--ease);font-family:var(--sans)}
+.sbtn:hover{border-color:var(--accent);background:rgba(56,189,248,.1);transform:translateY(-1px)}
+.sbtn.primary{background:var(--accent-g);border:none;color:#fff;box-shadow:var(--glow)}
+.sbtn.primary:hover{filter:brightness(1.08);box-shadow:0 8px 24px rgba(56,189,248,.35)}
+main{margin-left:var(--sw);flex:1;max-width:900px;padding:calc(var(--top) + 16px) 36px 120px}
+.topbar{position:fixed;top:3px;left:var(--sw);right:0;z-index:150;height:var(--top);
+  background:rgba(7,11,18,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;padding:0 24px}
+.mbtn{display:none;background:var(--bg3);border:1px solid var(--border);color:var(--ink);
+  padding:8px 14px;border-radius:8px;cursor:pointer;font-size:.82rem}
+.topbar-title{font-size:.82rem;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none}
+.topbar-loc-wrap{flex:1;min-width:0;display:flex;align-items:center;gap:10px}
+.topbar-breadcrumb{font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:5px;min-width:0;flex:1;flex-wrap:wrap}
+.loc-part{max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.loc-strong{color:var(--ink);font-weight:600}
+.loc-sep{opacity:.45;flex-shrink:0;font-size:.65rem}
+.loc-sub-wrap{display:inline-flex;align-items:center;gap:5px}
+.loc-sub-wrap.hidden{display:none}
+.loc-pos{font-family:var(--mono);font-size:.65rem;color:var(--accent2);flex-shrink:0}
+.loc-reading-pill{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  padding:4px 9px;border-radius:6px;background:rgba(16,185,129,.14);color:var(--ok2);flex-shrink:0;border:1px solid rgba(16,185,129,.28)}
+.nav-reading{display:none;font-size:.58rem;font-weight:700;color:var(--ok2);margin-left:auto;flex-shrink:0;
+  text-transform:uppercase;letter-spacing:.04em}
+.nav-links a.on .nav-reading,.nav-phy-sub.on .nav-reading,.nav-layer-sub.on .nav-reading,.p3-nav-sub.on .nav-reading{display:inline}
+.nav-label{flex:1;min-width:0}
+.topbar-actions{display:flex;gap:8px}
+.tact{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);
+  color:var(--ink2);font-size:.75rem;cursor:pointer;font-family:var(--sans);transition:all .2s}
+.tact:hover{border-color:var(--accent);color:var(--ink)}
+.hero{position:relative;padding:48px 36px 40px;margin-bottom:40px;border-radius:20px;overflow:hidden;
+  border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(8px)}
+.hero::before{content:'';position:absolute;inset:0;background:var(--accent-g);opacity:.06;pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;
+  background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:var(--ok2);
+  font-size:.72rem;font-weight:600;margin-bottom:16px;letter-spacing:.03em}
+.hero h2{font-family:var(--serif);font-size:2.2rem;color:#fff;margin-bottom:12px;font-weight:600;line-height:1.2}
+.hero .sub{color:var(--ink2);font-size:1.02rem;max-width:540px;line-height:1.7;margin-bottom:28px}
+.dashboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:28px}
+.dash-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:20px;
+  transition:all .25s var(--ease);cursor:pointer;position:relative;overflow:hidden}
+.dash-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:var(--glow)}
+.dash-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent-g);opacity:0;transition:opacity .2s}
+.dash-card:hover::after{opacity:1}
+.dash-icon{font-size:1.5rem;margin-bottom:10px}
+.dash-card h3{font-size:.88rem;color:#fff;margin-bottom:4px;font-weight:600}
+.dash-card p{font-size:.75rem;color:var(--muted);line-height:1.45}
+.dash-card .dash-stat{font-family:var(--mono);font-size:1.4rem;font-weight:700;color:var(--accent2);margin-top:8px}
+.study-path{margin-top:8px}
+.study-path h3{font-size:.85rem;color:var(--ink2);margin-bottom:14px;font-weight:600}
+.path-steps{display:flex;flex-direction:column;gap:0}
+.path-step{display:flex;gap:14px;padding:12px 0;position:relative;cursor:pointer;transition:opacity .2s}
+.path-step:not(:last-child)::before{content:'';position:absolute;left:15px;top:36px;bottom:-4px;width:2px;background:var(--border2)}
+.path-step:hover .path-title{color:var(--accent2)}
+.path-num{width:32px;height:32px;border-radius:50%;background:var(--bg3);border:2px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--muted);flex-shrink:0;z-index:1}
+.path-step.done .path-num{background:rgba(16,185,129,.15);border-color:var(--ok);color:var(--ok2)}
+.path-body{flex:1;padding-top:4px}
+.path-title{font-size:.84rem;color:var(--ink);font-weight:600;margin-bottom:2px;transition:color .2s}
+.path-meta{font-size:.72rem;color:var(--muted)}
+.path-why{font-size:.72rem;color:var(--warn);margin-top:2px}
+.tema{background:var(--glass);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:18px;
+  margin-bottom:40px;overflow:hidden;scroll-margin-top:calc(var(--top) + 16px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.tema:not(.visible):not(:target){opacity:0;transform:translateY(24px)}
+.tema.visible,.tema:target{opacity:1;transform:none}
+.tema.priority{border-color:rgba(245,158,11,.25);box-shadow:0 0 0 1px rgba(245,158,11,.08)}
+.tema-head{display:flex;gap:18px;padding:24px 28px;background:linear-gradient(135deg,var(--bg3),rgba(56,189,248,.06));
+  border-bottom:1px solid var(--border);align-items:flex-start;flex-wrap:wrap}
+.tema-num{font-size:1.5rem;font-weight:800;background:var(--accent-g);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;font-family:var(--mono)}
+.tema-head h2{font-family:var(--serif);font-size:1.3rem;color:#fff;font-weight:600;flex:1}
+.tema-focus{font-size:.86rem;color:var(--ink2);margin-top:6px;line-height:1.5}
+.tema-actions{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.tbtn{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg);
+  color:var(--ink2);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.tbtn:hover{border-color:var(--accent);color:var(--ink)}
+.tbtn.done{border-color:var(--ok);color:var(--ok2);background:rgba(16,185,129,.08)}
+.badge-p3{font-size:.65rem;padding:4px 10px;border-radius:6px;background:rgba(245,158,11,.15);
+  color:var(--warn);border:1px solid rgba(245,158,11,.3);font-weight:700;align-self:center}
+.tema-tabs{display:flex;gap:4px;padding:0 20px;background:var(--bg);border-bottom:1px solid var(--border);overflow-x:auto}
+.ttab{padding:12px 18px;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--sans)}
+.ttab:hover{color:var(--ink2)}
+.ttab.on{color:var(--accent2);border-bottom-color:var(--accent)}
+.tema-body{padding:28px 28px 32px;max-width:920px}
+.tema-section{margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.tema-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.tema-section-h{font-size:1.05rem;font-weight:800;color:#fff;margin:0 0 20px;padding:12px 16px;
+  background:linear-gradient(90deg,rgba(56,189,248,.12),transparent);border-left:4px solid var(--accent2);
+  border-radius:0 10px 10px 0}
+.tema-section.tramas .tema-section-h{border-left-color:#a855f7}
+.tema-section.diapos .tema-section-h{border-left-color:#ec4899}
+/* Diapositiva por diapositiva — imagen + panel derecho */
+.diapo-stack{margin-top:8px}
+.diapo-intro{margin-bottom:28px}
+.diapo-card{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid var(--border)}
+.diapo-card:last-child{border-bottom:none}
+.diapo-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+.diapo-badge{font-family:var(--mono);font-size:.72rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#6366f1,#a855f7);
+  padding:6px 12px;border-radius:8px}
+.diapo-meta{font-size:.72rem;color:var(--muted)}
+.diapo-title{font-size:.85rem;color:var(--ink2);flex:1;min-width:200px}
+.diapo-layout{display:grid;grid-template-columns:1fr minmax(280px,360px);gap:24px;align-items:start}
+.diapo-fig{margin:0;background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.25)}
+.diapo-fig img{display:block;width:100%;height:auto;background:#fff}
+.diapo-fig figcaption{font-size:.65rem;color:var(--muted);padding:8px 12px;text-align:center;border-top:1px solid var(--border)}
+.diapo-aside{display:flex;flex-direction:column;gap:14px;position:sticky;top:72px;max-height:calc(100vh - 90px);overflow-y:auto}
+.diapo-aside h5{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent2);margin:0 0 8px;font-weight:700}
+.diapo-aside .tip-box,.diapo-aside .preg-item{margin:0}
+.diapo-aside .ej-card{font-size:.82rem}
+@media(max-width:960px){
+  .diapo-layout{grid-template-columns:1fr}
+  .diapo-aside{position:static;max-height:none}
+}
+.tema-tabs,.tema-pane,.ttab{display:none!important}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.lead{font-family:var(--serif);font-size:1.06rem;color:var(--ink2);margin-bottom:24px;line-height:1.75}
+.subsec{margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.subsec:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.subsec h3{font-size:.95rem;color:var(--accent2);margin-bottom:14px;font-weight:600;
+  display:flex;align-items:center;gap:8px}
+.subsec h3::before{content:'';width:4px;height:18px;background:var(--accent-g);border-radius:2px;flex-shrink:0}
+.cobertura-banner{margin:0 0 24px;padding:14px 18px;background:rgba(14,165,233,.08);border:1px solid rgba(56,189,248,.2);
+  border-radius:12px;font-size:.84rem;color:var(--ink2);line-height:1.55}
+.cobertura-banner strong{color:var(--accent2)}
+.prof-voice{font-style:italic;border-left:3px solid var(--accent);padding:12px 16px;margin:0 0 20px;
+  background:rgba(14,165,233,.06);color:var(--ink2);border-radius:0 10px 10px 0;line-height:1.6}
+.leccion-pdf{border-top:1px dashed var(--border2);padding-top:20px;margin-top:12px}
+.leccion-pdf:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.exam-p3-box{margin:20px 0;padding:16px 20px;background:rgba(245,158,11,.08);border:1px solid rgba(251,191,36,.35);
+  border-radius:12px;font-size:.88rem;line-height:1.65;color:var(--ink2)}
+.exam-p3-label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  color:#f59e0b;margin-bottom:8px}
+.p3-deep h3{color:var(--accent2)}
+.formula-card{background:var(--formula-bg);border:1px solid var(--border2);border-radius:12px;
+  padding:20px 24px;margin:16px 0;text-align:center;overflow-x:auto;position:relative;
+  transition:border-color .2s,box-shadow .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.formula-card:hover{border-color:rgba(56,189,248,.35);box-shadow:var(--glow)}
+.formula-inner{display:flex;justify-content:center;align-items:center;min-height:2.8rem;width:100%}
+.math-display{display:flex;justify-content:center;padding:8px 4px;overflow-x:auto;width:100%;
+  -webkit-overflow-scrolling:touch}
+.math-display .katex,.math-inline .katex{font-size:1.22em;color:var(--ink)}
+.math-display math,.math-inline math{font-size:1.22em;color:var(--ink)}
+math mi,math mn,math mo,math mtext{color:var(--ink)!important}
+.katex-display{margin:.4em 0;overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.katex{color:var(--ink)}
+.formula-fallback{font-family:var(--mono);font-size:.9rem;color:var(--warn);white-space:pre-wrap;display:block;padding:8px}
+.tip-box,.warn-box{border-radius:12px;padding:16px 18px;margin:16px 0;font-size:.88rem;line-height:1.6}
+.tip-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);color:var(--ink2)}
+.warn-box{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);color:var(--ink2)}
+.tip-label{display:inline-flex;align-items:center;gap:6px;font-size:.68rem;text-transform:uppercase;
+  letter-spacing:.06em;font-weight:700;margin-bottom:8px;color:var(--warn)}
+.warn-box .tip-label{color:var(--dng)}
+.concept-list,.step-list{margin:10px 0 14px 20px;color:var(--ink2)}
+.concept-list li,.step-list li{margin-bottom:8px;padding-left:4px}
+.concept-list strong{color:var(--ink)}
+table.dat{width:100%;border-collapse:separate;border-spacing:0;font-size:.84rem;margin:14px 0;
+  border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+table.dat th,table.dat td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border)}
+table.dat th{background:var(--bg3);color:var(--accent2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+table.dat tr:last-child td{border-bottom:none}
+table.dat tbody tr{transition:background .15s}
+table.dat tbody tr:hover{background:rgba(56,189,248,.05)}
+table.dat code{font-family:var(--mono);color:var(--warn);font-size:.82rem;background:rgba(245,158,11,.08);padding:2px 6px;border-radius:4px}
+.stack-diagram{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:14px 0}
+.stack-row{display:flex;border-bottom:1px solid var(--border);font-size:.84rem;transition:background .15s}
+.stack-row:hover{background:rgba(56,189,248,.04)}
+.stack-row:last-child{border-bottom:none}
+.stack-label{width:110px;padding:12px 14px;background:var(--bg3);font-weight:600;color:var(--accent2);flex-shrink:0}
+.stack-row span:last-child{padding:12px 14px;color:var(--ink2)}
+.stack-row.hl .stack-label{background:rgba(56,189,248,.12)}
+.stack-row.mac .stack-label{color:var(--ok2)}
+.stack-row.plcp .stack-label{color:var(--warn)}
+.seq-diagram{font-family:var(--mono);font-size:.76rem;background:var(--formula-bg);
+  border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;color:var(--ok2);
+  overflow-x:auto;letter-spacing:.02em}
+.key-nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:18px 0}
+.kn{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center;
+  transition:all .2s var(--ease)}
+.kn:hover{border-color:var(--ok);transform:scale(1.02)}
+.kn-v{display:block;font-size:1.25rem;font-weight:800;color:var(--ok2);font-family:var(--mono)}
+.kn-l{font-size:.68rem;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.04em}
+.chuleta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.cg{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px;transition:border-color .2s}
+.cg:hover{border-color:var(--border2)}
+.cg h4{color:var(--accent2);margin-bottom:12px;font-size:.88rem;font-weight:600}
+.cg.dng{border-color:rgba(239,68,68,.3)}.cg.dng h4{color:var(--dng)}
+.ej-block{margin-top:24px;padding-top:24px;border-top:1px dashed var(--border)}
+.sec-h3{font-size:1rem;color:var(--ink);margin:20px 0 12px;font-weight:700}
+.sec-h4{font-size:.88rem;color:var(--accent2);margin:16px 0 10px;font-weight:600}
+.tema-section.tablas-phy-full .tema-section-h{display:none}
+.tema-section.tablas-phy-full{padding:0}
+.tablas-ej-block{margin-top:32px}
+.tablas-phy-mount{display:grid;grid-template-columns:minmax(200px,240px) 1fr;gap:0;width:100%;
+  min-height:calc(100dvh - var(--top) - 200px);max-height:calc(100dvh - var(--top) - 120px);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg2);
+  box-shadow:var(--glow)}
+main:has(.tablas-phy-mount){max-width:calc(100vw - var(--sw) - 32px)!important;padding-left:12px!important;padding-right:12px!important}
+.tema:has(.tablas-phy-mount) .tema-header{padding-bottom:12px}
+.tema-body:has(.tablas-phy-mount){max-width:100%!important;padding:8px 12px 24px!important}
+.tablas-phy-nav{background:var(--bg3);border-right:1px solid var(--border);display:flex;flex-direction:column;
+  min-height:0;overflow:hidden}
+.tablas-phy-nav-head{padding:14px 14px 10px;border-bottom:1px solid var(--border);flex-shrink:0}
+.tablas-phy-now-k{display:block;font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+#phy-now-title{display:block;font-size:.88rem;color:#fff;line-height:1.35;font-weight:600}
+.tablas-phy-pos{display:block;font-size:.7rem;color:var(--accent2);font-family:var(--mono);margin-top:8px}
+.tablas-phy-nav-list{flex:1;overflow-y:auto;padding:8px 6px;scrollbar-width:thin}
+.tablas-phy-nav-item{display:flex;align-items:flex-start;gap:8px;width:100%;padding:9px 10px;margin-bottom:2px;
+  border:none;border-radius:8px;background:transparent;color:var(--ink2);cursor:pointer;text-align:left;
+  font-size:.76rem;font-family:var(--sans);border-left:3px solid transparent;transition:all .15s var(--ease)}
+.tablas-phy-nav-item:hover{background:var(--bg);color:var(--ink)}
+.tablas-phy-nav-item.on{background:rgba(14,165,233,.14);color:#fff;border-left-color:var(--accent)}
+.tablas-phy-nav-n{font-family:var(--mono);font-size:.62rem;color:var(--muted);width:18px;flex-shrink:0;padding-top:2px}
+.tablas-phy-nav-item.on .tablas-phy-nav-n{color:var(--accent2)}
+.tablas-phy-nav-lbl{line-height:1.35}
+.tablas-phy-jump{display:flex;gap:6px;padding:10px;border-top:1px solid var(--border);flex-shrink:0}
+.tablas-phy-jump button{flex:1;padding:8px 6px;border-radius:8px;border:1px solid var(--border);
+  background:var(--bg);color:var(--ink2);font-size:.72rem;font-weight:600;cursor:pointer;font-family:var(--sans)}
+.tablas-phy-jump button:hover{border-color:var(--accent);color:var(--ink)}
+.tablas-phy-main{overflow-y:auto;padding:20px 24px 32px;min-height:0;background:var(--bg)}
+.phy-panel,.std-block{display:none}
+.phy-panel.phy-active,.std-block.phy-active{display:block}
+.nav-phy-subs{display:none;padding:2px 0 8px 12px;margin:-2px 0 4px 10px;border-left:2px solid rgba(245,158,11,.35)}
+.nav-phy-subs.open{display:block}
+.nav-phy-sub{display:flex!important;align-items:center;gap:8px;padding:7px 10px 7px 12px!important;
+  font-size:.72rem!important;margin:1px 0;border-radius:8px!important}
+.nav-phy-sub .nav-phy-n{font-family:var(--mono);font-size:.6rem;color:var(--muted);width:16px;flex-shrink:0}
+.nav-phy-sub.on{background:rgba(245,158,11,.12)!important;color:var(--warn)!important;border-color:rgba(245,158,11,.25)!important}
+.nav-links a[data-topic="tablas_phy"].on + .nav-phy-subs{display:block}
+.nav-p3-subs{display:none;padding:2px 0 8px 12px;margin:-2px 0 4px 10px;border-left:2px solid rgba(245,158,11,.45)}
+.nav-p3-subs.open{display:block}
+.nav-p3-sub{display:flex!important;align-items:center;gap:8px;padding:7px 10px 7px 12px!important;
+  font-size:.7rem!important;margin:1px 0;border-radius:8px!important}
+.nav-p3-sub .nav-p3-n{font-family:var(--mono);font-size:.58rem;color:var(--muted);width:16px;flex-shrink:0}
+.nav-p3-sub.on{background:rgba(245,158,11,.14)!important;color:var(--warn)!important}
+.nav-links a[data-topic="prueba3"].on + .nav-p3-subs{display:block}
+.p3-mount{display:grid;grid-template-columns:minmax(200px,240px) 1fr;gap:0;width:100%;
+  min-height:calc(100dvh - var(--top) - 200px);max-height:calc(100dvh - var(--top) - 120px);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg2)}
+main:has(.p3-mount){max-width:calc(100vw - var(--sw) - 32px)!important;padding-left:12px!important;padding-right:12px!important}
+.tema-body:has(.p3-mount){max-width:100%!important;padding:8px 12px 24px!important}
+.p3-nav{background:var(--bg3);border-right:1px solid var(--border);display:flex;flex-direction:column;min-height:0}
+.p3-nav-head{padding:14px;border-bottom:1px solid var(--border)}
+.p3-nav-k{display:block;font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+#p3-now-title{display:block;font-size:.86rem;color:#fff;margin-top:4px;font-weight:600;line-height:1.35}
+.p3-nav-pos{font-size:.7rem;color:var(--warn);font-family:var(--mono);margin-top:6px;display:block}
+.p3-nav-list{flex:1;overflow-y:auto;padding:8px 6px}
+.p3-nav-item{display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;padding:9px 10px;margin-bottom:2px;
+  border:none;border-radius:8px;background:transparent;color:var(--ink2);font-size:.74rem;cursor:pointer;
+  border-left:3px solid transparent;font-family:var(--sans)}
+.p3-nav-item:hover{background:var(--bg);color:var(--ink)}
+.p3-nav-item.on{background:rgba(245,158,11,.14);color:#fff;border-left-color:var(--warn)}
+.p3-nav-n{font-family:var(--mono);font-size:.6rem;color:var(--muted);width:18px;flex-shrink:0}
+.p3-nav-item.on .p3-nav-n{color:var(--warn)}
+.p3-nav-jump{display:flex;gap:6px;padding:10px;border-top:1px solid var(--border)}
+.p3-nav-jump button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--bg);
+  color:var(--ink2);font-size:.72rem;cursor:pointer}
+.p3-main{overflow-y:auto;padding:16px 20px 28px;min-height:0}
+.p3-block{display:none}
+.p3-block.p3-active{display:block}
+.p3-block-head{margin-bottom:16px;padding-bottom:12px;border-bottom:1px dashed var(--border)}
+.p3-block-title{font-size:1.05rem;color:#fff;margin:0 0 4px}
+.p3-block-sub{font-size:.8rem;color:var(--ink2);margin:0}
+.p3-map-table{margin:12px 0}
+.std-p3-fold{margin:12px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.std-p3-fold summary{padding:10px 14px;cursor:pointer;background:var(--bg3);font-weight:600;font-size:.82rem}
+.std-p3-fold>div,.std-p3-fold>.ej-tema-block{padding:12px 14px 16px}
+@media(max-width:900px){
+  .p3-mount{grid-template-columns:1fr;max-height:none}
+  .p3-nav{max-height:200px;border-right:none;border-bottom:1px solid var(--border)}
+  .p3-nav-list{display:flex;flex-wrap:nowrap;overflow-x:auto}
+  .p3-nav-item{flex-shrink:0;white-space:nowrap;width:auto}
+}
+.std-blocks{display:flex;flex-direction:column;gap:0;margin-top:0}
+.std-block{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:24px 28px;scroll-margin-top:80px}
+.std-block-head{margin-bottom:20px;padding-bottom:16px;border-bottom:1px dashed var(--border)}
+.std-block-title{font-size:1.15rem;color:#fff;margin:0 0 6px;font-weight:700}
+.std-block-sub{font-size:.86rem;color:var(--ink2);margin:0;line-height:1.5}
+.std-block-tablas,.std-block-uso,.std-block-ej{margin-top:20px}
+.tablas-diapo-grid{display:flex;flex-direction:column;gap:16px}
+.tabla-diapo{margin:0;background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.tabla-diapo img{display:block;width:100%;height:auto;max-width:100%;border-radius:0}
+.tabla-diapo figcaption{font-size:.75rem;color:var(--ink2);padding:10px 14px;border-top:1px solid var(--border);text-align:center}
+.std-flujo{margin:0 0 28px;font-size:.88rem;line-height:1.85}
+.std-block .ej-card{margin-top:12px}
+@media(max-width:900px){
+  .tablas-phy-mount{grid-template-columns:1fr;grid-template-rows:auto 1fr;max-height:none;min-height:520px}
+  .tablas-phy-nav{max-height:200px;border-right:none;border-bottom:1px solid var(--border)}
+  .tablas-phy-nav-list{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:6px;gap:4px}
+  .tablas-phy-nav-item{flex-shrink:0;width:auto;white-space:nowrap}
+  main:has(.tablas-phy-mount){max-width:100%!important}
+}
+.capture{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;background:var(--bg);overflow:hidden}
+.capture summary{padding:14px 16px;cursor:pointer;font-size:.84rem;color:var(--accent2);font-weight:600;transition:background .15s}
+.capture summary:hover{background:var(--bg3)}
+.capture-pre{font-family:var(--mono);font-size:.72rem;padding:16px;color:var(--ink2);overflow-x:auto;max-height:360px;line-height:1.55}
+/* --- Ejercicios por tema --- */
+.ej-tema-block{margin:32px 0;padding:24px;background:var(--bg);border:1px solid var(--border);border-radius:14px}
+.ej-tema-title{font-size:1.05rem;color:var(--accent2);margin-bottom:20px;font-weight:600}
+.ej-section{margin-bottom:28px}
+.ej-section-h{font-size:.88rem;color:var(--ink2);margin-bottom:16px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.ej-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px}
+.ej-tag{display:inline-block;font-size:.65rem;padding:4px 10px;border-radius:6px;background:rgba(56,189,248,.15);color:var(--accent2);font-weight:700;margin-bottom:10px}
+.ej-title{font-size:1rem;color:#fff;margin-bottom:12px}
+.ej-enunciado{font-size:.88rem;color:var(--ink2);margin-bottom:18px;line-height:1.6}
+.ej-enunciado strong{color:var(--warn)}
+.paso-item{margin-bottom:20px;padding-bottom:18px;border-bottom:1px dashed var(--border)}
+.paso-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.paso-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:.9rem;color:var(--ink)}
+.paso-n{width:28px;height:28px;border-radius:8px;background:var(--accent-g);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.porque-box{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:14px 16px;margin-top:12px;font-size:.86rem;color:var(--ink2);line-height:1.6}
+.porque-label{display:inline-flex;align-items:center;gap:6px;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:var(--ok2);margin-bottom:8px}
+.preg-list{display:flex;flex-direction:column;gap:8px}
+.preg-item{border:1px solid var(--border);border-radius:10px;background:var(--bg3);overflow:hidden}
+.preg-item summary{padding:14px 16px;cursor:pointer;font-size:.88rem;color:var(--ink);list-style:none;display:flex;align-items:flex-start;gap:10px}
+.preg-item summary::-webkit-details-marker{display:none}
+.preg-item[open] summary{border-bottom:1px solid var(--border);background:rgba(56,189,248,.06)}
+.preg-n{font-family:var(--mono);font-size:.72rem;color:var(--accent2);font-weight:700;flex-shrink:0}
+.preg-body{padding:16px 18px}
+.preg-resp{font-size:.88rem;color:var(--ok2);margin-bottom:8px;line-height:1.5}
+.ej-master-index{margin-bottom:28px;padding:20px;background:var(--bg3);border-radius:12px;border:1px solid var(--border)}
+.ej-tema-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ej-tema-link{font-size:.75rem;padding:8px 14px;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--accent2);transition:all .15s}
+.ej-tema-link:hover{border-color:var(--accent);background:rgba(56,189,248,.1)}
+.ej-practica{margin-top:32px;padding-top:24px;border-top:2px solid var(--border)}
+.ej-practica-section .ej-card{border-color:rgba(245,158,11,.25)}
+.btn-ver-resultado{display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:12px 20px;border-radius:10px;
+  border:1px solid var(--accent);background:rgba(56,189,248,.12);color:var(--accent2);font-size:.86rem;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.btn-ver-resultado:hover{background:rgba(56,189,248,.22);transform:translateY(-1px);box-shadow:0 4px 16px rgba(56,189,248,.25)}
+.btn-ver-resultado[aria-expanded="true"]{background:rgba(16,185,129,.15);border-color:var(--ok);color:var(--ok2)}
+.ej-solucion{margin-top:20px;padding:20px;background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.2);border-radius:12px}
+.master-ej-banner{margin:0 0 28px;padding:22px 24px;background:linear-gradient(135deg,rgba(16,185,129,.12),rgba(14,165,233,.08));
+  border:1px solid rgba(16,185,129,.35);border-radius:14px}
+.master-ej-banner h3{margin:0 0 10px;font-size:1.05rem;color:var(--ink)}
+.master-ej-banner p{margin:0 0 16px;font-size:.88rem;color:var(--ink2);line-height:1.55}
+.master-ej-table{font-size:.82rem;margin:0}
+.master-ej-table a{color:var(--accent2);text-decoration:none;font-weight:600}
+.master-ej-table a:hover{text-decoration:underline}
+.ej-resuelto-card{border-left:3px solid rgba(16,185,129,.5)}
+.sol-banner{margin:12px 0 16px;padding:10px 14px;background:rgba(16,185,129,.1);border-radius:8px;
+  font-size:.84rem;color:var(--ink2);text-align:center}
+.ej-solucion-visible{display:block!important}
+.ej-solucion[hidden]{display:none!important}
+.sol-banner{font-size:.78rem;font-weight:700;color:var(--ok2);margin-bottom:16px;text-transform:uppercase;letter-spacing:.05em}
+.teoria-examen-box{margin:24px 0;padding:24px;background:var(--bg3);border:1px solid var(--border);border-radius:14px}
+.teoria-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:16px 0}
+.teoria-item{padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;font-size:.84rem;line-height:1.55}
+.teoria-item strong{color:var(--accent2);display:block;margin-bottom:6px}
+.teoria-item p{color:var(--ink2);margin:0}
+.plantilla-box,.errores-box{margin-top:18px;padding:16px;border-radius:10px;font-size:.84rem;line-height:1.6}
+.plantilla-box{background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2)}
+.errores-box{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2)}
+.plantilla-box h5,.errores-box h5{font-size:.82rem;color:var(--ink);margin-bottom:10px}
+.plantilla-list,.errores-box ul{margin:0;padding-left:20px;color:var(--ink2)}
+.plantilla-list li,.errores-box li{margin-bottom:6px}
+.quiz-topic{font-size:.68rem;color:var(--muted);margin-left:8px}
+.iframe-wrap{margin:20px 0;padding:24px;background:var(--bg);border:1px solid var(--border);border-radius:14px;
+  transition:box-shadow .2s}
+.iframe-wrap:hover{box-shadow:var(--glow)}
+.frame-title{font-weight:700;color:#fff;margin-bottom:4px;font-size:.95rem}
+.frame-sub{font-size:.74rem;color:var(--muted);margin-bottom:12px}
+.frame-exam{font-size:.76rem;color:var(--ok2);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
+  padding:10px 14px;border-radius:8px;margin-bottom:14px;line-height:1.5}
+.frame-scroll{overflow-x:auto;margin-bottom:14px;padding:4px 2px 8px;-webkit-overflow-scrolling:touch}
+.frame-scroll::-webkit-scrollbar{height:6px}
+.frame-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.frame-svg{display:block;min-width:100%;height:auto}
+.frame-svg .fv-field{cursor:pointer;transition:filter .2s,transform .2s}
+.frame-svg .fv-field:hover rect{filter:brightness(1.15)}
+.frame-svg .fv-field.active rect{stroke:var(--warn);stroke-width:3}
+.frame-svg .fv-name{font:700 10px var(--sans);fill:#fff;text-transform:uppercase;letter-spacing:.04em}
+.frame-svg .fv-bits{font:500 9px var(--mono);fill:rgba(255,255,255,.88)}
+.frame-svg .fv-arrow{stroke:var(--muted);stroke-width:1.5;fill:none;marker-end:url(#fv-arrow)}
+.frame-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.68rem;color:var(--muted)}
+.frame-legend span{display:inline-flex;align-items:center;gap:5px}
+.frame-legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.sidebar-head{cursor:pointer;transition:background .2s}
+.sidebar-head:hover{background:rgba(56,189,248,.06)}
+.field-panel{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px;min-height:96px;
+  animation:fadeIn .3s var(--ease)}
+.field-panel .ph{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.field-panel h4{color:#fff;margin:8px 0;font-size:1rem}
+.field-panel .bits{font-family:var(--mono);color:var(--accent2);font-size:.86rem;margin-bottom:10px}
+.field-panel .desc{color:var(--ink2);font-size:.88rem;line-height:1.6}
+.field-panel .ex-tip{margin-top:12px;padding:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--warn);
+  font-size:.82rem;color:var(--warn);border-radius:0 8px 8px 0;line-height:1.5}
+/* Diagrama anotado estilo diapositiva (MPDU / PLCP) */
+.frame-annotated{margin:24px 0;padding:20px;background:var(--bg);border:1px solid var(--border);border-radius:16px}
+.frame-annotated .fa-header{font-size:.78rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.fa-sizes{display:flex;gap:4px;margin-bottom:6px;padding:0 2px}
+.fa-sizes span{flex:1;text-align:center;font-family:var(--mono);font-size:.62rem;color:var(--muted);min-width:40px}
+.fa-bar{display:flex;gap:3px;min-height:72px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
+.fa-seg{flex:1;min-width:48px;border-radius:8px 8px 0 0;padding:8px 4px;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;
+  border:2px solid rgba(255,255,255,.15);cursor:default;transition:transform .2s,box-shadow .2s}
+.fa-seg:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(56,189,248,.35)}
+.fa-seg.fc{background:linear-gradient(180deg,var(--frame-fc),#1e3a8a)}
+.fa-seg.dur{background:linear-gradient(180deg,var(--frame-dur),#1d4ed8)}
+.fa-seg.addr{background:linear-gradient(180deg,var(--frame-addr),#2563eb)}
+.fa-seg.addr.opt{opacity:.75;border-style:dashed}
+.fa-seg.seq{background:linear-gradient(180deg,var(--frame-seq),#3b82f6)}
+.fa-seg.body{background:linear-gradient(180deg,var(--frame-body),#0f766e);flex:3;min-width:100px}
+.fa-seg.fcs{background:linear-gradient(180deg,var(--frame-fcs),#b45309)}
+.fa-seg.sync,.fa-seg.sfd{background:linear-gradient(180deg,var(--frame-phy),#0e7490)}
+.fa-n{font-size:.58rem;font-weight:700;color:#fff;line-height:1.2;text-transform:uppercase;letter-spacing:.02em}
+.fa-b{font-family:var(--mono);font-size:.52rem;color:rgba(255,255,255,.85);margin-top:3px}
+.fa-callouts{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.fa-callout{padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;font-size:.82rem;color:var(--ink2);line-height:1.55}
+.fa-callout strong{color:var(--ink);display:block;margin-bottom:4px;font-size:.84rem}
+.fa-note{font-size:.74rem;color:var(--muted);margin-top:12px;font-style:italic}
+.plcp-view .fa-seg.body{flex:4}
+/* Diagrama slide estilo diapositiva — cada campo con callout */
+.frame-slide{margin:28px 0;padding:24px 20px 20px;background:linear-gradient(180deg,var(--bg3),var(--bg));
+  border:1px solid var(--border2);border-radius:18px;overflow-x:auto}
+.fs-head{margin-bottom:18px;text-align:center}
+.fs-title{font-size:1rem;font-weight:800;color:#fff;letter-spacing:.02em}
+.fs-sub{font-size:.76rem;color:var(--muted);margin-top:6px}
+.fs-bar-row{display:flex;gap:6px;align-items:flex-start;min-width:720px;padding-bottom:4px}
+.fs-unit{display:flex;flex-direction:column;align-items:center;min-width:52px}
+.fs-bytes{font-family:var(--mono);font-size:.62rem;color:var(--accent2);font-weight:700;margin-bottom:6px;text-align:center}
+.fs-block{width:100%;min-height:56px;border-radius:8px 8px 0 0;padding:8px 4px;display:flex;align-items:flex-end;justify-content:center;
+  border:2px solid rgba(255,255,255,.12);transition:transform .2s,box-shadow .2s}
+.fs-block:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(56,189,248,.3)}
+.fs-block.fc{background:linear-gradient(180deg,var(--frame-fc),#1e3a8a)}
+.fs-block.dur{background:linear-gradient(180deg,var(--frame-dur),#1d4ed8)}
+.fs-block.addr{background:linear-gradient(180deg,var(--frame-addr),#2563eb)}
+.fs-block.addr.opt{opacity:.85;border-style:dashed}
+.fs-block.seq{background:linear-gradient(180deg,var(--frame-seq),#3b82f6)}
+.fs-block.body{background:linear-gradient(180deg,var(--frame-body),#0f766e);min-height:64px}
+.fs-block.fcs{background:linear-gradient(180deg,var(--frame-fcs),#b45309)}
+.fs-block.sync,.fs-block.sfd{background:linear-gradient(180deg,var(--frame-phy),#0e7490)}
+.fs-lbl{font-size:.58rem;font-weight:700;color:#fff;text-align:center;line-height:1.25;text-transform:uppercase;letter-spacing:.02em}
+.fs-connector{width:2px;height:14px;background:linear-gradient(180deg,var(--accent2),var(--border));margin:4px 0}
+.fs-desc{margin-top:4px;padding:10px 8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  font-size:.72rem;color:var(--ink2);line-height:1.5;text-align:left;width:100%;min-height:88px}
+.fs-desc strong{color:var(--ink)}
+.fs-exam{margin-top:8px;padding:8px 10px;background:rgba(245,158,11,.08);border-left:3px solid var(--warn);
+  border-radius:0 8px 8px 0;font-size:.68rem;color:var(--warn);line-height:1.45}
+.fs-unit{cursor:pointer;transition:transform .15s}
+.fs-unit:hover .fs-block{transform:translateY(-3px);box-shadow:0 8px 24px rgba(56,189,248,.35)}
+.fs-unit.active .fs-block{outline:3px solid var(--warn);outline-offset:2px}
+.fs-unit.active .fs-desc{border-color:rgba(245,158,11,.45);background:rgba(245,158,11,.06)}
+.fs-footer{font-size:.74rem;color:var(--muted);margin-top:16px;text-align:center;font-style:italic}
+.frame-slide-wide .fs-bar-row{min-width:1100px}
+.frame-slide-fc .fs-bar-row{min-width:880px}
+.frame-slide-fc .fs-unit{min-width:58px}
+@media(max-width:900px){.fs-bar-row{min-width:640px}.fs-desc{min-height:72px;font-size:.68rem}}
+/* Simulacro Prueba 3 */
+.simulacro-box{margin-top:32px;padding:24px;background:var(--bg);border:2px solid var(--accent);border-radius:18px}
+.sim-header h3{color:#fff;margin:0 0 8px;font-size:1.1rem}
+.sim-intro{font-size:.84rem;color:var(--ink2);line-height:1.55;margin:0}
+.sim-sections{margin-top:20px;display:flex;flex-direction:column;gap:24px}
+.sim-sec h4{font-size:.88rem;color:var(--accent2);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.sim-item{margin-bottom:8px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg3)}
+.sim-item summary{padding:12px 14px;cursor:pointer;font-size:.84rem;color:var(--ink);list-style:none}
+.sim-item summary::-webkit-details-marker{display:none}
+.sim-item[open] summary{background:rgba(56,189,248,.1);border-bottom:1px solid var(--border)}
+.sim-body{padding:14px 16px}
+.sim-ans{color:var(--ok2);font-size:.86rem;margin:0 0 10px}
+.sim-n{font-family:var(--mono);font-size:.72rem;background:var(--accent);color:#fff;padding:2px 6px;border-radius:4px;margin-right:6px}
+.sim-opts{margin:0 0 10px;padding-left:20px;font-size:.84rem;color:var(--ink2)}
+.sim-opt-ok{color:var(--ok2);font-weight:700}
+.sim-calc{padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;margin-bottom:12px}
+.sim-calc h4{margin:0 0 10px;font-size:.9rem;color:#fff}
+.sim-enun{font-size:.84rem;color:var(--ink2);line-height:1.55;margin-bottom:10px}
+.sim-sol{padding:12px 0 0;font-size:.84rem;color:var(--ink2)}
+.sim-tip-box{margin-top:20px;padding:14px 16px;background:rgba(245,158,11,.08);border-left:4px solid var(--warn);border-radius:0 10px 10px 0;font-size:.82rem;color:var(--ink2)}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}
+.compare-col h4{font-size:.88rem;color:#fff;margin-bottom:10px}
+@media(max-width:700px){.compare-grid{grid-template-columns:1fr}}
+/* V/F */
+.preg-vf .preg-n{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.preg-vf-true .preg-resp strong{color:var(--ok2)}
+.preg-vf-false .preg-resp strong{color:var(--dng)}
+.siglas-search{width:100%;max-width:420px;margin:12px 0 20px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);
+  border-radius:10px;color:var(--ink);font-size:.88rem}
+.siglas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.sigla-card{padding:14px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;transition:border-color .2s}
+.sigla-card:hover{border-color:var(--accent)}
+.sigla-card .sig{font-family:var(--mono);font-weight:700;color:var(--accent2);font-size:.95rem}
+.sigla-card .full{font-size:.78rem;color:var(--muted);margin:4px 0}
+.sigla-card .desc{font-size:.82rem;color:var(--ink2);line-height:1.45}
+.sigla-tag{display:inline-block;font-size:.6rem;padding:2px 6px;border-radius:4px;background:rgba(56,189,248,.15);color:var(--accent2);margin-top:8px}
+.num-examen-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:16px 0}
+.num-ex-card{padding:14px;background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(14,165,233,.08));border:1px solid var(--border2);border-radius:12px}
+.num-ex-card .val{font-size:1.1rem;font-weight:800;color:var(--ok2);font-family:var(--mono)}
+.num-ex-card .lbl{font-size:.78rem;color:var(--ink2);margin-top:4px}
+/* Modal estudio */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:500;
+  display:none;align-items:center;justify-content:center;padding:20px;animation:fadeIn .25s}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;width:min(520px,100%);
+  max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,.5);
+  animation:modalIn .35s var(--ease)}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(20px)}to{opacity:1;transform:none}}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-head h2{font-size:1rem;color:#fff;font-weight:600}
+.modal-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);
+  color:var(--ink2);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.modal-close:hover{background:var(--dng);color:#fff;border-color:var(--dng)}
+.modal-body{padding:24px;overflow-y:auto;flex:1}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:space-between;align-items:center}
+/* Flashcards */
+.flashcard{perspective:1000px;height:220px;cursor:pointer;margin-bottom:20px}
+.flashcard-inner{position:relative;width:100%;height:100%;transition:transform .5s var(--ease);transform-style:preserve-3d}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:28px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  border:1px solid var(--border)}
+.flashcard-front{background:var(--bg3)}
+.flashcard-back{background:linear-gradient(135deg,rgba(56,189,248,.15),rgba(14,165,233,.1));transform:rotateY(180deg)}
+.flashcard-face .fc-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.flashcard-front p{font-size:1.05rem;color:var(--ink);font-weight:500;line-height:1.5}
+.flashcard-back p{font-size:1rem;color:var(--ok2);font-weight:600;line-height:1.5}
+.flashcard-hint{font-size:.72rem;color:var(--muted);text-align:center;margin-top:8px}
+.fc-progress{font-family:var(--mono);font-size:.78rem;color:var(--accent2)}
+.fc-tag{display:inline-block;padding:3px 8px;border-radius:4px;background:rgba(56,189,248,.15);
+  color:var(--accent2);font-size:.65rem;font-weight:700;margin-bottom:12px}
+/* Quiz */
+.quiz-q{font-size:1rem;color:var(--ink);font-weight:500;margin-bottom:20px;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{padding:14px 18px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);
+  color:var(--ink2);cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;font-family:var(--sans)}
+.quiz-opt:hover:not(.locked){border-color:var(--accent);background:rgba(56,189,248,.08);color:var(--ink)}
+.quiz-opt.correct{border-color:var(--ok);background:rgba(16,185,129,.12);color:var(--ok2)}
+.quiz-opt.wrong{border-color:var(--dng);background:rgba(239,68,68,.1);color:var(--dng)}
+.quiz-exp{margin-top:16px;padding:14px;border-radius:10px;background:var(--bg);border:1px solid var(--border);
+  font-size:.84rem;color:var(--ink2);line-height:1.55;display:none}
+.quiz-exp strong{color:var(--ok2);display:block;margin-bottom:6px;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+.quiz-exp.show{display:block}
+.quiz-score{text-align:center;padding:32px 20px}
+.quiz-score .big{font-size:3rem;font-weight:800;background:var(--accent-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.quiz-score p{color:var(--ink2);margin-top:8px;font-size:.9rem}
+.search-hit mark{background:rgba(245,158,11,.35);color:inherit;padding:0 2px;border-radius:2px}
+.tema.search-hide{display:none!important}
+#panel-float{position:fixed;bottom:24px;right:24px;width:min(360px,calc(100vw - 48px));max-height:50vh;
+  overflow-y:auto;background:var(--bg2);border:1px solid var(--accent);border-radius:14px;padding:18px;
+  box-shadow:0 16px 48px rgba(0,0,0,.5);z-index:300;display:none;cursor:pointer}
+#panel-float.show{display:block;animation:modalIn .3s var(--ease)}
+#totop{position:fixed;bottom:24px;left:calc(var(--sw) + 24px);width:44px;height:44px;border-radius:12px;
+  background:var(--accent-g);color:#fff;border:none;cursor:pointer;font-size:1rem;opacity:0;transition:all .25s;z-index:100;
+  box-shadow:var(--glow)}
+#totop.show{opacity:1}
+#totop:hover{transform:translateY(-3px)}
+footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
+@media(max-width:900px){
+  nav.sidebar{transform:translateX(-100%);transition:.3s var(--ease);box-shadow:8px 0 32px rgba(0,0,0,.3)}
+  nav.sidebar.open{transform:translateX(0)}
+  main{margin-left:0;padding:calc(var(--top) + 12px) 16px 100px}
+  .topbar{left:0}#totop{left:24px}.mbtn{display:block}.hero h2{font-size:1.6rem}}
+@media print{nav.sidebar,.topbar,#totop,#panel-float,.modal-overlay,#progress-top,.tema-tabs,.tema-actions{display:none!important}
+  main{margin-left:0;max-width:100%}.tema{opacity:1!important;transform:none!important;break-inside:avoid}}
+
+/* ═══ Visor diapositivas — 3 columnas, altura fija viewport ═══ */
+main:has(.sv-mount){max-width:calc(100vw - var(--sw) - 32px)!important;padding-left:12px!important;padding-right:12px!important}
+.tema:has(.sv-mount) .tema-header{padding:20px 24px 12px}
+.tema-section.viewer-only{padding:0;border:none;margin:0}
+.tema-section.viewer-only .tema-section-h{display:none}
+.tema-body:has(.sv-mount){max-width:100%!important;padding:8px 12px 24px!important}
+.sv-mount{width:100%}
+.sv-deck{
+  display:grid;
+  grid-template-columns:minmax(140px,175px) minmax(0,1fr) minmax(220px,260px);
+  grid-template-rows:1fr;
+  gap:0;
+  width:100%;
+  height:calc(100dvh - var(--top) - 118px);
+  min-height:420px;
+  max-height:920px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.28);
+}
+.sv-nav-left,.sv-center,.sv-resumen-right{min-height:0;height:100%;overflow:hidden}
+.sv-nav-left{background:var(--bg3);border-right:1px solid var(--border);display:flex;flex-direction:column}
+.sv-nav-head{padding:10px 12px;border-bottom:1px solid var(--border);font-size:.68rem;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.05em;flex-shrink:0;line-height:1.35}
+.sv-slide-list{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:6px;display:flex;flex-direction:column;gap:3px;
+  scrollbar-width:thin}
+.sv-slide-item{display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:7px;cursor:pointer;
+  border:1px solid transparent;background:transparent;color:var(--ink2);font-size:.68rem;text-align:left;
+  transition:background .15s;font-family:var(--sans);width:100%}
+.sv-slide-item:hover{background:rgba(56,189,248,.08);border-color:var(--border)}
+.sv-slide-item.on{background:rgba(99,102,241,.18);border-color:rgba(99,102,241,.45);color:#fff}
+.sv-slide-item img{width:44px;height:30px;object-fit:cover;border-radius:3px;background:#fff;flex-shrink:0}
+.sv-slide-item .sn{font-family:var(--mono);font-weight:700;color:var(--accent2);min-width:28px;font-size:.65rem}
+.sv-slide-item span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sv-topic-jump{padding:8px;border-top:1px solid var(--border);display:flex;gap:5px;flex-shrink:0}
+.sv-topic-jump button{flex:1;padding:7px 4px;font-size:.65rem;border-radius:7px;border:1px solid var(--border);
+  background:var(--bg);color:var(--ink2);cursor:pointer;font-family:var(--sans)}
+.sv-topic-jump button:hover{border-color:var(--accent);color:var(--ink)}
+.sv-center{display:flex;flex-direction:column;min-width:0;background:#080c14}
+.sv-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px;
+  background:var(--bg3);border-bottom:1px solid var(--border);flex-shrink:0}
+.sv-toolbar .sv-pos{font-family:var(--mono);font-size:.72rem;color:var(--ink);font-weight:700;min-width:88px;text-align:center}
+.sv-tbtn{padding:6px 10px;border-radius:7px;border:1px solid var(--border);background:var(--bg);
+  color:var(--ink2);font-size:.68rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .15s;white-space:nowrap}
+.sv-tbtn:hover{border-color:var(--accent);color:#fff}
+.sv-tbtn.on{background:rgba(56,189,248,.15);border-color:var(--accent2);color:var(--accent2)}
+.sv-tbtn:disabled{opacity:.35;cursor:not-allowed}
+.sv-stage-wrap{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.sv-stage{flex:1;min-height:0;position:relative;overflow:hidden;cursor:grab;touch-action:none;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at center,#12182a 0%,#080c14 70%)}
+.sv-stage.dragging{cursor:grabbing}
+.sv-panzoom{transform-origin:center center;will-change:transform;line-height:0;flex-shrink:0}
+.sv-panzoom img{display:block;width:auto;height:auto;max-width:none;max-height:none;
+  box-shadow:0 4px 24px rgba(0,0,0,.45);border-radius:3px;user-select:none;-webkit-user-drag:none;background:#fff}
+.sv-zoom-hint{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:.62rem;color:var(--muted);
+  background:rgba(0,0,0,.55);padding:3px 9px;border-radius:5px;pointer-events:none;z-index:2;white-space:nowrap}
+.sv-drawer{flex-shrink:0;max-height:0;overflow:hidden;transition:max-height .3s var(--ease);background:var(--bg2);
+  border-top:1px solid var(--border)}
+.sv-drawer.open{max-height:min(38vh,360px);overflow-y:auto;padding:12px 14px}
+.sv-resumen-right{background:var(--bg3);border-left:1px solid var(--border);padding:12px 14px;
+  overflow-y:auto;font-size:.8rem;line-height:1.5}
+.sv-resumen-right h5{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent2);
+  margin:0 0 8px;font-weight:700}
+.sv-resumen-right .concept-list{font-size:.78rem}
+.sv-resumen-right .tip-box{font-size:.75rem;padding:10px}
+.sv-resumen-right .lead-diapo{font-size:.88rem;margin-bottom:8px;color:var(--ink)}
+.sv-resumen-right .muted{color:var(--muted);font-size:.76rem;margin-bottom:8px}
+.sv-fs{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);display:none;align-items:center;
+  justify-content:center;padding:16px}
+.sv-fs.open{display:flex}
+.sv-fs img{max-width:96vw;max-height:92vh;object-fit:contain;box-shadow:0 0 48px rgba(0,0,0,.8)}
+.sv-fs-close{position:absolute;top:14px;right:16px;padding:9px 16px;border-radius:9px;border:none;
+  background:#fff;color:#111;font-weight:700;cursor:pointer;font-size:.82rem}
+@media(min-width:1101px){
+  .tema:has(.sv-mount) .tema-header{padding:16px 20px 8px}
+  .tema:has(.sv-mount) .tema-lead{display:none}
+}
+@media(max-width:1100px){
+  main:has(.sv-mount){max-width:100%!important;padding-left:8px!important;padding-right:8px!important}
+  .sv-deck{
+    grid-template-columns:1fr;
+    grid-template-rows:auto minmax(280px,1fr) auto;
+    height:calc(100vh - var(--top) - 100px);
+    max-height:none;
+  }
+  .sv-nav-left{max-height:118px;border-right:none;border-bottom:1px solid var(--border)}
+  .sv-slide-list{flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:6px 8px}
+  .sv-slide-item{flex-shrink:0;min-width:108px;max-width:140px}
+  .sv-topic-jump{display:none}
+  .sv-resumen-right{max-height:160px;border-left:none;border-top:1px solid var(--border)}
+  .sv-toolbar .sv-tbtn[data-panel]{font-size:.62rem;padding:5px 7px}
+}
+@media(max-width:600px){
+  .sv-deck{height:calc(100vh - var(--top) - 72px);min-height:360px;border-radius:10px}
+  .sv-toolbar .sv-pos{min-width:72px;font-size:.65rem}
+  .sv-zoom-hint{display:none}
+}
+</style>
+</head>
+<body>
+<div id="progress-top"><i></i></div>
+<div class="layout" style="grid-template-columns:1fr">
+<main style="max-width:960px;margin:0 auto;padding:0 20px 60px">
+<header class="topbar" style="position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--border);margin:0 -20px;padding:12px 20px">
+<span class="topbar-title">Simulación de examen WLAN</span>
+<div class="topbar-actions">
+<a class="tact" href="../" style="text-decoration:none">Portal</a>
+<a class="tact" href="../guia/" style="text-decoration:none">Guía de estudio</a>
+<button class="tact" onclick="openFlashcards()">Flashcards</button>
+<button class="tact" onclick="openQuiz()">Quiz</button>
+</div>
+</header>
+
+<section class="hero" id="portada" style="margin-bottom:32px">
+<span class="hero-badge">● Simulación de examen</span>
+<h2>Practica como en la Prueba 3</h2>
+<p class="sub">Quiz aleatorio con explicación, flashcards de números clave y banco de ejercicios resueltos paso a paso (Prueba3-3, WLAN-1).</p>
+<div class="dashboard" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<div class="dash-card" onclick="openQuiz()">
+<div class="dash-icon">🎯</div>
+<h3>Quiz rápido</h3>
+<p>57 preguntas con filtro por tema</p>
+</div>
+<div class="dash-card" onclick="openFlashcards()">
+<div class="dash-icon">🃏</div>
+<h3>Flashcards</h3>
+<p>27 tarjetas · Espacio para voltear</p>
+</div>
+<div class="dash-card" onclick="document.getElementById('simulacro-p3')?.scrollIntoView({behavior:'smooth'})">
+<div class="dash-icon">📋</div>
+<h3>Simulacro P3</h3>
+<p>Completar, V/F, opción múltiple</p>
+</div>
+<div class="dash-card" onclick="document.getElementById('banco-ejercicios')?.scrollIntoView({behavior:'smooth'})">
+<div class="dash-icon">📐</div>
+<h3>Banco ejercicios</h3>
+<p>Eficiencia, NAV, tiempos µs, dBm</p>
+</div>
+</div>
+</section><section class="tema visible" id="simulacro-p3" style="opacity:1;transform:none"><header class="tema-head"><span class="tema-num">P3</span><div><h2>Simulacro Prueba 3 — tipo examen</h2><p class="tema-focus">Preguntas estilo PhD. Soraya Sinche · con ¿Por qué?</p></div></header><div class="tema-body"><div class="simulacro-box" id="simulacro-p3">
+<div class="sim-header">
+<h3>🎓 Simulacro Prueba 3 — Estilo examen EPN</h3>
+<p class="sim-intro">Basado en <strong>Prueba3-3</strong>, <strong>WLAN-1</strong> y PDFs 2026-A.
+Cada respuesta incluye <strong>¿Por qué?</strong> citando el PDF del curso.</p>
+</div>
+<div class="sim-sections">
+<section class="sim-sec"><h4>Parte 1 — Completar (12 preguntas · Prueba3-3)</h4><details class="sim-item sim-blank">
+<summary>1. Modulación máxima IEEE 802.11be para velocidad nominal máxima:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>4096-QAM</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 6 slide 154: be sube de 1024-QAM (ax) a 4096-QAM. Prueba3-3 pregunta directa.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>2. Canales no solapados 802.11n @ 2.4 GHz (no HT):</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>3</strong> (canales 1, 6, 11)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 5: en 2.4 GHz solo caben 3 canales de 20 MHz sin solaparse. Prueba3-3.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>3. Ancho de banda máximo 802.11be @ máxima velocidad:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>320 MHz</strong> (solo en 6 GHz)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 6: 320 MHz imposible en 2.4 GHz (83.5 MHz total). be usa 6 GHz.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>4. Antenas máximas MU-MIMO en 802.11ax:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>8</strong> (uplink y downlink)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Tabla PDF 6 slide 166: ax MU-MIMO 8×8 UL+DL. Prueba3-3 directa.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>5. Dirección MU-MIMO en 802.11ax:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>Uplink y Downlink</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 6: ax extiende MU-MIMO al uplink. ac solo tenía DL.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>6. Dirección MU-MIMO en 802.11ac:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>Solo Downlink</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 6 slide 3: UL=SU-MIMO, DL=MU-MIMO en ac. Trampa clásica vs ax.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>7. Subportadoras OFDMA 802.11ax @ 20 MHz:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>256</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 6 slide 134: ax organiza 20 MHz en 256 tonos de 78.125 kHz. Legacy = 48 datos.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>8. Ancho de banda máximo 802.11n:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>40 MHz</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Tabla slide 166: n máx 40 MHz. 80/160 MHz es ac.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>9. WPA3 Personal reemplaza PSK con:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>SAE</strong> (Simultaneous Authentication of Equals)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>WLAN-1 #13. SAE mitiga ataques de diccionario offline vs PSK.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>10. Tecnologías MIMO que debutaron en 802.11ac:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>MU-MIMO downlink</strong> y <strong>SDMA</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 6 slide 2: ac introduce MU-MIMO DL. SU-MIMO ya existía en n.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>11. Bits por símbolo OFDM — QPSK con coding 1/2:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>48 bits/símbolo</strong> → \(48 \times 2 \times 0.5 = 48\)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 7: 48 subportadoras datos × log₂(QPSK)=2 × tasa 1/2. Símbolo = 4 µs → 12 Mbps.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>12. Bits por símbolo OFDM — 64-QAM con coding 3/4:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>216 bits/símbolo</strong> → \(48 \times 6 \times 0.75 = 216\) → 54 Mbps</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>48 × 6 bits × 3/4 = 216. 216 bits / 4 µs = 54 Mbps — tasa máx 802.11a/g.</p></div></div>
+</details></section>
+<section class="sim-sec"><h4>Parte 2 — Verdadero / Falso (10 preguntas)</h4><details class="sim-item sim-vf">
+<summary><span class="sim-n">V1</span> V/F — El campo Signal indica la velocidad del preámbulo PLCP.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Falso</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 7: Signal = velocidad del PSDU (datos). Preámbulo legacy siempre @ 1 Mbps.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V2</span> V/F — Beacon es una trama de gestión.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Verdadero</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 9 slide 220: tipo 00 = gestión. Beacon subtipo específico.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V3</span> V/F — Ethernet 802.3 tiene campo Duration para NAV.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Falso</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Duration/NAV es exclusivo 802.11. Ethernet no reserva medio así.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V4</span> V/F — Autenticación y asociación son el mismo proceso.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Falso</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Orden PDF: Scan → Auth → Assoc → 4-way handshake (RSNA).</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V5</span> V/F — El overhead MAC en ejercicios Prueba 3 es 30 bytes.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Falso</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>30 B cabecera + 4 B FCS = 34 B. Error que baja la nota.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V6</span> V/F — RIFS (2 µs) es el IFS más corto en 802.11n.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Verdadero</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 10 slide 247: RIFS=2 µs sustituye SIFS entre ráfagas. Solo en n.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V7</span> V/F — A-MPDU es obligatorio en 802.11ac.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Verdadero</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 9 slide 235: ac define solo A-MPDU. A-MSDU opcional.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V8</span> V/F — RTS/CTS resuelve el problema de terminal expuesto.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Falso</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 10: RTS/CTS resuelve terminal <strong>oculto</strong>. Expuesto = silencio innecesario.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V9</span> V/F — En Mixed Mode 802.11n, la tasa real está en HT-SIG.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Verdadero</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 8: L-SIG lleva 6 Mbps y longitud falsa; HT-SIG tiene MCS y longitud reales.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">V10</span> V/F — PBSS opera en banda de 60 GHz.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Verdadero</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 2: PBSS = 802.11ad DMG @ 60 GHz. No confundir con BSS normal.</p></div></div>
+</details></section>
+<section class="sim-sec"><h4>Parte 3 — Selección múltiple (8 preguntas)</h4><details class="sim-item sim-mc">
+<summary><span class="sim-n">M1</span> To DS=1, From DS=0 indica:</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) Ad-hoc (IBSS)</li><li class="sim-opt-ok">b) STA → AP (infraestructura)</li><li class="">c) AP → STA</li><li class="">d) WDS (4 direcciones)</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> b) STA → AP (infraestructura)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 9 / WLAN-1 #5. Bits 8-9 FC: 10 = cliente envía al AP.</p></div></div>
+</details><details class="sim-item sim-mc">
+<summary><span class="sim-n">M2</span> ¿Qué cifra WPA2 en comparación con WPA?</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) TKIP en lugar de RC4</li><li class="sim-opt-ok">b) AES-CCMP más fuerte que TKIP de WPA</li><li class="">c) WEP mejorado</li><li class="">d) SAE obligatorio</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> b) AES-CCMP más fuerte que TKIP de WPA</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>WLAN-1: WPA=TKIP; WPA2=AES (802.11i).</p></div></div>
+</details><details class="sim-item sim-mc">
+<summary><span class="sim-n">M3</span> Con cifrado habilitado, ¿qué parte se protege?</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) MPDU completa</li><li class="sim-opt-ok">b) Solo MSDU (payload)</li><li class="">c) Solo PLCP</li><li class="">d) Solo FCS</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> b) Solo MSDU (payload)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>WLAN-1 #15: bit Protected=1 cifra el MSDU, no la cabecera MAC.</p></div></div>
+</details><details class="sim-item sim-mc">
+<summary><span class="sim-n">M4</span> ¿Cuál NO es mecanismo de autenticación 802.11?</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) Open System</li><li class="">b) Shared Key</li><li class="">c) SAE (WPA3)</li><li class="sim-opt-ok">d) CSMA/CA</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> d) CSMA/CA</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>CSMA/CA = acceso al medio DCF (PDF 10), no autenticación.</p></div></div>
+</details><details class="sim-item sim-mc">
+<summary><span class="sim-n">M5</span> Duration en periodo CF (PCF) vale:</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) 44 µs</li><li class="">b) 920 µs</li><li class="sim-opt-ok">c) 32768 µs</li><li class="">d) 0 siempre</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> c) 32768 µs</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 9 slide 228: bits 14=0, 15=1 → NAV=32768 µs fijo.</p></div></div>
+</details><details class="sim-item sim-mc">
+<summary><span class="sim-n">M6</span> Trama RTS tiene tamaño MAC de:</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) 14 B</li><li class="sim-opt-ok">b) 20 B</li><li class="">c) 28 B</li><li class="">d) 34 B</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> b) 20 B</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 9: RTS=20 B (lleva RA+Duration). CTS/ACK=14 B.</p></div></div>
+</details><details class="sim-item sim-mc">
+<summary><span class="sim-n">M7</span> 100 mW de potencia equivale a:</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) 10 dBm</li><li class="">b) 17 dBm</li><li class="sim-opt-ok">c) 20 dBm</li><li class="">d) 27 dBm</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> c) 20 dBm</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Prueba3-3: 10·log₁₀(100)=20 dBm. Tabla link budget.</p></div></div>
+</details><details class="sim-item sim-mc">
+<summary><span class="sim-n">M8</span> FHSS: AB 100 MHz, espaciado 10 kHz → chips PN mínimos:</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) 10</li><li class="">b) 12</li><li class="sim-opt-ok">c) 14</li><li class="">d) 16</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> c) 14</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>N=10⁷/10⁴=10⁴ canales → 2¹⁴=16384≥10000 → k=14 chips.</p></div></div>
+</details></section>
+<section class="sim-sec"><h4>Parte 4 — Ejercicios numéricos resueltos (6 problemas · paso a paso)</h4><article class="sim-calc ej-card">
+<h4>Ejercicio A — Prueba3-3 completo (eficiencia + tiempo B)</h4>
+<div class="sim-enun"><p>802.11g, RTS/CTS. A: payload <strong>400 B</strong>. B: payload <strong>200 B</strong>, CW=<strong>5</strong> tras pérdida ACK.</p>
+            <p>PLCP corto 72+48 bits · MAC 30+4 B · datos <strong>22 Mbps</strong> · SIFS=10 µs · slot=20 µs.</p>
+            <p><strong>Pide:</strong> η_MAC A y B · η_PLCP A y B · tiempo total secuencia de B.</p></div>
+<div class="ej-solucion ej-solucion-visible">
+<div class="sol-banner">✅ Solución paso a paso — con ¿Por qué?</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>η_MAC</strong></div>
+<div class="formula-card" data-latex="\eta_{\text{MAC,A}} = \frac{400}{434} = \mathbf{92.17\%} \quad \eta_{\text{MAC,B}} = \frac{200}{234} = \mathbf{85.47\%}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>&#x003B7;</mi><mrow><mtext>MAC,A</mtext></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>400</mn></mrow><mrow><mn>434</mn></mrow></mfrac><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">92.17</mn><mi mathvariant="bold">&#x00025;</mi></mrow><mspace width="1em" /><msub><mi>&#x003B7;</mi><mrow><mtext>MAC,B</mtext></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>200</mn></mrow><mrow><mn>234</mn></mrow></mfrac><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">85.47</mn><mi mathvariant="bold">&#x00025;</mi></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Divide payload entre MPDU (payload+34). Payload pequeño → η menor.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>η_PLCP</strong></div>
+<div class="formula-card" data-latex="\eta_{\text{PLCP,A}} = 3472/(3472+120) = \mathbf{96.66\%} \quad \eta_{\text{PLCP,B}} = 1872/(1872+120) = \mathbf{93.98\%}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>&#x003B7;</mi><mrow><mtext>PLCP,A</mtext></mrow></msub><mo>&#x0003D;</mo><mn>3472</mn><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mn>3472</mn><mo>&#x0002B;</mo><mn>120</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">96.66</mn><mi mathvariant="bold">&#x00025;</mi></mrow><mspace width="1em" /><msub><mi>&#x003B7;</mi><mrow><mtext>PLCP,B</mtext></mrow></msub><mo>&#x0003D;</mo><mn>1872</mn><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mn>1872</mn><mo>&#x0002B;</mo><mn>120</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">93.98</mn><mi mathvariant="bold">&#x00025;</mi></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Usa bits del MPDU completo. Overhead PLCP corto = 120 bits fijos.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">3</span><strong>T_PLCP y tramas</strong></div>
+<div class="formula-card" data-latex="T_{\text{PLCP}} = \frac{72}{1} + \frac{48}{2} = 96\,\mu\text{s}. T_{\text{DATA}} = 96 + \frac{1872}{22} = 181.2\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mtext>PLCP</mtext></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>72</mn></mrow><mrow><mn>1</mn></mrow></mfrac><mo>&#x0002B;</mo><mfrac><mrow><mn>48</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>96</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo>&#x0002E;</mo><msub><mi>T</mi><mrow><mtext>DATA</mtext></mrow></msub><mo>&#x0003D;</mo><mn>96</mn><mo>&#x0002B;</mo><mfrac><mrow><mn>1872</mn></mrow><mrow><mn>22</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>181.2</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Preámbulo @ 1M, header @ 2M. DATA MPDU = 234 B.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">4</span><strong>Tiempo total B</strong></div>
+<div class="formula-card" data-latex="T_{\text{total}} = 50 + 100 + 103.3 + 10 + 101.1 + 10 + 181.2 + 10 + 101.1 = \mathbf{666.7\,\mu\text{s}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mtext>total</mtext></mrow></msub><mo>&#x0003D;</mo><mn>50</mn><mo>&#x0002B;</mo><mn>100</mn><mo>&#x0002B;</mo><mn>103.3</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>101.1</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>181.2</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>101.1</mn><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">666.7</mn><mspace width="0.167em" /><mi mathvariant="bold">&#x003BC;</mi><mtext mathvariant="bold">s</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>DIFS(50) + Backoff(5×20) + RTS/CTS con SIFS entre tramas.</p></div>
+</div>
+</div>
+</article><article class="sim-calc ej-card">
+<h4>Ejercicio B — Cadena dB Prueba3-3 #1</h4>
+<div class="sim-enun"><p>Pt = <strong>27 dBm</strong>. Atenuación <strong>13.2×</strong> → amp <strong>+8.3 dB</strong> → amp <strong>28.5×</strong> → atenuación <strong>−1.6 dB</strong>.</p></div>
+<div class="ej-solucion ej-solucion-visible">
+<div class="sol-banner">✅ Solución paso a paso — con ¿Por qué?</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Atenuación 13.2× a dB</strong></div>
+<div class="formula-card" data-latex="L = -10\log_{10}(13.2) = \mathbf{-11.21\,\text{dB}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>L</mi><mo>&#x0003D;</mo><mo>&#x02212;</mo><mn>10</mn><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>13.2</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mrow><mo mathvariant="bold">&#x02212;</mo><mn mathvariant="bold">11.21</mn><mspace width="0.167em" /><mtext mathvariant="bold">dB</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Factor lineal NO es dB directo. Atenuación = signo negativo.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>Ganancia 28.5× a dB</strong></div>
+<div class="formula-card" data-latex="G = 10\log_{10}(28.5) = \mathbf{+14.55\,\text{dB}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>G</mi><mo>&#x0003D;</mo><mn>10</mn><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>28.5</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mrow><mo mathvariant="bold">&#x0002B;</mo><mn mathvariant="bold">14.55</mn><mspace width="0.167em" /><mtext mathvariant="bold">dB</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Ganancia lineal → dB positivo con 10·log₁₀.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">3</span><strong>Total sistema</strong></div>
+<div class="formula-card" data-latex="G_{\text{total}} = -11.21 + 8.3 + 14.55 - 1.6 = \mathbf{+10.04\,\text{dB}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>G</mi><mrow><mtext>total</mtext></mrow></msub><mo>&#x0003D;</mo><mo>&#x02212;</mo><mn>11.21</mn><mo>&#x0002B;</mo><mn>8.3</mn><mo>&#x0002B;</mo><mn>14.55</mn><mo>&#x02212;</mo><mn>1.6</mn><mo>&#x0003D;</mo><mrow><mo mathvariant="bold">&#x0002B;</mo><mn mathvariant="bold">10.04</mn><mspace width="0.167em" /><mtext mathvariant="bold">dB</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>En dB todo suma algebraically. +10 dB ≈ ganancia neta ×10.</p></div>
+</div>
+</div>
+</article><article class="sim-calc ej-card">
+<h4>Ejercicio C — EIRP Prueba3-3 #3</h4>
+<div class="sim-enun"><p>Tx <strong>100 mW</strong>, cable <strong>−3 dB</strong>, antena <strong>7 dBi</strong>. <strong>Pide EIRP en mW.</strong></p></div>
+<div class="ej-solucion ej-solucion-visible">
+<div class="sol-banner">✅ Solución paso a paso — con ¿Por qué?</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Tx a dBm</strong></div>
+<div class="formula-card" data-latex="P_t = 10\log_{10}(100) = \mathbf{20\,\text{dBm}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>P</mi><mi>t</mi></msub><mo>&#x0003D;</mo><mn>10</mn><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>100</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">20</mn><mspace width="0.167em" /><mtext mathvariant="bold">dBm</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Siempre convierte mW→dBm primero: 100 mW = 20 dBm.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>Cadena dB</strong></div>
+<div class="formula-card" data-latex="\text{EIRP} = 20 - 3 + 7 = \mathbf{24\,\text{dBm}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>EIRP</mtext><mo>&#x0003D;</mo><mn>20</mn><mo>&#x02212;</mo><mn>3</mn><mo>&#x0002B;</mo><mn>7</mn><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">24</mn><mspace width="0.167em" /><mtext mathvariant="bold">dBm</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Pérdidas restan, ganancia antena suma.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">3</span><strong>Resultado mW</strong></div>
+<div class="formula-card" data-latex="10^{\frac{24}{10}} = 10^{2.4} = \mathbf{251.2\,\text{mW}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mn>10</mn><mrow><mfrac><mrow><mn>24</mn></mrow><mrow><mn>10</mn></mrow></mfrac></mrow></msup><mo>&#x0003D;</mo><msup><mn>10</mn><mrow><mn>2.4</mn></mrow></msup><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">251.2</mn><mspace width="0.167em" /><mtext mathvariant="bold">mW</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>El enunciado pide mW — convierte al final. 10^2.4 ≈ 251.</p></div>
+</div>
+</div>
+</article><article class="sim-calc ej-card">
+<h4>Ejercicio D — NAV RTS/CTS @ 54 Mbps</h4>
+<div class="sim-enun"><p>802.11g, SIFS=10 µs, PLCP largo 192 µs, <strong>54 Mbps</strong>. Payload=100 B → MPDU=134 B.</p></div>
+<div class="ej-solucion ej-solucion-visible">
+<div class="sol-banner">✅ Solución paso a paso — con ¿Por qué?</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Tiempos tramas</strong></div>
+<div class="formula-card" data-latex="T_{\text{CTS}} = 192 + \frac{112}{54} = 194.1\,\mu\text{s} \quad T_{\text{DATA}} = 192 + \frac{1072}{54} = 211.9\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mtext>CTS</mtext></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mfrac><mrow><mn>112</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>194.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace width="1em" /><msub><mi>T</mi><mrow><mtext>DATA</mtext></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mfrac><mrow><mn>1072</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>211.9</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>MPDU=134 B. CTS/ACK=14 B. PLCP largo @ 1 Mbps = 192 µs.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>NAV_RTS</strong></div>
+<div class="formula-card" data-latex="10 + 194.1 + 10 + 211.9 + 10 + 194.1 = \mathbf{640.1\,\mu\text{s}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>211.9</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">640.1</mn><mspace width="0.167em" /><mi mathvariant="bold">&#x003BC;</mi><mtext mathvariant="bold">s</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>RTS reserva CTS+DATA+ACK con SIFS entre cada uno.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">3</span><strong>NAV_CTS</strong></div>
+<div class="formula-card" data-latex="10 + 211.9 + 10 + 194.1 = \mathbf{426.0\,\mu\text{s}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>10</mn><mo>&#x0002B;</mo><mn>211.9</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">426.0</mn><mspace width="0.167em" /><mi mathvariant="bold">&#x003BC;</mi><mtext mathvariant="bold">s</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>CTS no incluye CTS ni RTS — solo lo que falta.</p></div>
+</div>
+</div>
+</article><article class="sim-calc ej-card">
+<h4>Ejercicio E — FHSS chips PN Prueba3-3 #2</h4>
+<div class="sim-enun"><p>AB salto = <strong>100 MHz</strong>, espaciado = <strong>10 kHz</strong>.</p></div>
+<div class="ej-solucion ej-solucion-visible">
+<div class="sol-banner">✅ Solución paso a paso — con ¿Por qué?</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Canales</strong></div>
+<div class="formula-card" data-latex="N = \frac{100 \times 10^6}{10 \times 10^3} = \mathbf{10\,000}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mo>&#x0003D;</mo><mfrac><mrow><mn>100</mn><mo>&#x000D7;</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><mrow><mn>10</mn><mo>&#x000D7;</mo><msup><mn>10</mn><mn>3</mn></msup></mrow></mfrac><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">10</mn><mspace width="0.167em" /><mn mathvariant="bold">000</mn></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>AB dividido espaciado = cuántas frecuencias de salto caben.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>Potencia de 2</strong></div>
+<div class="formula-card" data-latex="2^{13} = 8192 &lt; 10\,000 &lt; 16384 = 2^{14}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mn>2</mn><mrow><mn>13</mn></mrow></msup><mo>&#x0003D;</mo><mn>8192</mn><mo>&#x0003C;</mo><mn>10</mn><mspace width="0.167em" /><mn>000</mn><mo>&#x0003C;</mo><mn>16384</mn><mo>&#x0003D;</mo><msup><mn>2</mn><mrow><mn>14</mn></mrow></msup></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PN necesita cubrir al menos N frecuencias → menor 2^k ≥ N.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">3</span><strong>Resultado</strong></div>
+<div class="formula-card" data-latex="k = \mathbf{14\,\text{chips}}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>k</mi><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">14</mn><mspace width="0.167em" /><mtext mathvariant="bold">chips</mtext></mrow></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>2^14 = 16384 ≥ 10000. Respuesta examen: 14 chips.</p></div>
+</div>
+</div>
+</article><article class="sim-calc ej-card">
+<h4>Ejercicio F — OFDM bits/símbolo (Prueba3-3 parte 1)</h4>
+<div class="sim-enun"><p>802.11a/g: <strong>48 subportadoras</strong> datos, símbolo = 4 µs.</p>
+            <p>a) QPSK 1/2 &nbsp; b) 64-QAM 3/4</p></div>
+<div class="ej-solucion ej-solucion-visible">
+<div class="sol-banner">✅ Solución paso a paso — con ¿Por qué?</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>QPSK 1/2</strong></div>
+<div class="formula-card" data-latex="48 \times \log_2(4) \times 0.5 = 48 \times 2 \times 0.5 = \mathbf{48\,\text{bits/símbolo}} \Rightarrow 12\,\text{Mbps}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mn>4</mn><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><mn>0.5</mn><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><mn>2</mn><mo>&#x000D7;</mo><mn>0.5</mn><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">48</mn><mspace width="0.167em" /><mtext mathvariant="bold">bits/símbolo</mtext></mrow><mo>&#x021D2;</mo><mn>12</mn><mspace width="0.167em" /><mtext>Mbps</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>QPSK=2 bits/portadora. Tasa 1/2 = mitad útil (FEC). 48/4µs=12 Mbps.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>64-QAM 3/4</strong></div>
+<div class="formula-card" data-latex="48 \times 6 \times 0.75 = \mathbf{216\,\text{bits/símbolo}} \Rightarrow 54\,\text{Mbps}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>48</mn><mo>&#x000D7;</mo><mn>6</mn><mo>&#x000D7;</mo><mn>0.75</mn><mo>&#x0003D;</mo><mrow><mn mathvariant="bold">216</mn><mspace width="0.167em" /><mtext mathvariant="bold">bits/símbolo</mtext></mrow><mo>&#x021D2;</mo><mn>54</mn><mspace width="0.167em" /><mtext>Mbps</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>64-QAM=6 bits/portadora. 3/4=75% útil. 216/4µs=54 Mbps — tasa máx.</p></div>
+</div>
+</div>
+</article></section>
+<section class="sim-sec"><h4>Parte 5 — Preguntas extra 2026-A</h4><details class="sim-item sim-blank">
+<summary>N1. Velocidad máx PHY 802.11ax (Mbps):</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>9607 Mbps</strong> (8×8, 160 MHz, 1024-QAM)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Tabla PDF 6 slide 166. No confundir con be (46000).</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>N2. Hex Signal para 11 Mbps DSSS:</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <code>0x6E</code> (110 decimal)</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 7 slide 175. 22 Mbps PBCC=0xDC. DSSS-OFDM=0x1E.</p></div></div>
+</details><details class="sim-item sim-blank">
+<summary>N3. ¿Cuántos µs entre DATA y ACK?</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Respuesta:</strong> <strong>10 µs (SIFS)</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 10 slide 251: ACK tras SIFS, no DIFS.</p></div></div>
+</details><details class="sim-item sim-vf">
+<summary><span class="sim-n">N4</span> V/F — Length en PLCP DSSS indica bytes del MPDU.</summary>
+<div class="sim-body"><p class="sim-ans"><strong>Falso</strong></p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>PDF 7: Length DSSS = duración en µs. OFDM Signal Length = bytes.</p></div></div>
+</details><details class="sim-item sim-mc">
+<summary><span class="sim-n">N5</span> Frame Control 0x0080 corresponde a:</summary>
+<div class="sim-body"><ol class="sim-opts"><li class="">a) Probe Request</li><li class="sim-opt-ok">b) Beacon</li><li class="">c) Authentication</li><li class="">d) RTS</li></ol>
+<p class="sim-ans"><strong>Correcta:</strong> b) Beacon</p>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>0x0080 = Beacon (gestión). 0xb000=Auth. 0x0500=Probe Req.</p></div></div>
+</details></section>
+</div>
+<div class="sim-tip-box">
+<p><strong>Consejo:</strong> En numéricos: (1) ¿PLCP largo 192 µs o corto 96 µs? (2) MPDU = payload + 34.
+(3) η_PLCP en bits. (4) NAV = SIFS entre cada trama. (5) Hex Duration → decimal µs.</p>
+</div>
+</div></div></section><div class="master-ej-banner" id="indice-ejercicios">
+<h3>✅ Sistema completo — 45 ejercicios resueltos + 95 preguntas teóricas</h3>
+<p>Cada ejercicio numérico tiene <strong>solución visible</strong> y recuadro verde <em>¿Por qué?</em> en cada paso. Nada queda sin resolver.</p>
+<table class="dat master-ej-table"><thead><tr><th>Ejercicio</th><th>Tema</th><th>Tipo</th></tr></thead><tbody>
+<tr><td><a href="#ej-capas-mpdu">Calcular MPDU y PPDU — overhead por capas</a></td><td>Capas MSDU → PPDU</td><td>Numérico</td></tr><tr><td><a href="#ej-a4">Bits por símbolo 802.11a (QPSK y 64-QAM)</a></td><td>PLCP legacy — tiempos y OFDM</td><td>Numérico</td></tr><tr><td><a href="#ej-a12-ofdm">Longitud símbolo OFDM @ 54 Mbps (ejercicios varios #12)</a></td><td>PLCP legacy — tiempos y OFDM</td><td>Numérico</td></tr><tr><td><a href="#ej-a5">Eficiencia PLCP — preámbulo largo</a></td><td>PLCP legacy — tiempos y OFDM</td><td>Numérico</td></tr><tr><td><a href="#pr-d7">D7 — Bits por símbolo (16-QAM y BPSK)</a></td><td>PLCP legacy — tiempos y OFDM</td><td>Práctica D</td></tr><tr><td><a href="#pr-d12">D12 — PLCP preámbulo largo en µs</a></td><td>PLCP legacy — tiempos y OFDM</td><td>Práctica D</td></tr><tr><td><a href="#pr-d3">D3 — Tiempo trama DATA completa</a></td><td>PLCP legacy — tiempos y OFDM</td><td>Práctica D</td></tr><tr><td><a href="#ej-a7">To DS / From DS — identificar red</a></td><td>MAC — Frame Control y overhead</td><td>Numérico</td></tr><tr><td><a href="#ej-a8">Decodificar Frame Control — hex a tipo/subtipo</a></td><td>MAC — Frame Control y overhead</td><td>Numérico</td></tr><tr><td><a href="#ej-a10">Tamaños tramas control — memorizar</a></td><td>MAC — Frame Control y overhead</td><td>Numérico</td></tr><tr><td><a href="#pr-d8">D8 — Tabla To DS / From DS</a></td><td>MAC — Frame Control y overhead</td><td>Práctica D</td></tr><tr><td><a href="#pr-d9">D9 — Frame Control 0x1000</a></td><td>MAC — Frame Control y overhead</td><td>Práctica D</td></tr><tr><td><a href="#pr-d11">D11 — Tamaño RTS y ACK</a></td><td>MAC — Frame Control y overhead</td><td>Práctica D</td></tr><tr><td><a href="#ej-a2">NAV en RTS y CTS (802.11g, 54 Mbps)</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Numérico</td></tr><tr><td><a href="#ej-a3">NAV hex → decimal</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Numérico</td></tr><tr><td><a href="#ej-a9">Tiempos DCF — SIFS, Slot, PIFS, DIFS</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Numérico</td></tr><tr><td><a href="#pr-d4">D4 — NAV del RTS</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Práctica D</td></tr><tr><td><a href="#pr-d5">D5 — NAV del CTS</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Práctica D</td></tr><tr><td><a href="#pr-d6">D6 — Hex 0x01F4 → NAV</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Práctica D</td></tr><tr><td><a href="#pr-d10">D10 — DIFS y Backoff</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Práctica D</td></tr><tr><td><a href="#pr-d14">D14 — Orden secuencia RTS/CTS</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Práctica D</td></tr><tr><td><a href="#pr-d15">D15 — Teoría NAV y preámbulo PLCP</a></td><td>DCF — NAV, RTS/CTS, tiempos</td><td>Práctica D</td></tr><tr><td><a href="#ej-a1">Eficiencia MAC/PLCP + tiempo RTS/CTS (Prueba3-3)</a></td><td>Eficiencia — ejercicio completo Prueba3-3</td><td>Numérico</td></tr><tr><td><a href="#ej-a6">Eficiencia PLCP — preámbulo corto</a></td><td>Eficiencia — ejercicio completo Prueba3-3</td><td>Numérico</td></tr><tr><td><a href="#ej-a1-a">Tiempo estación A — Prueba3-3 (CW=3, payload 400 B)</a></td><td>Eficiencia — ejercicio completo Prueba3-3</td><td>Numérico</td></tr><tr><td><a href="#pr-d1">D1 — Eficiencia MAC (512 B payload)</a></td><td>Eficiencia — ejercicio completo Prueba3-3</td><td>Práctica D</td></tr><tr><td><a href="#pr-d2">D2 — Eficiencia PLCP (mismo caso D1)</a></td><td>Eficiencia — ejercicio completo Prueba3-3</td><td>Práctica D</td></tr><tr><td><a href="#ej-c1">Trama #871 — Authentication Request</a></td><td>Wireshark — tramas reales</td><td>Numérico</td></tr><tr><td><a href="#ej-c2">Trama #873 — Authentication Response</a></td><td>Wireshark — tramas reales</td><td>Numérico</td></tr><tr><td><a href="#ej-c3">Trama #875 — Association Request</a></td><td>Wireshark — tramas reales</td><td>Numérico</td></tr><tr><td><a href="#ej-c4">Trama #877 — Association Response</a></td><td>Wireshark — tramas reales</td><td>Numérico</td></tr><tr><td><a href="#ej-c5">Flujo completo conexión STA → AP</a></td><td>Wireshark — tramas reales</td><td>Numérico</td></tr><tr><td><a href="#pr-d13">D13 — Wireshark trama #875</a></td><td>Wireshark — tramas reales</td><td>Práctica D</td></tr><tr><td><a href="#ej-p3-completar">Completar Prueba3-3 parte 1 — todas las respuestas</a></td><td>PMD — modulación y estándares</td><td>Numérico</td></tr><tr><td><a href="#ej-p2-eirp">EIRP en mW — Prueba3-3 parte 2 (#3)</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Numérico</td></tr><tr><td><a href="#ej-p2-cadena">Ganancia/atenuación total — Prueba3-3 parte 2 (#1)</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Numérico</td></tr><tr><td><a href="#ej-p2-fhss">Chips PN mínimos FHSS — Prueba3-3 parte 2 (#2)</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Numérico</td></tr><tr><td><a href="#ej-fhss-600">FHSS AB 600 MHz — ejercicios varios #7</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Numérico</td></tr><tr><td><a href="#ej-dsss-gp">DSSS — velocidad con ganancia 512 — ejercicios varios #8</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Numérico</td></tr><tr><td><a href="#ej-fhss-mfsk">FHSS/MFSK — chips por símbolo — ejercicios varios #6</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Numérico</td></tr><tr><td><a href="#pr-lp1">Practica — EIRP (50 mW, 2 dB, 5 dBi)</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Práctica D</td></tr><tr><td><a href="#pr-lp2">Practica — Cadena dB (factor 4×, +6 dB, −2 dB)</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Práctica D</td></tr><tr><td><a href="#pr-lp3">Practica — FHSS (80 MHz, 20 kHz)</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Práctica D</td></tr><tr><td><a href="#pr-lp4">Practica — dBm a mW (27 dBm)</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Práctica D</td></tr><tr><td><a href="#pr-lp5">Practica — DSSS 11 Mcps, Gp=256</a></td><td>Link budget — dBm, EIRP, FHSS</td><td>Práctica D</td></tr>
+</tbody></table>
+</div><div id="banco-ejercicios"><div class="ej-banco-completo" id="banco-ejercicios"><h3 class="ej-section-h">📘 Banco Sección D — todos resueltos (D1–D15)</h3><p class="tema-focus">Solución <strong>visible</strong> en cada tarjeta. El recuadro verde <em>¿Por qué?</em> explica la razón de cada paso — no solo el número final.</p><article class="ej-card ej-practica-card" id="pr-d7">
+<div class="ej-tag">PLCP legacy — tiempos y OFDM</div>
+<h4 class="ej-title">D7 — Bits por símbolo (16-QAM y BPSK)</h4>
+<div class="ej-enunciado"><p>802.11a, <strong>48 subportadoras</strong> datos, tasa codificación <strong>1/2</strong>:<br/>a) 16-QAM · b) BPSK</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d7">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>16-QAM 1/2</strong></div>
+<div class="formula-card" data-latex="48 \times \log_2(16) \times 0.5 = 48 \times 4 \times 0.5 = 96\,\text{bits/símbolo}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mn>16</mn><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><mn>0.5</mn><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><mn>4</mn><mo>&#x000D7;</mo><mn>0.5</mn><mo>&#x0003D;</mo><mn>96</mn><mspace width="0.167em" /><mtext>bits/símbolo</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>16-QAM = 4 bits/portadora. Tasa 1/2 → mitad útil. Fórmula general: 48 × log2(M) × tasa.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>BPSK 1/2</strong></div>
+<div class="formula-card" data-latex="48 \times \log_2(2) \times 0.5 = 48 \times 1 \times 0.5 = 24\,\text{bits/símbolo}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mn>2</mn><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><mn>0.5</mn><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><mn>1</mn><mo>&#x000D7;</mo><mn>0.5</mn><mo>&#x0003D;</mo><mn>24</mn><mspace width="0.167em" /><mtext>bits/símbolo</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>BPSK = 1 bit/portadora — la modulación más lenta pero más robusta.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d12">
+<div class="ej-tag">PLCP legacy — tiempos y OFDM</div>
+<h4 class="ej-title">D12 — PLCP preámbulo largo en µs</h4>
+<div class="ej-enunciado"><p>802.11g modo <strong>preámbulo largo</strong>: 144 bits preámb + 48 bits header @ 1 Mbps.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d12">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Tiempo PLCP largo</strong></div>
+<div class="formula-card" data-latex="T_{\text{PLCP}} = \frac{144 + 48}{1\,\text{Mbps}} = 192\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mtext>PLCP</mtext></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>144</mn><mo>&#x0002B;</mo><mn>48</mn></mrow><mrow><mn>1</mn><mspace width="0.167em" /><mtext>Mbps</mtext></mrow></mfrac><mo>&#x0003D;</mo><mn>192</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Preámbulo y header largo van @ 1 Mbps. Este 192 µs se suma a CADA trama física.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d3">
+<div class="ej-tag">PLCP legacy — tiempos y OFDM</div>
+<h4 class="ej-title">D3 — Tiempo trama DATA completa</h4>
+<div class="ej-enunciado"><p>MPDU = <strong>546 B</strong>, PLCP largo <strong>192 µs</strong>, datos @ <strong>11 Mbps</strong>.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d3">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Cuerpo @ 11 Mbps</strong></div>
+<div class="formula-card" data-latex="T_{\text{cuerpo}} = \frac{546 \times 8}{11} = 397.1\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mtext>cuerpo</mtext></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>546</mn><mo>&#x000D7;</mo><mn>8</mn></mrow><mrow><mn>11</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>397.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>MPDU total incluye payload + MAC. Los 546 B son el MPDU completo del enunciado.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>Trama DATA total</strong></div>
+<div class="formula-card" data-latex="T_{\text{DATA}} = 192 + 397.1 = 589.1\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mtext>DATA</mtext></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mn>397.1</mn><mo>&#x0003D;</mo><mn>589.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Siempre: T_trama = T_PLCP + T_cuerpo. PLCP @ 1M, cuerpo @ tasa del enunciado.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d8">
+<div class="ej-tag">MAC — Frame Control y overhead</div>
+<h4 class="ej-title">D8 — Tabla To DS / From DS</h4>
+<div class="ej-enunciado"><p>Completa: 00, 10, 01, 11 → ¿qué tipo de red?</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d8">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Tabla completa</strong></div>
+
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><table class="dat"><tr><th>ToDS</th><th>FromDS</th><th>Red</th></tr>
+<tr><td>0</td><td>0</td><td>Ad-hoc (IBSS)</td></tr>
+<tr><td>1</td><td>0</td><td>Infra — STA → AP</td></tr>
+<tr><td>0</td><td>1</td><td>Infra — AP → STA</td></tr>
+<tr><td>1</td><td>1</td><td>WDS / bridge</td></tr></table>
+Pregunta directa Prueba WLAN-1. Bits 8-9 del Frame Control.</div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d9">
+<div class="ej-tag">MAC — Frame Control y overhead</div>
+<h4 class="ej-title">D9 — Frame Control 0x1000</h4>
+<div class="ej-enunciado"><p>¿Qué <strong>tipo y subtipo</strong> representa <code>0x1000</code>?</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d9">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Decodificar</strong></div>
+<div class="formula-card" data-latex="\texttt{0x1000} \Rightarrow \text{Gestión, Association Response}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext mathvariant="monospace">0x1000</mtext><mo>&#x021D2;</mo><mtext>Gestión,&#x000A0;Association&#x000A0;Response</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Byte bajo 0x00 → tipo 00 gestión, subtipo 0001. AP responde al cliente con AID.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d11">
+<div class="ej-tag">MAC — Frame Control y overhead</div>
+<h4 class="ej-title">D11 — Tamaño RTS y ACK</h4>
+<div class="ej-enunciado"><p>¿Cuántos bytes tiene un <strong>RTS</strong>? ¿Y un <strong>ACK</strong>?</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d11">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Respuesta</strong></div>
+<div class="formula-card" data-latex="\text{RTS} = 20\,\text{B} \quad \text{ACK} = 14\,\text{B}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>RTS</mtext><mo>&#x0003D;</mo><mn>20</mn><mspace width="0.167em" /><mtext>B</mtext><mspace width="1em" /><mtext>ACK</mtext><mo>&#x0003D;</mo><mn>14</mn><mspace width="0.167em" /><mtext>B</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>RTS lleva RA + Duration (más grande). ACK/CTS son mínimas — 14 B MAC sin body.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d4">
+<div class="ej-tag">DCF — NAV, RTS/CTS, tiempos</div>
+<h4 class="ej-title">D4 — NAV del RTS</h4>
+<div class="ej-enunciado"><p>802.11g, SIFS=10 µs, PLCP largo 192 µs, <strong>54 Mbps</strong>.
+                Payload=100 B → MPDU=134 B. Secuencia RTS→CTS→DATA→ACK.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d4">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Tiempos tramas</strong></div>
+<div class="formula-card" data-latex="T_{\text{CTS}} = 192 + \frac{112}{54} \approx 194.1\,\mu\text{s} \quad T_{\text{DATA}} = 192 + \frac{1072}{54} \approx 211.9\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mtext>CTS</mtext></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mfrac><mrow><mn>112</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x02248;</mo><mn>194.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace width="1em" /><msub><mi>T</mi><mrow><mtext>DATA</mtext></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mfrac><mrow><mn>1072</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x02248;</mo><mn>211.9</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>MPDU=134 B. ACK ≈ CTS (14 B). Cada trama = T_PLCP + bytes×8/Mbps.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>NAV_RTS</strong></div>
+<div class="formula-card" data-latex="10 + 194.1 + 10 + 211.9 + 10 + 194.1 = 640.1\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>211.9</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0003D;</mo><mn>640.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>RTS reserva CTS + DATA + ACK con SIFS entre cada uno. No incluye DIFS ni Backoff.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d5">
+<div class="ej-tag">DCF — NAV, RTS/CTS, tiempos</div>
+<h4 class="ej-title">D5 — NAV del CTS</h4>
+<div class="ej-enunciado"><p>Mismos datos que D4. Calcula <strong>NAV_CTS</strong>.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d5">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>NAV_CTS</strong></div>
+<div class="formula-card" data-latex="10 + 211.9 + 10 + 194.1 = 426.0\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>10</mn><mo>&#x0002B;</mo><mn>211.9</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0003D;</mo><mn>426.0</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>CTS no incluye CTS ni RTS — solo DATA + ACK restantes.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d6">
+<div class="ej-tag">DCF — NAV, RTS/CTS, tiempos</div>
+<h4 class="ej-title">D6 — Hex 0x01F4 → NAV</h4>
+<div class="ej-enunciado"><p>Duration en CTS = <code>0x01F4</code>. ¿Cuántos µs de NAV?</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d6">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Conversión</strong></div>
+<div class="formula-card" data-latex="\texttt{0x01F4} = 1 \times 256 + 15 \times 16 + 4 = 500\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext mathvariant="monospace">0x01F4</mtext><mo>&#x0003D;</mo><mn>1</mn><mo>&#x000D7;</mo><mn>256</mn><mo>&#x0002B;</mo><mn>15</mn><mo>&#x000D7;</mo><mn>16</mn><mo>&#x0002B;</mo><mn>4</mn><mo>&#x0003D;</mo><mn>500</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Ejercicios varios #13 usa 0x0398=920. Mismo método: hex → decimal µs.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d10">
+<div class="ej-tag">DCF — NAV, RTS/CTS, tiempos</div>
+<h4 class="ej-title">D10 — DIFS y Backoff</h4>
+<div class="ej-enunciado"><p>SIFS=10 µs, slot=20 µs, CW=7 (contador queda en 7).</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d10">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>DIFS</strong></div>
+<div class="formula-card" data-latex="\text{DIFS} = 10 + 2 \times 20 = 50\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>DIFS</mtext><mo>&#x0003D;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>2</mn><mo>&#x000D7;</mo><mn>20</mn><mo>&#x0003D;</mo><mn>50</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>DIFS = SIFS + 2×slot. Siempre en 802.11b/g de ejercicios.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>Backoff</strong></div>
+<div class="formula-card" data-latex="\text{Backoff} = 7 \times 20 = 140\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>Backoff</mtext><mo>&#x0003D;</mo><mn>7</mn><mo>&#x000D7;</mo><mn>20</mn><mo>&#x0003D;</mo><mn>140</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Backoff = CW × slot cuando el contador queda en CW.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d14">
+<div class="ej-tag">DCF — NAV, RTS/CTS, tiempos</div>
+<h4 class="ej-title">D14 — Orden secuencia RTS/CTS</h4>
+<div class="ej-enunciado"><p>Ordena: DIFS, Backoff, RTS, SIFS, CTS, SIFS, DATA, SIFS, ACK</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d14">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Secuencia correcta</strong></div>
+
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p><strong>Primero:</strong> DIFS + Backoff &nbsp;→&nbsp; <strong>Último:</strong> ACK</p>
+<p>Orden completo: DIFS → Backoff → RTS → SIFS → CTS → SIFS → DATA → SIFS → ACK</p>
+DIFS+Backoff solo al INICIO. SIFS entre cada trama del diálogo.</div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d15">
+<div class="ej-tag">DCF — NAV, RTS/CTS, tiempos</div>
+<h4 class="ej-title">D15 — Teoría NAV y preámbulo PLCP</h4>
+<div class="ej-enunciado"><p>En una frase: ¿Para qué sirve el NAV? ¿Por qué preámbulo PLCP a velocidad baja?</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d15">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>NAV</strong></div>
+<div class="formula-card" data-latex="Reservar el medio virtualmente para que otras STAs no transmitan."><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>R</mi><mi>e</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>v</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>l</mi><mi>m</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>o</mi><mi>v</mi><mi>i</mi><mi>r</mi><mi>t</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>o</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>S</mi><mi>T</mi><mi>A</mi><mi>s</mi><mi>n</mi><mi>o</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>s</mi><mi>m</mi><mi>i</mi><mi>t</mi><mi>a</mi><mi>n</mi><mo>&#x0002E;</mo></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Implementa VCS — todas actualizan Duration al oír RTS/CTS/DATA.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>Preámbulo bajo</strong></div>
+<div class="formula-card" data-latex="Todas las STAs (incluso legacy) pueden sincronizarse; SIGNAL indica tasa real de datos."><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>T</mi><mi>o</mi><mi>d</mi><mi>a</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>S</mi><mi>T</mi><mi>A</mi><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>i</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>u</mi><mi>s</mi><mi>o</mi><mi>l</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>c</mi><mi>y</mi><mo stretchy="false">&#x00029;</mo><mi>p</mi><mi>u</mi><mi>e</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>c</mi><mi>r</mi><mi>o</mi><mi>n</mi><mi>i</mi><mi>z</mi><mi>a</mi><mi>r</mi><mi>s</mi><mi>e</mi><mi>;</mi><mi>S</mi><mi>I</mi><mi>G</mi><mi>N</mi><mi>A</mi><mi>L</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>t</mi><mi>a</mi><mi>s</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>l</mi><mi>d</mi><mi>e</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mo>&#x0002E;</mo></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Si preámbulo fuera @ 54 Mbps, dispositivos viejos no podrían detectar la trama.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d1">
+<div class="ej-tag">Eficiencia — ejercicio completo Prueba3-3</div>
+<h4 class="ej-title">D1 — Eficiencia MAC (512 B payload)</h4>
+<div class="ej-enunciado"><p>Payload = <strong>512 bytes</strong>, overhead MAC = <strong>34 B</strong>. Calcula η_MAC en %.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d1">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>η_MAC</strong></div>
+<div class="formula-card" data-latex="\eta_{\text{MAC}} = \frac{512}{512 + 34} = \frac{512}{546} = 93.77\%"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>&#x003B7;</mi><mrow><mtext>MAC</mtext></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>512</mn></mrow><mrow><mn>512</mn><mo>&#x0002B;</mo><mn>34</mn></mrow></mfrac><mo>&#x0003D;</mo><mfrac><mrow><mn>512</mn></mrow><mrow><mn>546</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>93.77</mn><mi>&#x00025;</mi></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Solo payload es útil. Denominador = MPDU = payload + overhead MAC.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d2">
+<div class="ej-tag">Eficiencia — ejercicio completo Prueba3-3</div>
+<h4 class="ej-title">D2 — Eficiencia PLCP (mismo caso D1)</h4>
+<div class="ej-enunciado"><p>Mismo D1. PLCP: preámbulo <strong>144 bits</strong>, header <strong>48 bits</strong>.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d2">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Bits MPDU</strong></div>
+<div class="formula-card" data-latex="\text{MPDU} = 546\,\text{B} = 4368\,\text{bits}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>MPDU</mtext><mo>&#x0003D;</mo><mn>546</mn><mspace width="0.167em" /><mtext>B</mtext><mo>&#x0003D;</mo><mn>4368</mn><mspace width="0.167em" /><mtext>bits</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Usa MPDU completo (512+34), no solo payload.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>η_PLCP</strong></div>
+<div class="formula-card" data-latex="\eta_{\text{PLCP}} = \frac{4368}{4368 + 192} = 95.79\%"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>&#x003B7;</mi><mrow><mtext>PLCP</mtext></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>4368</mn></mrow><mrow><mn>4368</mn><mo>&#x0002B;</mo><mn>192</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>95.79</mn><mi>&#x00025;</mi></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Overhead PLCP largo = 192 bits. Fórmula: bits útiles / (bits útiles + overhead PLCP).</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-d13">
+<div class="ej-tag">Wireshark — tramas reales</div>
+<h4 class="ej-title">D13 — Wireshark trama #875</h4>
+<div class="ej-enunciado"><p>En trama #875: a) ¿SSID? b) ¿Hacia AP o desde AP?</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-d13">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Respuestas</strong></div>
+<div class="formula-card" data-latex="a) SSID = &lt;strong&gt;CWNA&lt;/strong&gt; \cdot  b) Hacia el AP (Association Request del cliente)."><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>a</mi><mo stretchy="false">&#x00029;</mo><mi>S</mi><mi>S</mi><mi>I</mi><mi>D</mi><mo>&#x0003D;</mo><mo>&#x0003C;</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>n</mi><mi>g</mi><mo>&#x0003E;</mo><mi>C</mi><mi>W</mi><mi>N</mi><mi>A</mi><mo>&#x0003C;</mo><mo>&#x0002F;</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>n</mi><mi>g</mi><mo>&#x0003E;</mo><mo>&#x000B7;</mo><mi>b</mi><mo stretchy="false">&#x00029;</mo><mi>H</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>e</mi><mi>l</mi><mi>A</mi><mi>P</mi><mo stretchy="false">&#x00028;</mo><mi>A</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>R</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>d</mi><mi>e</mi><mi>l</mi><mi>c</mi><mi>l</mi><mi>i</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002E;</mo></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>FC 0x0000 = Assoc Request. Source = STA, Dest/BSSID = AP. Tráfico uplink de asociación.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-lp1">
+<div class="ej-tag">Link budget — dBm, EIRP, FHSS</div>
+<h4 class="ej-title">Practica — EIRP (50 mW, 2 dB, 5 dBi)</h4>
+<div class="ej-enunciado"><p>Tx <strong>50 mW</strong>, cable <strong>2 dB</strong> pérdida, antena <strong>5 dBi</strong>. EIRP en mW.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-lp1">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>dBm</strong></div>
+<div class="formula-card" data-latex="P_t = 10\log_{10}(50) = 16.99 \approx 17\,\text{dBm}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>P</mi><mi>t</mi></msub><mo>&#x0003D;</mo><mn>10</mn><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>50</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>16.99</mn><mo>&#x02248;</mo><mn>17</mn><mspace width="0.167em" /><mtext>dBm</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>50 mW ≈ 17 dBm (entre 10mW=10dBm y 100mW=20dBm).</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>Cadena</strong></div>
+<div class="formula-card" data-latex="\text{EIRP} = 17 - 2 + 5 = 20\,\text{dBm}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>EIRP</mtext><mo>&#x0003D;</mo><mn>17</mn><mo>&#x02212;</mo><mn>2</mn><mo>&#x0002B;</mo><mn>5</mn><mo>&#x0003D;</mo><mn>20</mn><mspace width="0.167em" /><mtext>dBm</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Misma receta: tx − pérdidas + ganancia antena.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">3</span><strong>mW</strong></div>
+<div class="formula-card" data-latex="10^{\frac{20}{10}} = 100\,\text{mW}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mn>10</mn><mrow><mfrac><mrow><mn>20</mn></mrow><mrow><mn>10</mn></mrow></mfrac></mrow></msup><mo>&#x0003D;</mo><mn>100</mn><mspace width="0.167em" /><mtext>mW</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>20 dBm = 100 mW exacto. Buen chequeo mental.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-lp2">
+<div class="ej-tag">Link budget — dBm, EIRP, FHSS</div>
+<h4 class="ej-title">Practica — Cadena dB (factor 4×, +6 dB, −2 dB)</h4>
+<div class="ej-enunciado"><p>Canal atenúa <strong>4 veces</strong>, amp <strong>+6 dB</strong>, filtro <strong>−2 dB</strong>.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-lp2">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Canal a dB</strong></div>
+<div class="formula-card" data-latex="-10\log_{10}(4) = -6.02 \approx -6\,\text{dB}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mo>&#x02212;</mo><mn>10</mn><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>4</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mo>&#x02212;</mo><mn>6.02</mn><mo>&#x02248;</mo><mo>&#x02212;</mo><mn>6</mn><mspace width="0.167em" /><mtext>dB</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>4× atenuación ≈ 6 dB (regla: 4×=−6dB, 10×=−10dB).</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>Total</strong></div>
+<div class="formula-card" data-latex="G = -6 + 6 - 2 = -2\,\text{dB}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>G</mi><mo>&#x0003D;</mo><mo>&#x02212;</mo><mn>6</mn><mo>&#x0002B;</mo><mn>6</mn><mo>&#x02212;</mo><mn>2</mn><mo>&#x0003D;</mo><mo>&#x02212;</mo><mn>2</mn><mspace width="0.167em" /><mtext>dB</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Ganancia neta −2 dB = pierdes ~37% de potencia.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-lp3">
+<div class="ej-tag">Link budget — dBm, EIRP, FHSS</div>
+<h4 class="ej-title">Practica — FHSS (80 MHz, 20 kHz)</h4>
+<div class="ej-enunciado"><p>AB salto <strong>80 MHz</strong>, espaciado <strong>20 kHz</strong>. ¿Chips PN mínimos?</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-lp3">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>N canales</strong></div>
+<div class="formula-card" data-latex="N = 80 \times 10^6 / (20 \times 10^3) = 4000"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mo>&#x0003D;</mo><mn>80</mn><mo>&#x000D7;</mo><msup><mn>10</mn><mn>6</mn></msup><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mn>20</mn><mo>&#x000D7;</mo><msup><mn>10</mn><mn>3</mn></msup><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>4000</mn></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Mismo método Prueba3, distintos números.</p></div>
+</div><div class="paso-item">
+<div class="paso-head"><span class="paso-n">2</span><strong>k</strong></div>
+<div class="formula-card" data-latex="2^{11} = 2048 &lt; 4000 &lt; 4096 = 2^{12} \Rightarrow k = 12"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mn>2</mn><mrow><mn>11</mn></mrow></msup><mo>&#x0003D;</mo><mn>2048</mn><mo>&#x0003C;</mo><mn>4000</mn><mo>&#x0003C;</mo><mn>4096</mn><mo>&#x0003D;</mo><msup><mn>2</mn><mrow><mn>12</mn></mrow></msup><mo>&#x021D2;</mo><mi>k</mi><mo>&#x0003D;</mo><mn>12</mn></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>12 chips PN cubren hasta 4096 frecuencias.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-lp4">
+<div class="ej-tag">Link budget — dBm, EIRP, FHSS</div>
+<h4 class="ej-title">Practica — dBm a mW (27 dBm)</h4>
+<div class="ej-enunciado"><p>¿Cuántos <strong>mW</strong> son <strong>27 dBm</strong>?</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-lp4">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Conversión</strong></div>
+<div class="formula-card" data-latex="10^{\frac{27}{10}} = 10^{2.7} = 501.2\,\text{mW} \approx 0.5\,\text{W}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mn>10</mn><mrow><mfrac><mrow><mn>27</mn></mrow><mrow><mn>10</mn></mrow></mfrac></mrow></msup><mo>&#x0003D;</mo><msup><mn>10</mn><mrow><mn>2.7</mn></mrow></msup><mo>&#x0003D;</mo><mn>501.2</mn><mspace width="0.167em" /><mtext>mW</mtext><mo>&#x02248;</mo><mn>0.5</mn><mspace width="0.167em" /><mtext>W</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>27 dBm ≈ 500 mW. Tx típico Prueba3 cadena de enlaces.</p></div>
+</div>
+</div>
+</article><article class="ej-card ej-practica-card" id="pr-lp5">
+<div class="ej-tag">Link budget — dBm, EIRP, FHSS</div>
+<h4 class="ej-title">Practica — DSSS 11 Mcps, Gp=256</h4>
+<div class="ej-enunciado"><p>Chip rate <strong>11 Mcps</strong> (802.11b), Gp=<strong>256</strong>.</p></div>
+<div class="ej-solucion ej-solucion-visible" id="sol-pr-lp5">
+<div class="sol-banner">✅ Solución paso a paso — con el <em>por qué</em> de cada paso</div>
+<div class="paso-item">
+<div class="paso-head"><span class="paso-n">1</span><strong>Rb</strong></div>
+<div class="formula-card" data-latex="R_b = \frac{11 \times 10^6}{256} = 42\,968.75\,\text{bps} \approx 43\,\text{kbps}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>R</mi><mi>b</mi></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>11</mn><mo>&#x000D7;</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><mrow><mn>256</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>42</mn><mspace width="0.167em" /><mn>968.75</mn><mspace width="0.167em" /><mtext>bps</mtext><mo>&#x02248;</mo><mn>43</mn><mspace width="0.167em" /><mtext>kbps</mtext></mrow></math></div></div>
+<div class="porque-box"><span class="porque-label">¿Por qué?</span><p>802.11b usa 11 Mcps. Gp=256 es típico para tasas altas DSSS.</p></div>
+</div>
+</div>
+</article></div></div>
+<footer style="text-align:center;padding:32px 0;color:var(--muted);font-size:.8rem">
+WLAN EPN 2026-A · 57 preguntas · 27 flashcards · <a href="../guia/" style="color:var(--accent2)">Volver a la guía</a>
+</footer>
+</main>
+</div>
+
+<div class="modal-overlay" id="modal-fc">
+<div class="modal">
+<div class="modal-head"><h2>🃏 Flashcards — memorización rápida</h2>
+<button class="modal-close" onclick="closeModal('modal-fc')">×</button></div>
+<div class="modal-body">
+<span class="fc-tag" id="fc-tag">P3</span>
+<div class="flashcard" id="flashcard" onclick="flipCard()">
+<div class="flashcard-inner">
+<div class="flashcard-face flashcard-front"><span class="fc-label">Pregunta · clic para voltear</span><p id="fc-q"></p></div>
+<div class="flashcard-face flashcard-back"><span class="fc-label">Respuesta</span><p id="fc-a"></p></div>
+</div></div>
+<p class="flashcard-hint">Espacio = voltear · ← → navegar</p>
+</div>
+<div class="modal-foot">
+<button class="sbtn" onclick="prevCard()">← Anterior</button>
+<span class="fc-progress" id="fc-prog">1 / 20</span>
+<button class="sbtn primary" onclick="nextCard()">Siguiente →</button>
+</div>
+</div></div>
+<div class="modal-overlay" id="modal-quiz">
+<div class="modal">
+<div class="modal-head"><h2>🎯 Simulacro Prueba 3</h2>
+<button class="modal-close" onclick="closeModal('modal-quiz')">×</button></div>
+<div class="modal-body">
+<div id="quiz-game">
+<div class="quiz-filter-wrap" style="margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+<label for="quiz-topic-filter" style="font-size:.75rem;color:var(--muted)">Tema:</label>
+<select id="quiz-topic-filter" class="quiz-filter" onchange="filterQuizTopic(this.value)" style="padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--ink);font-size:.82rem">
+<option value="all">Todos los temas</option>
+</select>
+<span class="fc-progress" id="quiz-prog">Pregunta 1/20</span>
+</div>
+<p class="quiz-q" id="quiz-q"></p>
+<div class="quiz-opts" id="quiz-opts"></div>
+<div class="quiz-exp" id="quiz-exp"></div>
+</div>
+<div class="quiz-score" id="quiz-result" style="display:none">
+<div class="big">100%</div><p>Resultado</p>
+<button class="sbtn primary" style="margin-top:20px" onclick="openQuiz()">Repetir simulacro</button>
+</div>
+</div>
+</div></div>
+<div id="panel-float"></div>
+<button id="totop" title="Arriba">↑</button>
+<script defer>
+const GUIDE_MODE = 'pdf';
+const SLIDE_DECKS_DATA = {};
+const FRAMES = {};
+const FLASHCARDS = [{"q": "¿Overhead MAC típico en ejercicios?", "tag": "P3", "a": "34 bytes (30 cabecera + 4 FCS)"}, {"q": "¿Tiempo PLCP largo 802.11g?", "tag": "P3", "a": "192 µs (144 bits @ 1 Mbps + 48 bits @ 1 Mbps)"}, {"q": "¿Tiempo PLCP corto?", "tag": "P3", "a": "96 µs (72 @ 1M + 48 @ 2M)"}, {"q": "SIFS · Slot · DIFS en 802.11g?", "tag": "P3", "a": "10 µs · 20 µs · 50 µs (DIFS = SIFS + 2×slot)"}, {"q": "Tamaño RTS / CTS / ACK", "tag": "P3", "a": "20 B / 14 B / 14 B"}, {"q": "Fórmula η_MAC", "tag": "P3", "a": "η_MAC = payload / (payload + 34)", "a_html": "<span class=\"math-inline\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><mrow><msub><mi>&#x003B7;</mi><mrow><mi>M</mi><mi>A</mi><mi>C</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi></mrow><mrow><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002B;</mo><mn>34</mn></mrow></mfrac></mrow></math></span>"}, {"q": "Fórmula T_trama", "tag": "P3", "a": "T = T_PLCP + (8 × bytes) / Mbps", "a_html": "<span class=\"math-inline\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><mrow><mi>T</mi><mo>&#x0003D;</mo><msub><mi>T</mi><mrow><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0002B;</mo><mfrac><mrow><mn>8</mn><mo>&#x000D7;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>s</mi></mrow><mrow><mi>M</mi><mi>b</mi><mi>p</mi><mi>s</mi></mrow></mfrac></mrow></math></span>"}, {"q": "NAV en RTS incluye…", "tag": "P3", "a": "SIFS + T_CTS + SIFS + T_DATA + SIFS + T_ACK"}, {"q": "Preámbulo PLCP legacy se transmite a…", "tag": "P2", "a": "Siempre 1 Mbps (datos pueden ir a otra tasa)"}, {"q": "Subportadoras de datos OFDM 802.11a/g", "tag": "P2", "a": "48 (de 64 total)"}, {"q": "QPSK 1/2 → bits/símbolo", "tag": "P2", "a": "48 × 2 × 0.5 = 48 bits/símbolo"}, {"q": "64-QAM 3/4 → bits/símbolo y Mbps", "tag": "P2", "a": "216 bits/símbolo → 54 Mbps"}, {"q": "Tipo trama Beacon (bits 2-3)", "tag": "P3", "a": "00 = Gestión (NO control)"}, {"q": "Frame Control 0xb000", "tag": "P3", "a": "Authentication (gestión)"}, {"q": "Signal hex 11 Mbps / 22 Mbps", "tag": "P3", "a": "0x6E / 0xDC"}, {"q": "MSDU vs MPDU vs PSDU vs PPDU", "tag": "P3", "a": "Datos LLC → trama MAC → MPDU en física → + preámbulo PLCP"}, {"q": "802.11n Mixed Mode", "tag": "P2", "a": "Obligatorio; L-SIG 6 Mbps + longitud falsa; tasa real en HT-SIG"}, {"q": "802.11ax @ 20 MHz subportadoras", "tag": "P4", "a": "256"}, {"q": "802.11ax velocidad máx (Mbps)", "tag": "P4", "a": "9607 Mbps"}, {"q": "802.11be velocidad máx (Mbps)", "tag": "P4", "a": "46000 Mbps"}, {"q": "802.11be ancho máx / modulación máx", "tag": "P4", "a": "320 MHz / 4096-QAM"}, {"q": "Autenticación ≠ Asociación. Orden", "tag": "P1", "a": "Auth → Assoc → 4-way handshake (RSNA)"}, {"q": "100 mW en dBm", "tag": "P2", "a": "20 dBm"}, {"q": "EIRP fórmula cadena", "tag": "P2", "a": "Pt(dBm) − pérdidas(dB) + ganancia antena(dBi)"}, {"q": "EIRP Prueba3 (100mW, 3dB, 7dBi)", "tag": "P2", "a": "24 dBm = 251.2 mW"}, {"q": "FHSS chips PN Prueba3", "tag": "P2", "a": "14 chips (100MHz/10kHz → 2^14)"}, {"q": "Cadena dB Prueba3 total", "tag": "P2", "a": "+10.04 dB (13.2×, +8.3, 28.5×, −1.6)"}];
+const QUIZ = [{"q": "¿Beacon es trama de control?", "opts": ["Sí", "No, es gestión", "Es datos", "Es extensión"], "a": 1, "exp": "Tipo 00 = gestión. Beacon subtipo 1000. Control solo ACK/RTS/CTS.", "topic": "mac"}, {"q": "PLCP preámbulo DSSS/g se transmite a:", "opts": ["Misma tasa que datos", "1 Mbps", "2 Mbps siempre", "54 Mbps"], "a": 1, "exp": "Regla PDF: preámbulo+cabecera legacy @ 1 Mbps. Datos van aparte.", "topic": "plcp_legacy"}, {"q": "Overhead MAC en ejercicios Prueba 3:", "opts": ["28 B", "30 B", "34 B", "38 B"], "a": 2, "exp": "30 cabecera + 4 FCS = 34 bytes. Sin esto η_MAC sale mal.", "topic": "mac"}, {"q": "DIFS en ejercicios 802.11g (SIFS=10, slot=20):", "opts": ["30 µs", "40 µs", "50 µs", "60 µs"], "a": 2, "exp": "DIFS = SIFS + 2×slot = 10 + 40 = 50 µs. Va ANTES del backoff.", "topic": "dcf"}, {"q": "PLCP corto total:", "opts": ["72 µs", "96 µs", "144 µs", "192 µs"], "a": 1, "exp": "72@1M + 48@2M = 96 µs. Se suma a cada trama física.", "topic": "plcp_legacy"}, {"q": "Tamaño trama RTS:", "opts": ["14 B", "20 B", "28 B", "34 B"], "a": 1, "exp": "RTS = 20 bytes MAC. CTS/ACK = 14 B.", "topic": "mac"}, {"q": "η_MAC con payload 400 B:", "opts": ["85.47%", "92.17%", "96.66%", "100%"], "a": 1, "exp": "400/(400+34) = 92.17%. Solo payload es útil.", "topic": "eficiencia"}, {"q": "48 subportadoras OFDM significa:", "opts": ["48 total incl. pilotos", "48 de datos", "48 MHz ancho", "48 Mbps"], "a": 1, "exp": "64 total − pilotos − DC = 48 datos. Base de bits/símbolo.", "topic": "plcp_legacy"}, {"q": "NAV en CTS incluye:", "opts": ["Solo T_DATA", "SIFS+T_DATA+SIFS+T_ACK", "DIFS+Backoff", "Toda sec RTS"], "a": 1, "exp": "CTS reserva solo lo que falta: DATA + ACK (+ SIFS entre ellos).", "topic": "dcf"}, {"q": "802.11n modo obligatorio:", "opts": ["Greenfield", "Mixed", "Legacy only", "Cualquiera"], "a": 1, "exp": "Mixed Mode obligatorio para coexistir con a/g.", "topic": "plcp_modern"}, {"q": "ToDS=0 FromDS=1 significa:", "opts": ["STA→AP", "AP→STA", "Ad-hoc", "WDS"], "a": 1, "exp": "From DS=1 → trama sale del AP hacia STA.", "topic": "mac"}, {"q": "Signal hex 802.11g modo DSSS-OFDM:", "opts": ["0x0A (1 Mbps)", "0x6E (11 Mbps)", "0x1E (ERP-OFDM)", "0xDC (22 Mbps PBCC)"], "a": 2, "exp": "0x1E=30 decimal indica DSSS-OFDM. 0x6E=11M DSSS, 0xDC=22M PBCC.", "topic": "plcp_legacy"}, {"q": "¿Misma Mbps PLCP y datos en ejercicio?", "opts": ["Siempre sí", "Nunca, PLCP@1M datos@N", "Solo en 802.11a", "Solo en n"], "a": 1, "exp": "Error clásico: PLCP legacy @ 1 Mbps, cuerpo @ tasa del enunciado.", "topic": "plcp_legacy"}, {"q": "MPDU = payload + ?", "opts": ["Solo FCS", "Overhead MAC 34 B", "PLCP 192 µs", "SIFS"], "a": 1, "exp": "MPDU = payload + cabecera MAC + FCS (34 B típico).", "topic": "capas"}, {"q": "Frame Control 0xb000 es:", "opts": ["Control RTS", "Gestión Auth", "Datos", "Beacon"], "a": 1, "exp": "0xb000 = Authentication. Primer paso conexión Wireshark.", "topic": "wireshark"}, {"q": "¿Qué indica el campo Duration?", "opts": ["Mbps de datos", "µs de NAV", "Número de retry", "Tamaño payload"], "a": 1, "exp": "Duration = microsegundos que el medio estará ocupado (NAV).", "topic": "dcf"}, {"q": "PIFS en 802.11g (SIFS=10, slot=20):", "opts": ["20 µs", "30 µs", "40 µs", "50 µs"], "a": 1, "exp": "PIFS = SIFS + 1×slot = 30 µs. DIFS = 50 µs.", "topic": "dcf"}, {"q": "η_PLCP con MPDU 1872 bits y PLCP 120 bits:", "opts": ["85.47%", "93.98%", "96.66%", "98.82%"], "a": 1, "exp": "1872/(1872+120) = 93.98%. Overhead PLCP en bits, no bytes.", "topic": "eficiencia"}, {"q": "Orden correcto conexión STA:", "opts": ["Assoc→Auth", "Auth→Assoc", "Data→Auth", "Beacon→Data"], "a": 1, "exp": "Auth (#871) → Auth Resp → Assoc Req → Assoc Resp. Luego datos.", "topic": "wireshark"}, {"q": "PSDU en capa física es:", "opts": ["Solo payload", "El MPDU", "Preámbulo PLCP", "MSDU LLC"], "a": 1, "exp": "PSDU = MPDU visto desde PHY. PLCP lo envuelve → PPDU.", "topic": "capas"}, {"q": "100 mW equivale a:", "opts": ["10 dBm", "17 dBm", "20 dBm", "27 dBm"], "a": 2, "exp": "10·log10(100)=20 dBm. Tabla clave Prueba3.", "topic": "link_budget"}, {"q": "EIRP (100mW, cable −3dB, antena 7dBi) en mW:", "opts": ["100 mW", "200 mW", "251 mW", "500 mW"], "a": 2, "exp": "20−3+7=24 dBm → 10^2.4≈251 mW.", "topic": "link_budget"}, {"q": "FHSS 100MHz / 10kHz → chips PN mínimos:", "opts": ["10", "12", "14", "16"], "a": 2, "exp": "N=10000 → 2^14=16384≥10000.", "topic": "link_budget"}, {"q": "Atenuación 13.2 veces en dB ≈", "opts": ["−6 dB", "−11 dB", "+11 dB", "−13 dB"], "a": 1, "exp": "−10·log10(13.2)≈−11.21 dB. No confundir × con dB.", "topic": "link_budget"}, {"q": "¿Para qué sirve RTS/CTS?", "opts": ["Terminal expuesto", "Terminal oculto", "Ahorrar energía", "Cifrar datos"], "a": 1, "exp": "RTS/CTS resuelve terminal oculto: reserva medio antes de DATA.", "topic": "dcf"}, {"q": "Duration en trama = 0x0398 → NAV:", "opts": ["398 µs", "920 µs", "256 µs", "1000 µs"], "a": 1, "exp": "0x0398 = 3×256+9×16+8 = 920 µs.", "topic": "dcf"}, {"q": "3 dB de pérdida significa potencia:", "opts": ["Se triplica", "Se reduce a la mitad", "Sin cambio", "÷10"], "a": 1, "exp": "3 dB ≈ ÷2 en potencia. Cable Prueba3.", "topic": "link_budget"}, {"q": "Velocidad máxima IEEE 802.11ax (Mbps):", "opts": ["600 Mbps", "9607 Mbps", "46000 Mbps", "6933 Mbps"], "a": 1, "exp": "Tabla PMD: 9607 Mbps (8×8, 160 MHz). ac≈6933, be=46000.", "topic": "plcp_modern"}, {"q": "Velocidad máxima IEEE 802.11be (Mbps):", "opts": ["9607 Mbps", "46000 Mbps", "32000 Mbps", "10000 Mbps"], "a": 1, "exp": "Wi-Fi 7 EHT: 46000 Mbps teórico (16×16, 320 MHz).", "topic": "plcp_modern"}, {"q": "Modulación máxima 802.11be:", "opts": ["256-QAM", "1024-QAM", "4096-QAM", "64-QAM"], "a": 2, "exp": "be=EHT con 4096-QAM. ax usa 1024-QAM.", "topic": "plcp_modern"}, {"q": "V/F: Beacon es trama de control.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "Beacon=gestión tipo 00. Control solo ACK/RTS/CTS.", "topic": "mac"}, {"q": "V/F: El campo Signal indica velocidad del preámbulo PLCP.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "Signal=velocidad PSDU. Preámbulo legacy @ 1 Mbps fijo.", "topic": "plcp_legacy"}, {"q": "V/F: Ethernet 802.3 tiene campo Duration/NAV.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "Duration es exclusivo 802.11 para reserva virtual.", "topic": "capas"}, {"q": "Campo FCS del MPDU ocupa:", "opts": ["2 B", "4 B", "6 B", "8 B"], "a": 1, "exp": "CRC-32 = 4 bytes. Overhead MAC = 30+4=34 B.", "topic": "mac"}, {"q": "802.11ac MU-MIMO dirección:", "opts": ["Solo uplink", "Solo downlink", "UL y DL", "No tiene MU-MIMO"], "a": 1, "exp": "ac=DL only. ax añade UL MU-MIMO.", "topic": "plcp_modern"}, {"q": "Subportadoras OFDMA 802.11ax @ 20 MHz:", "opts": ["48", "64", "256", "320"], "a": 2, "exp": "ax usa 256 tonos @ 20 MHz. Legacy OFDM=48 datos.", "topic": "plcp_modern"}, {"q": "RIFS en 802.11n vale:", "opts": ["2 µs", "10 µs", "20 µs", "50 µs"], "a": 0, "exp": "RIFS=2 µs solo n. SIFS=10 µs es el IFS más corto en b/g.", "topic": "dcf"}, {"q": "Duration en periodo CF vale:", "opts": ["44 µs", "920 µs", "32768 µs", "65535 µs"], "a": 2, "exp": "CF period: bits 14=0, 15=1 → 32768 µs fijo.", "topic": "mac"}, {"q": "PBSS opera en:", "opts": ["2.4 GHz", "5 GHz", "60 GHz", "6 GHz"], "a": 2, "exp": "PBSS = 802.11ad DMG @ 60 GHz con rol PCP.", "topic": "intro"}, {"q": "8ª generación Wi-Fi es:", "opts": ["802.11be", "802.11ax", "802.11bn", "802.11ac"], "a": 2, "exp": "7ª=be, 8ª=bn (Ultra High Reliability, en desarrollo).", "topic": "intro"}, {"q": "Modulación máxima 802.11be (Prueba3-3):", "opts": ["1024-QAM", "256-QAM", "4096-QAM", "64-QAM"], "a": 2, "exp": "Pregunta repetida Prueba3-3 parte 1. be=EHT.", "topic": "pmd"}, {"q": "Canales no solapados 2.4 GHz @ 20 MHz:", "opts": ["1", "3", "11", "14"], "a": 1, "exp": "Canales 1, 6, 11. Prueba3-3 pregunta n @ 2.4 GHz.", "topic": "pmd"}, {"q": "AB máximo 802.11n:", "opts": ["20 MHz", "40 MHz", "80 MHz", "160 MHz"], "a": 1, "exp": "n máx 40 MHz. 80/160 es ac.", "topic": "pmd"}, {"q": "WPA3 Personal usa autenticación:", "opts": ["PSK", "SAE", "Shared Key", "EAP-TLS"], "a": 1, "exp": "WLAN-1 #13: SAE reemplaza PSK para mitigar diccionario.", "topic": "intro"}, {"q": "To DS=0, From DS=0 indica red:", "opts": ["Infraestructura", "Ad-hoc IBSS", "WDS", "Mesh"], "a": 1, "exp": "WLAN-1 #5: 00=ad-hoc. 10=STA→AP.", "topic": "mac"}, {"q": "Con cifrado, se protege principalmente:", "opts": ["MPDU completa", "MSDU (payload)", "PLCP", "Preámbulo"], "a": 1, "exp": "WLAN-1 #15: privacidad a nivel MSDU.", "topic": "mac"}, {"q": "16-QAM 1/2 → bits/símbolo OFDM:", "opts": ["48", "96", "216", "288"], "a": 1, "exp": "48×4×0.5=96 → 24 Mbps. Prueba3-3 OFDM.", "topic": "plcp_legacy"}, {"q": "BPSK 3/4 → bits/símbolo OFDM:", "opts": ["24", "36", "48", "72"], "a": 1, "exp": "48×1×0.75=36 → 9 Mbps.", "topic": "plcp_legacy"}, {"q": "Cadena dB Prueba3-3 (13.2×, +8.3, 28.5×, −1.6) total:", "opts": ["−10 dB", "+10.04 dB", "+20 dB", "0 dB"], "a": 1, "exp": "Convierte × a dB antes de sumar.", "topic": "link_budget"}, {"q": "η_MAC payload 200 B:", "opts": ["85.47%", "92.17%", "93.77%", "96.66%"], "a": 0, "exp": "200/(200+34)=85.47%. Estación B Prueba3-3.", "topic": "eficiencia"}, {"q": "T_PLCP corto (72+48 bits):", "opts": ["72 µs", "96 µs", "120 µs", "192 µs"], "a": 1, "exp": "72@1M + 48@2M = 96 µs. Prueba3-3 usa corto.", "topic": "plcp_legacy"}, {"q": "Mixed Mode obligatorio en:", "opts": ["802.11ac", "802.11n", "802.11be", "802.11b"], "a": 1, "exp": "n exige Mixed para coexistir con legacy.", "topic": "plcp_modern"}, {"q": "A-MSDU vs A-MPDU — ¿cuál usa Block ACK?", "opts": ["A-MSDU", "A-MPDU", "Ambas", "Ninguna"], "a": 1, "exp": "PDF 9: A-MPDU cifrado individual + Block ACK.", "topic": "mac"}, {"q": "SSID máximo caracteres:", "opts": ["16", "32", "64", "256"], "a": 1, "exp": "PDF 2: 32 chars, case-sensitive.", "topic": "intro"}, {"q": "Signal hex 22 Mbps PBCC:", "opts": ["0x6E", "0xDC", "0x21", "0x1E"], "a": 1, "exp": "0xDC=22M PBCC. 0x21=33M. 0x1E=DSSS-OFDM.", "topic": "plcp_legacy"}, {"q": "V/F: Length PLCP DSSS mide bytes.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "DSSS Length=µs. OFDM Signal Length=bytes.", "topic": "plcp_legacy"}, {"q": "V/F: PCF es obligatorio en todas las STAs.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "DCF obligatorio. PCF opcional (casi no implementado).", "topic": "dcf"}];
+const STUDY_PATH = [{"step": 1, "topic": "intro", "title": "Intro + componentes", "time": "15 min", "why": "PDF 1–2 · Base del curso"}, {"step": 2, "topic": "capas", "title": "Capas MSDU→PPDU", "time": "15 min", "why": "PDF 3 · Encapsulamiento"}, {"step": 3, "topic": "pmd", "title": "PMD modulación", "time": "20 min", "why": "PDF 4–6 · b, g/n, ac/ax/be"}, {"step": 4, "topic": "plcp_legacy", "title": "PLCP legacy 192/96 µs", "time": "20 min", "why": "PDF 7 · Tiempos clave P3"}, {"step": 5, "topic": "plcp_modern", "title": "PLCP g/n/ac/ax/be", "time": "15 min", "why": "PDF 8 · Mixed, HE, EHT"}, {"step": 6, "topic": "mac", "title": "MAC y Frame Control", "time": "25 min", "why": "PDF 9 · Tramas + 34 B"}, {"step": 7, "topic": "dcf", "title": "DCF y NAV", "time": "30 min", "why": "PDF 10 · RTS/CTS"}, {"step": 8, "topic": "tablas_phy", "title": "Tablas PHY examen", "time": "25 min", "why": "★ Cómo usar tablas b→be"}, {"step": 9, "topic": "p1_examen", "title": "Prueba 1 — fundamentos", "time": "25 min", "why": "Topologías, FHSS, EIRP"}, {"step": 10, "topic": "p2_examen", "title": "Prueba 2 — física/PLCP", "time": "20 min", "why": "PMD + PLCP legacy"}, {"step": 11, "topic": "tipos_examen", "title": "Tipos de pregunta", "time": "10 min", "why": "Estrategia por formato"}, {"step": 12, "topic": "eficiencia", "title": "Eficiencia + ejercicios", "time": "45 min", "why": "★ Prueba 3 — sacar 100"}, {"step": 13, "topic": "link_budget", "title": "dBm, EIRP, FHSS", "time": "25 min", "why": "Prueba3-3 parte 2"}, {"step": 14, "topic": "wireshark", "title": "Wireshark", "time": "20 min", "why": "Decodificar FC hex"}, {"step": 15, "topic": "chuleta", "title": "Chuleta final", "time": "10 min", "why": "Repaso día del examen"}];
+const TOPIC_IDS = ["intro", "capas", "pmd", "plcp_legacy", "plcp_modern", "mac", "dcf", "tablas_phy", "p1_examen", "p2_examen", "tipos_examen", "prueba3", "eficiencia", "link_budget", "wireshark", "chuleta"];
+const PHY_NAV = [];
+const PHY_ORDER = PHY_NAV.map(x => x.id);
+const STD_NAV = [];
+const TOPIC_META = {};
+const P3_NAV = [];
+const P3_ORDER = P3_NAV.map(x => x.id);
+let phySubCurrent = 'intro';
+let p3SubCurrent = 'mapa';
+const stdLayerCurrent = {};
+const STORAGE_KEY = GUIDE_MODE === 'estandar' ? 'wlan_std_v1' : 'wlan_study_v2';
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
+}
+function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+const FIELD_COLORS = {
+  fc:'#1d4ed8',dur:'#2563eb',a1:'#3b82f6',a2:'#60a5fa',a3:'#0ea5e9',a4:'#818cf8',seq:'#6366f1',
+  body:'#0d9488',fcs:'#d97706',payload:'#14b8a6',sync:'#0891b2',sfd:'#06b6d4',sig:'#0284c7',
+  svc:'#0369a1',len:'#1e40af',crc:'#b45309',psdu:'#059669',pre:'#0891b2',hdr:'#0e7490',mac:'#2563eb',
+  rts:'#7c3aed',cts:'#8b5cf6',ack:'#a78bfa',difs:'#f59e0b',bo:'#fbbf24',data:'#10b981',
+  dst:'#3b82f6',src:'#60a5fa',type:'#818cf8',s1:'#64748b',s2:'#64748b',s3:'#64748b',
+  preamb:'#0891b2',signal:'#0284c7',service:'#0369a1',tail:'#475569',lstf:'#0e7490',lltf:'#0e7490',
+  lsig:'#2563eb',htsig:'#7c3aed',htstf:'#8b5cf6',htltf:'#a78bfa',vhta:'#6366f1',vhtstf:'#818cf8',
+  vhtltf:'#a78bfa',vhtb:'#c084fc'
+};
+
+function fieldColor(id) {
+  if (FIELD_COLORS[id]) return FIELD_COLORS[id];
+  if (/^a[1-4]$/.test(id) || id.includes('addr')) return '#3b82f6';
+  if (/sync|ltf|stf|sfd|pre/i.test(id)) return '#0891b2';
+  if (/data|body|psdu|payload/i.test(id)) return '#0d9488';
+  return '#38bdf8';
+}
+
+function escSvg(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function wrapSvgLines(text, maxW) {
+  const chars = Math.max(5, Math.floor(maxW / 5.5));
+  const parts = String(text).split(/[\s/]+/);
+  const lines = [];
+  let line = '';
+  parts.forEach(w => {
+    const test = line ? line + ' ' + w : w;
+    if (test.length <= chars) line = test;
+    else {
+      if (line) lines.push(line);
+      line = w.length > chars ? w.slice(0, chars - 1) + '…' : w;
+    }
+  });
+  if (line) lines.push(line);
+  return lines.slice(0, 2);
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fieldSegClass(id) {
+  const map = {fc:'fc',dur:'dur',seq:'seq',body:'body',fcs:'fcs',sig:'dur',svc:'seq',len:'addr',crc:'fcs',
+    rts:'fc',cts:'dur',ack:'seq',dst:'addr',src:'addr',type:'dur',mac:'seq',hdr:'dur',pre:'sync'};
+  if (map[id]) return map[id];
+  if (/^a[1-4]$/.test(id)) return id === 'a4' ? 'addr opt' : 'addr';
+  if (/sync|sfd|lstf|lltf|pre|preamb|stf|ltf|signal|service|tail|lsig|htsig|htstf|htltf|vhta|vhtstf|vhtltf|vhtb/i.test(id)) return 'sync';
+  if (/data|body|psdu|payload|msdu/i.test(id)) return 'body';
+  if (/difs|bo|s1|s2|s3/.test(id)) return 'dur';
+  return 'addr';
+}
+
+function renderFrameSlide(frameId, f) {
+  const wide = frameId === 'mpdu' || frameId === 'plcp_dsss' || frameId === 'plcp_11b_l';
+  const fcCls = frameId === 'fc' ? ' frame-slide-fc' : (wide ? ' frame-slide-wide' : '');
+  const units = f.fields.map(field => {
+    const flex = field.flex || 1;
+    const seg = fieldSegClass(field.id);
+    const desc = field.desc || '';
+    const exam = field.exam
+      ? `<div class="fs-exam"><strong>Examen:</strong> ${escHtml(field.exam)}</div>` : '';
+    return `<div class="fs-unit" style="flex:${flex}" data-frame="${frameId}" data-field="${field.id}"
+      onclick="selectField('${frameId}','${field.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectField('${frameId}','${field.id}')}" role="button" tabindex="0" aria-label="${escHtml(field.name)}">
+      <div class="fs-bytes">${escHtml(field.bits)}</div>
+      <div class="fs-block ${seg}"><span class="fs-lbl">${escHtml(field.name)}</span></div>
+      <div class="fs-connector" aria-hidden="true"></div>
+      <div class="fs-desc">${escHtml(desc)}${exam}</div>
+    </div>`;
+  }).join('');
+  return `<div class="frame-slide${fcCls}"><div class="fs-bar-row">${units}</div></div>`;
+}
+
+function renderFrameSvg(frameId, f) {
+  const fields = f.fields;
+  const isSeq = frameId === 'dcf_seq';
+  const minW = isSeq ? 96 : 76;
+  const barH = isSeq ? 80 : 96;
+  const totalFlex = fields.reduce((s, x) => s + (x.flex || 1), 0);
+  const svgW = Math.max(800, fields.reduce((s, x) => s + Math.max(minW, (x.flex || 1) / totalFlex * 800), 0));
+  const gap = isSeq ? 12 : 6;
+  let x = 8;
+  let rects = '';
+  let labels = '';
+  const arrowId = 'fv-arrow-' + frameId;
+  fields.forEach((field, i) => {
+    const fw = Math.max(minW, ((field.flex || 1) / totalFlex) * (svgW - 16));
+    const bw = fw - gap;
+    const color = fieldColor(field.id);
+    const y = isSeq ? 32 : 14;
+    const nameLines = wrapSvgLines(field.name, bw);
+    const lineH = 11;
+    const nameStart = y + barH / 2 - ((nameLines.length - 1) * lineH) / 2 - 6;
+    let nameSvg = '';
+    nameLines.forEach((ln, li) => {
+      nameSvg += `<text class="fv-name" x="${x + bw / 2}" y="${nameStart + li * lineH}"
+        text-anchor="middle" font-size="9">${escSvg(ln)}</text>`;
+    });
+    const bits = String(field.bits);
+    const bitsShort = bits.length > Math.floor(bw / 5) ? bits.slice(0, Math.floor(bw / 5) - 1) + '…' : bits;
+    rects += `<g class="fv-field" data-frame="${frameId}" data-field="${field.id}"
+      onclick="selectField('${frameId}','${field.id}')" role="button" tabindex="0">
+      <title>${escSvg(field.name)} — ${escSvg(bits)}</title>
+      <rect x="${x}" y="${y}" width="${bw}" height="${barH}" rx="8"
+        fill="${color}" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+      ${nameSvg}
+      <text class="fv-bits" x="${x + bw / 2}" y="${y + barH - 10}"
+        text-anchor="middle" font-size="8">${escSvg(bitsShort)}</text>
+    </g>`;
+    if (isSeq && i < fields.length - 1) {
+      const ax = x + bw + 2;
+      labels += `<line class="fv-arrow" x1="${ax}" y1="${y + barH / 2}" x2="${ax + gap - 4}" y2="${y + barH / 2}"
+        marker-end="url(#${arrowId})"/>`;
+    }
+    x += fw;
+  });
+  const h = isSeq ? barH + 52 : barH + 28;
+  return `<svg class="frame-svg" viewBox="0 0 ${svgW} ${h}" width="${svgW}" height="${h}" aria-label="${escSvg(f.title)}">
+    <defs><marker id="${arrowId}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--muted)"/></marker></defs>
+    ${rects}${labels}</svg>`;
+}
+
+function initFrames() {
+  document.querySelectorAll('.iframe-wrap').forEach(w => {
+    const id = w.dataset.frame;
+    const f = FRAMES[id];
+    if (!f) return;
+    let h = `<div class="frame-title">${f.title}</div>`;
+    if (f.subtitle) h += `<div class="frame-sub">${f.subtitle}</div>`;
+    if (f.exam) h += `<div class="frame-exam">🎯 ${f.exam}</div>`;
+    const diagram = id === 'dcf_seq'
+      ? `<div class="frame-scroll">${renderFrameSvg(id, f)}</div>`
+      : `<div class="frame-scroll">${renderFrameSlide(id, f)}</div>`;
+    h += diagram;
+    h += `<div class="frame-legend"><span><i style="background:#1d4ed8"></i>Cabecera MAC</span>
+      <span><i style="background:#0891b2"></i>PLCP / sync</span>
+      <span><i style="background:#0d9488"></i>Datos</span>
+      <span><i style="background:#d97706"></i>FCS / CRC</span>
+      <span>Clic en un bloque para resaltar</span></div>`;
+    h += `<div class="field-panel" id="panel-${id}"><p class="ph">Resumen al seleccionar un campo</p></div>`;
+    w.innerHTML = h;
+  });
+}
+
+function selectField(frameId, fieldId) {
+  const f = FRAMES[frameId];
+  const field = f.fields.find(x => x.id === fieldId);
+  if (!field) return;
+  document.querySelectorAll(`[data-frame="${frameId}"][data-field]`).forEach(b =>
+    b.classList.toggle('active', b.dataset.field === fieldId));
+  document.querySelectorAll(`.fv-field[data-frame="${frameId}"]`).forEach(b =>
+    b.classList.toggle('active', b.dataset.field === fieldId));
+  const html = `<p class="ph">${f.title}</p><h4>${field.name}</h4>
+    <div class="bits">${field.bits}</div><div class="desc">${field.desc}</div>` +
+    (field.exam ? `<div class="ex-tip">📝 ${field.exam}</div>` : '');
+  const panel = document.getElementById('panel-' + frameId);
+  if (panel) panel.innerHTML = html;
+  const fl = document.getElementById('panel-float');
+  if (fl) {
+    fl.innerHTML = html;
+    fl.classList.add('show');
+    const unit = document.querySelector(`.fs-unit[data-frame="${frameId}"][data-field="${fieldId}"]`);
+    if (unit) unit.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+}
+
+function toggleNav() { document.querySelector('nav.sidebar').classList.toggle('open'); }
+
+function setBreadcrumb(section, topic, sub, posText) {
+  const sec = document.getElementById('loc-section');
+  const top = document.getElementById('loc-topic');
+  const subWrap = document.getElementById('loc-sub-wrap');
+  const subEl = document.getElementById('loc-sub');
+  const pos = document.getElementById('loc-pos');
+  const legacy = document.getElementById('top-title');
+  if (sec) sec.textContent = section || '';
+  if (top) top.textContent = topic || '';
+  if (subWrap && subEl) {
+    if (sub) { subWrap.classList.remove('hidden'); subEl.textContent = sub; }
+    else subWrap.classList.add('hidden');
+  }
+  if (pos) pos.textContent = posText ? (' · ' + posText) : '';
+  if (legacy) legacy.textContent = [section, topic, sub].filter(Boolean).join(' · ');
+}
+
+function phyHashToSub(id) {
+  if (!id) return null;
+  if (id === 'tablas-phy-intro') return 'intro';
+  if (id.startsWith('tablas-') && id !== 'tablas_phy' && id !== 'tablas-phy-mount' && id !== 'tablas-phy-main') {
+    const sub = id.replace('tablas-', '');
+    if (PHY_ORDER.includes(sub)) return sub;
+  }
+  return null;
+}
+
+function phySubToHash(subId) {
+  return subId === 'intro' ? 'tablas-phy-intro' : 'tablas-' + subId;
+}
+
+function goPhySub(subId) {
+  if (!PHY_ORDER.includes(subId)) subId = 'intro';
+  phySubCurrent = subId;
+  document.querySelectorAll('.phy-panel, #tablas_phy .std-block').forEach(el => {
+    const sid = el.dataset.phySub || '';
+    el.classList.toggle('phy-active', sid === subId);
+  });
+  document.querySelectorAll('.tablas-phy-nav-item, .nav-phy-sub').forEach(el => {
+    el.classList.toggle('on', el.dataset.phySub === subId);
+  });
+  const navItem = PHY_NAV.find(x => x.id === subId);
+  if (navItem) {
+    const meta = TOPIC_META.tablas_phy || {};
+    const idx = PHY_ORDER.indexOf(subId);
+    setBreadcrumb(meta.section || 'Teoría', meta.title || 'Tablas PHY', navItem.title, (idx + 1) + '/' + PHY_ORDER.length);
+    const nowEl = document.getElementById('phy-now-title');
+    if (nowEl) nowEl.textContent = navItem.title;
+    const posEl = document.getElementById('phy-nav-pos');
+    if (posEl) posEl.textContent = (idx + 1) + ' / ' + PHY_ORDER.length;
+  }
+  document.querySelector('.nav-phy-subs')?.classList.add('open');
+  document.querySelector('.nav-links a[data-topic="tablas_phy"]')?.classList.add('on');
+  const h = phySubToHash(subId);
+  if (location.hash !== '#' + h) history.replaceState(null, '', '#' + h);
+  document.getElementById('tablas-phy-main')?.scrollTo({ top: 0, behavior: 'smooth' });
+  renderKatex();
+}
+
+function p3HashToSub(id) {
+  if (!id || !id.startsWith('p3-')) return null;
+  const sub = id.slice(3);
+  return P3_ORDER.includes(sub) ? sub : null;
+}
+
+function p3SubToHash(subId) {
+  return 'p3-' + subId;
+}
+
+function goP3Sub(subId) {
+  if (!P3_ORDER.includes(subId)) subId = 'mapa';
+  p3SubCurrent = subId;
+  document.querySelectorAll('.p3-block').forEach(el => {
+    el.classList.toggle('p3-active', el.dataset.p3Sub === subId);
+  });
+  document.querySelectorAll('.p3-nav-item, .nav-p3-sub').forEach(el => {
+    el.classList.toggle('on', el.dataset.p3Sub === subId);
+  });
+  const navItem = P3_NAV.find(x => x.id === subId);
+  if (navItem) {
+    const meta = TOPIC_META.prueba3 || {};
+    const idx = P3_ORDER.indexOf(subId);
+    setBreadcrumb(meta.section || 'Prueba 3', meta.title || 'Prueba 3', navItem.title, (idx + 1) + '/' + P3_ORDER.length);
+    const nowEl = document.getElementById('p3-now-title');
+    if (nowEl) nowEl.textContent = navItem.title;
+    const posEl = document.getElementById('p3-nav-pos');
+    if (posEl) posEl.textContent = (idx + 1) + ' / ' + P3_ORDER.length;
+  }
+  document.querySelector('.nav-p3-subs')?.classList.add('open');
+  document.querySelector('.nav-links a[data-topic="prueba3"]')?.classList.add('on');
+  const h = p3SubToHash(subId);
+  if (location.hash !== '#' + h) history.replaceState(null, '', '#' + h);
+  document.getElementById('p3-main')?.scrollTo({ top: 0, behavior: 'smooth' });
+  renderKatex();
+}
+
+function initTablasPhyNav() {
+  if (GUIDE_MODE !== 'pdf') return;
+  const mount = document.getElementById('tablas-phy-mount');
+  if (!mount) return;
+  mount.querySelectorAll('.tablas-phy-nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      goTopic('tablas_phy');
+      goPhySub(btn.dataset.phySub);
+    });
+  });
+  mount.querySelectorAll('[data-phy-jump]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = PHY_ORDER.indexOf(phySubCurrent);
+      if (btn.dataset.phyJump === 'prev' && idx > 0) goPhySub(PHY_ORDER[idx - 1]);
+      if (btn.dataset.phyJump === 'next' && idx < PHY_ORDER.length - 1) goPhySub(PHY_ORDER[idx + 1]);
+    });
+  });
+}
+
+function initP3Nav() {
+  if (GUIDE_MODE !== 'pdf') return;
+  const mount = document.getElementById('p3-mount');
+  if (!mount) return;
+  mount.querySelectorAll('.p3-nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      goTopic('prueba3');
+      goP3Sub(btn.dataset.p3Sub);
+    });
+  });
+  mount.querySelectorAll('[data-p3-jump]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = P3_ORDER.indexOf(p3SubCurrent);
+      if (btn.dataset.p3Jump === 'prev' && idx > 0) goP3Sub(P3_ORDER[idx - 1]);
+      if (btn.dataset.p3Jump === 'next' && idx < P3_ORDER.length - 1) goP3Sub(P3_ORDER[idx + 1]);
+      if (P3_ORDER.includes(btn.dataset.p3Jump)) goP3Sub(btn.dataset.p3Jump);
+    });
+  });
+}
+
+function stdHashParse(id) {
+  if (!id || !id.startsWith('estandar-')) return null;
+  const rest = id.slice('estandar-'.length);
+  for (const item of STD_NAV) {
+    const sid = item.id;
+    if (rest === sid) return { std: sid, layer: item.layers[0] };
+    const prefix = sid + '-';
+    if (rest.startsWith(prefix)) {
+      const layer = rest.slice(prefix.length);
+      if (item.layers.includes(layer)) return { std: sid, layer };
+    }
+  }
+  return null;
+}
+
+function goStdLayer(stdId, layerId) {
+  const item = STD_NAV.find(x => x.id === stdId);
+  if (!item) return;
+  if (!item.layers.includes(layerId)) layerId = item.layers[0];
+  stdLayerCurrent[stdId] = layerId;
+  document.querySelectorAll(`#std-main-${stdId} .layer-panel`).forEach(p => {
+    p.classList.toggle('layer-active', p.dataset.layer === layerId);
+  });
+  document.querySelectorAll(`.layer-nav-item[data-std="${stdId}"]`).forEach(b => {
+    b.classList.toggle('on', b.dataset.layer === layerId);
+  });
+  document.querySelectorAll(`.nav-layer-sub[data-std="${stdId}"]`).forEach(a => {
+    a.classList.toggle('on', a.dataset.layer === layerId);
+  });
+  const btn = document.querySelector(`.layer-nav-item[data-std="${stdId}"][data-layer="${layerId}"]`);
+  const now = document.getElementById('layer-now-' + stdId);
+  const pos = document.getElementById('layer-pos-' + stdId);
+  if (now && btn) now.textContent = btn.textContent.trim();
+  if (pos) {
+    const idx = item.layers.indexOf(layerId);
+    pos.textContent = (idx + 1) + ' / ' + item.layers.length;
+    setBreadcrumb('Por estándar', item.title, btn ? btn.textContent.trim() : layerId, (idx + 1) + '/' + item.layers.length);
+  } else {
+    setBreadcrumb('Por estándar', item.title, layerId, '');
+  }
+  document.querySelector('.nav-layer-subs[data-parent="estandar-' + stdId + '"]')?.classList.add('open');
+  document.querySelector('.nav-links a[data-topic="estandar-' + stdId + '"]')?.classList.add('on');
+  const h = 'estandar-' + stdId + '-' + layerId;
+  if (location.hash !== '#' + h) history.replaceState(null, '', '#' + h);
+  document.getElementById('std-main-' + stdId)?.scrollTo({ top: 0, behavior: 'smooth' });
+  renderKatex();
+}
+
+function initStandardGuide() {
+  if (GUIDE_MODE !== 'estandar') return;
+  document.querySelectorAll('.layer-nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      goTopic('estandar-' + btn.dataset.std);
+      goStdLayer(btn.dataset.std, btn.dataset.layer);
+    });
+  });
+  document.querySelectorAll('[data-std-jump]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const std = btn.dataset.stdJump;
+      const item = STD_NAV.find(x => x.id === std);
+      if (!item) return;
+      const cur = stdLayerCurrent[std] || item.layers[0];
+      const idx = item.layers.indexOf(cur);
+      if (btn.dataset.dir === 'prev' && idx > 0) goStdLayer(std, item.layers[idx - 1]);
+      if (btn.dataset.dir === 'next' && idx < item.layers.length - 1) goStdLayer(std, item.layers[idx + 1]);
+    });
+  });
+  document.querySelectorAll('.std-jump-tablas').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const std = btn.dataset.std;
+      if (!std) return;
+      goTopic('estandar-' + std);
+      goStdLayer(std, 'tablas');
+    });
+  });
+}
+
+function goTopic(id) {
+  if (GUIDE_MODE === 'estandar') {
+    const parsed = stdHashParse(id);
+    if (parsed) {
+      const el = document.getElementById('estandar-' + parsed.std);
+      if (!el) return;
+      el.classList.add('visible');
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.nav-links a[data-topic]').forEach(a =>
+        a.classList.toggle('on', a.dataset.topic === 'estandar-' + parsed.std));
+      goStdLayer(parsed.std, parsed.layer);
+      document.querySelector('nav.sidebar')?.classList.remove('open');
+      return;
+    }
+  }
+  const p3FromHash = GUIDE_MODE === 'pdf' ? p3HashToSub(id) : null;
+  const phyFromHash = GUIDE_MODE === 'pdf' ? phyHashToSub(id) : null;
+  if (phyFromHash) id = 'tablas_phy';
+  else if (p3FromHash) id = 'prueba3';
+  const targetId = id === 'portada' || !id ? 'portada' : id;
+  if (targetId === 'portada') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setBreadcrumb('Inicio', GUIDE_MODE === 'estandar' ? 'Guía por estándar' : 'Guía por PDF', '', '');
+    document.querySelectorAll('.nav-links a').forEach(a =>
+      a.classList.toggle('on', a.getAttribute('href') === '#portada'));
+    document.querySelector('.nav-phy-subs')?.classList.remove('open');
+    document.querySelector('.nav-p3-subs')?.classList.remove('open');
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    document.querySelector('nav.sidebar')?.classList.remove('open');
+    return;
+  }
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  el.classList.add('visible');
+  el.style.opacity = '1';
+  el.style.transform = 'none';
+  if (targetId === 'tablas_phy') {
+    if (location.hash !== '#' + targetId && !phyFromHash) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } else if (location.hash !== '#' + targetId) {
+    history.replaceState(null, '', '#' + targetId);
+  }
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (targetId === 'tablas_phy') {
+    const h2 = el.querySelector('h2');
+    if (h2 && !phyFromHash) {
+      const topTitle = document.getElementById('top-title');
+      if (topTitle) topTitle.textContent = h2.textContent;
+    }
+    goPhySub(phyFromHash || phyHashToSub((location.hash || '').replace(/^#/, '')) || phySubCurrent || 'intro');
+    document.querySelectorAll('.nav-links a').forEach(a =>
+      a.classList.toggle('on', a.dataset.topic === 'tablas_phy'));
+    document.querySelector('nav.sidebar')?.classList.remove('open');
+    return;
+  }
+  if (targetId === 'prueba3') {
+    goP3Sub(p3FromHash || p3HashToSub((location.hash || '').replace(/^#/, '')) || p3SubCurrent || 'mapa');
+    document.querySelectorAll('.nav-links a').forEach(a =>
+      a.classList.toggle('on', a.dataset.topic === 'prueba3'));
+    document.querySelector('nav.sidebar')?.classList.remove('open');
+    return;
+  }
+  document.querySelector('.nav-phy-subs')?.classList.remove('open');
+  document.querySelector('.nav-p3-subs')?.classList.remove('open');
+  const meta = TOPIC_META[targetId] || {};
+  setBreadcrumb(meta.section || 'Tema', meta.title || (el.querySelector('h2')?.textContent || targetId), '', '');
+  document.querySelectorAll('.nav-links a').forEach(a =>
+    a.classList.toggle('on', a.getAttribute('href') === '#' + targetId));
+  document.querySelector('nav.sidebar')?.classList.remove('open');
+}
+
+function initNavLinks() {
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const href = a.getAttribute('href').slice(1) || 'portada';
+      if (a.classList.contains('nav-phy-sub')) {
+        goTopic('tablas_phy');
+        goPhySub(a.dataset.phySub);
+        return;
+      }
+      if (a.classList.contains('nav-p3-sub')) {
+        goTopic('prueba3');
+        goP3Sub(a.dataset.p3Sub);
+        return;
+      }
+      if (a.classList.contains('nav-layer-sub')) {
+        goTopic('estandar-' + a.dataset.std + '-' + a.dataset.layer);
+        return;
+      }
+      goTopic(href);
+      if (href === 'tablas_phy') goPhySub('intro');
+      if (href === 'prueba3') goP3Sub('mapa');
+      if (GUIDE_MODE === 'estandar' && href.startsWith('estandar-') && !href.includes('-', 9)) {
+        const sid = href.replace('estandar-', '');
+        const item = STD_NAV.find(x => x.id === sid);
+        if (item) goStdLayer(sid, item.layers[0]);
+      }
+    });
+  });
+}
+
+function updateProgressUI() {
+  const p = loadProgress();
+  const done = TOPIC_IDS.filter(id => p[id]).length;
+  const pct = Math.round((done / TOPIC_IDS.length) * 100);
+  const circle = document.querySelector('.progress-ring .fg');
+  const pctEl = document.querySelector('.progress-ring .pct');
+  if (circle) {
+    const r = 18; const c = 2 * Math.PI * r;
+    circle.setAttribute('stroke-dasharray', c);
+    circle.setAttribute('stroke-dashoffset', c - (pct/100)*c);
+  }
+  if (pctEl) pctEl.textContent = pct + '%';
+  document.querySelectorAll('.nav-links a[data-topic]').forEach(a => {
+    const id = a.dataset.topic;
+    a.classList.toggle('done', !!p[id]);
+  });
+  document.querySelectorAll('.tbtn-mark').forEach(btn => {
+    btn.classList.toggle('done', !!p[btn.dataset.topic]);
+    btn.textContent = p[btn.dataset.topic] ? '✓ Completado' : 'Marcar estudiado';
+  });
+  STUDY_PATH.forEach(s => {
+    const el = document.querySelector(`.path-step[data-topic="${s.topic}"]`);
+    if (el) el.classList.toggle('done', !!p[s.topic]);
+  });
+}
+
+function markTopic(id) {
+  const p = loadProgress();
+  p[id] = !p[id];
+  saveProgress(p);
+  updateProgressUI();
+}
+
+function initScrollAnim() {
+  const obs = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.tema').forEach(s => obs.observe(s));
+
+  const navObs = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        document.querySelectorAll('.nav-links a[data-topic]').forEach(a =>
+          a.classList.toggle('on', a.dataset.topic === id));
+        if (id !== 'tablas_phy') {
+          const title = e.target.querySelector('h2');
+          if (title) document.getElementById('top-title').textContent = title.textContent;
+        }
+        if (TOPIC_IDS.includes(id) && e.intersectionRatio > 0.3) {
+          const p = loadProgress();
+          if (!p[id]) { p[id + '_seen'] = true; saveProgress(p); }
+        }
+      }
+    });
+  }, { rootMargin: '-20% 0 -55% 0' });
+  document.querySelectorAll('.tema, #portada').forEach(s => navObs.observe(s));
+
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    document.querySelector('#progress-top i').style.width = pct + '%';
+    document.getElementById('totop').classList.toggle('show', h.scrollTop > 400);
+  }, { passive: true });
+}
+
+function initSearch() {
+  const input = document.getElementById('global-search');
+  if (!input) return;
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase().trim();
+    document.querySelectorAll('.tema').forEach(t => {
+      if (!q) { t.classList.remove('search-hide'); return; }
+      t.classList.toggle('search-hide', !t.textContent.toLowerCase().includes(q));
+    });
+  });
+}
+
+/* Flashcards */
+let fcIdx = 0;
+function openFlashcards() {
+  fcIdx = 0;
+  document.getElementById('modal-fc').classList.add('open');
+  renderFlashcard();
+}
+function renderFlashcard() {
+  const fc = FLASHCARDS[fcIdx];
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped');
+  document.getElementById('fc-q').textContent = fc.q;
+  const aEl = document.getElementById('fc-a');
+  if (fc.a_html) aEl.innerHTML = fc.a_html;
+  else aEl.textContent = fc.a;
+  document.getElementById('fc-tag').textContent = fc.tag || 'WLAN';
+  document.getElementById('fc-prog').textContent = (fcIdx+1) + ' / ' + FLASHCARDS.length;
+}
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function nextCard() { fcIdx = (fcIdx + 1) % FLASHCARDS.length; renderFlashcard(); }
+function prevCard() { fcIdx = (fcIdx - 1 + FLASHCARDS.length) % FLASHCARDS.length; renderFlashcard(); }
+
+/* Quiz por tema */
+const QUIZ_TOPICS = {
+  all: 'Todos los temas',
+  capas: 'Capas MSDU→PPDU',
+  plcp_legacy: 'PLCP legacy',
+  mac: 'MAC / Frame Control',
+  dcf: 'DCF / NAV',
+  eficiencia: 'Eficiencia',
+  link_budget: 'Link budget / EIRP',
+  wireshark: 'Wireshark',
+  plcp_modern: 'PLCP g/n/ac',
+  tablas_phy: 'Tablas PHY',
+};
+let quizPool = QUIZ.slice();
+let quizIdx = 0, quizScore = 0, quizDone = false;
+
+function initQuizFilter() {
+  const sel = document.getElementById('quiz-topic-filter');
+  if (!sel) return;
+  const topics = [...new Set(QUIZ.map(q => q.topic).filter(Boolean))];
+  sel.innerHTML = '<option value="all">' + QUIZ_TOPICS.all + ' (' + QUIZ.length + ')</option>';
+  topics.forEach(t => {
+    const n = QUIZ.filter(q => q.topic === t).length;
+    const label = QUIZ_TOPICS[t] || t;
+    sel.innerHTML += '<option value="' + t + '">' + label + ' (' + n + ')</option>';
+  });
+}
+
+function toggleResultado(btn) {
+  const solId = btn.getAttribute('aria-controls');
+  const sol = document.getElementById(solId);
+  if (!sol) return;
+  const open = sol.hasAttribute('hidden');
+  if (open) { sol.removeAttribute('hidden'); btn.setAttribute('aria-expanded', 'true');
+    btn.innerHTML = '<span class="btn-ver-icon">🙈</span> Ocultar resultado'; sol.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  else { sol.setAttribute('hidden', ''); btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span class="btn-ver-icon">👁</span> Ver resultado paso a paso'; }
+}
+
+function filterQuizTopic(topic) {
+  quizPool = topic === 'all' ? QUIZ.slice() : QUIZ.filter(q => q.topic === topic);
+  quizIdx = 0; quizScore = 0;
+  renderQuizQ();
+}
+
+function openQuiz(topic) {
+  quizIdx = 0; quizScore = 0; quizDone = false;
+  quizPool = QUIZ.slice();
+  document.getElementById('modal-quiz').classList.add('open');
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-game').style.display = 'block';
+  initQuizFilter();
+  const sel = document.getElementById('quiz-topic-filter');
+  if (sel && topic && topic !== 'all') {
+    sel.value = topic;
+    filterQuizTopic(topic);
+  } else renderQuizQ();
+}
+
+function renderQuizQ() {
+  if (quizIdx >= quizPool.length) {
+    document.getElementById('quiz-game').style.display = 'none';
+    const res = document.getElementById('quiz-result');
+    res.style.display = 'block';
+    const total = quizPool.length || 1;
+    const pct = Math.round((quizScore / total) * 100);
+    res.querySelector('.big').textContent = pct + '%';
+    res.querySelector('p').textContent = quizScore + ' de ' + total + ' correctas' +
+      (pct === 100 ? ' — ¡Listo para el 100!' : pct >= 80 ? ' — Casi, repasa los errores' : ' — Repasa temas 06-08');
+    return;
+  }
+  const q = quizPool[quizIdx];
+  const topicLabel = q.topic ? (QUIZ_TOPICS[q.topic] || q.topic) : '';
+  document.getElementById('quiz-q').innerHTML = q.q + (topicLabel ? '<span class="quiz-topic">· ' + topicLabel + '</span>' : '');
+  document.getElementById('quiz-exp').classList.remove('show');
+  document.getElementById('quiz-prog').textContent = 'Pregunta ' + (quizIdx+1) + '/' + quizPool.length;
+  const opts = document.getElementById('quiz-opts');
+  opts.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = o;
+    btn.onclick = () => answerQuiz(i, btn);
+    opts.appendChild(btn);
+  });
+}
+function answerQuiz(i, btn) {
+  const q = quizPool[quizIdx];
+  document.querySelectorAll('.quiz-opt').forEach(b => { b.classList.add('locked'); b.style.pointerEvents = 'none'; });
+  const exp = document.getElementById('quiz-exp');
+  if (i === q.a) { btn.classList.add('correct'); quizScore++; exp.style.borderColor = 'var(--ok)'; }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.quiz-opt')[q.a]?.classList.add('correct'); exp.style.borderColor = 'var(--dng)'; }
+  exp.innerHTML = '<strong>¿Por qué?</strong> ' + q.exp;
+  exp.classList.add('show');
+  setTimeout(() => { quizIdx++; renderQuizQ(); }, 2000);
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function filterSiglas(q) {
+  const term = (q || '').toLowerCase().trim();
+  document.querySelectorAll('#siglas-grid .sigla-card').forEach(card => {
+    const hay = !term || (card.dataset.sig || '').includes(term);
+    card.style.display = hay ? '' : 'none';
+  });
+}
+
+function renderKatex() {
+  if (typeof katex === 'undefined') return;
+  document.querySelectorAll('[data-latex]').forEach(el => {
+    const lat = el.getAttribute('data-latex');
+    const inner = el.querySelector('.formula-inner') || el;
+    if (!lat) return;
+    try {
+      katex.render(lat, inner, { displayMode: true, throwOnError: false, strict: 'ignore' });
+    } catch (e) {}
+  });
+  document.querySelectorAll('[data-latex-inline]').forEach(el => {
+    const lat = el.getAttribute('data-latex-inline');
+    if (!lat) return;
+    try {
+      katex.render(lat, el, { displayMode: false, throwOnError: false, strict: 'ignore' });
+    } catch (e) {}
+  });
+}
+
+function revealVisibleTemas() {
+  document.querySelectorAll('.tema').forEach(t => {
+    const r = t.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.92 && r.bottom > 40) t.classList.add('visible');
+  });
+}
+
+function initHashNav() {
+  const id = (location.hash || '').replace(/^#/, '');
+  if (GUIDE_MODE === 'estandar') {
+    const parsed = stdHashParse(id);
+    if (parsed) {
+      goTopic(id);
+      return;
+    }
+    if (id && document.getElementById(id)) {
+      goTopic(id);
+    } else {
+      revealVisibleTemas();
+    }
+  } else {
+    const phySub = phyHashToSub(id);
+    if (phySub) {
+      goTopic('tablas_phy');
+      goPhySub(phySub);
+      return;
+    }
+    const p3Sub = p3HashToSub(id);
+    if (p3Sub) {
+      goTopic('prueba3');
+      goP3Sub(p3Sub);
+      return;
+    }
+    if (id && document.getElementById(id)) {
+      goTopic(id);
+      if (id === 'tablas_phy') goPhySub('intro');
+    } else {
+      revealVisibleTemas();
+    }
+  }
+  window.addEventListener('hashchange', () => {
+    const hid = (location.hash || '').replace(/^#/, '');
+    if (GUIDE_MODE === 'estandar') {
+      const parsed = stdHashParse(hid);
+      if (parsed) { goTopic(hid); return; }
+      if (hid) goTopic(hid);
+      else goTopic('portada');
+      return;
+    }
+    const ps = phyHashToSub(hid);
+    if (ps) {
+      goTopic('tablas_phy');
+      goPhySub(ps);
+      return;
+    }
+    const p3s = p3HashToSub(hid);
+    if (p3s) {
+      goTopic('prueba3');
+      goP3Sub(p3s);
+      return;
+    }
+    if (hid) goTopic(hid);
+    else goTopic('portada');
+  });
+}
+
+function boot() {
+  renderKatex();
+  initFrames();
+  initSlideViewers();
+  initTablasPhyNav();
+  initP3Nav();
+  initStandardGuide();
+  initNavLinks();
+  updateProgressUI();
+  initScrollAnim();
+  initHashNav();
+  initSearch();
+  document.getElementById('totop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('panel-float').onclick = e => {
+    if (e.target.id === 'panel-float') e.target.classList.remove('show');
+  };
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+      e.preventDefault(); document.getElementById('global-search')?.focus();
+    }
+    if (document.getElementById('modal-fc').classList.contains('open')) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
+      if (e.key === 'ArrowRight') nextCard();
+      if (e.key === 'ArrowLeft') prevCard();
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', function() {
+  function start() {
+    if (typeof katex === 'undefined') { setTimeout(start, 40); return; }
+    boot();
+  }
+  start();
+});
+
+/* Visor diapositivas */
+const SLIDE_DECKS = typeof SLIDE_DECKS_DATA !== 'undefined' ? SLIDE_DECKS_DATA : {};
+
+function initSlideViewers() {
+  document.querySelectorAll('.sv-mount').forEach(mount => {
+    const topic = mount.dataset.topic;
+    const deck = SLIDE_DECKS[topic];
+    if (!deck || !deck.slides?.length) return;
+    mount.innerHTML = '';
+    const el = buildSlideViewer(topic, deck);
+    mount.appendChild(el);
+    initDeckState(topic, deck);
+  });
+}
+
+function buildSlideViewer(topic, deck) {
+  const wrap = document.createElement('div');
+  wrap.className = 'sv-deck';
+  wrap.id = 'sv-deck-' + topic;
+  wrap.innerHTML = `
+    <aside class="sv-nav-left">
+      <div class="sv-nav-head">${deck.title || topic} · ${deck.slides.length} diapos</div>
+      <div class="sv-slide-list" id="sv-list-${topic}"></div>
+      <div class="sv-topic-jump">
+        <button type="button" data-jump="prev" title="Tema anterior">◀ Tema</button>
+        <button type="button" data-jump="next" title="Tema siguiente">Tema ▶</button>
+      </div>
+    </aside>
+    <div class="sv-center">
+      <div class="sv-toolbar">
+        <button type="button" class="sv-tbtn" data-act="prev">◀ Ant</button>
+        <span class="sv-pos" id="sv-pos-${topic}">1 / ${deck.slides.length}</span>
+        <button type="button" class="sv-tbtn" data-act="next">Sig ▶</button>
+        <span style="flex:1"></span>
+        <button type="button" class="sv-tbtn" data-act="zoom-out" title="Alejar">−</button>
+        <button type="button" class="sv-tbtn" data-act="zoom-reset" title="Ajustar a pantalla">Ajustar</button>
+        <button type="button" class="sv-tbtn" data-act="zoom-in" title="Acercar">+</button>
+        <button type="button" class="sv-tbtn" data-act="fullscreen" title="Pantalla completa">⛶</button>
+        <button type="button" class="sv-tbtn" data-panel="preguntas" id="sv-btn-preg-${topic}">❓ Preguntas</button>
+        <button type="button" class="sv-tbtn" data-panel="ejercicios" id="sv-btn-ej-${topic}">✏️ Ejercicios</button>
+      </div>
+      <div class="sv-stage-wrap">
+        <div class="sv-stage" id="sv-stage-${topic}">
+          <div class="sv-panzoom" id="sv-pz-${topic}">
+            <img id="sv-img-${topic}" alt="Diapositiva" draggable="false"/>
+          </div>
+          <span class="sv-zoom-hint">Rueda = zoom · Arrastra = mover · Doble clic = ajustar · ← → diapo</span>
+        </div>
+        <div class="sv-drawer" id="sv-drawer-${topic}"></div>
+      </div>
+    </div>
+    <aside class="sv-resumen-right" id="sv-res-${topic}">
+      <h5>📌 Resumen e ideas clave</h5>
+      <div id="sv-res-body-${topic}"></div>
+    </aside>`;
+  const list = wrap.querySelector('#sv-list-' + topic);
+  deck.slides.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'sv-slide-item' + (i === 0 ? ' on' : '');
+    btn.dataset.idx = i;
+    btn.innerHTML = `<img src="${slideImgUrl(s.img)}" alt="" loading="lazy"/><span class="sn">${s.num}</span><span>${(s.title || '').slice(0, 28)}</span>`;
+    btn.addEventListener('click', () => goSlide(topic, i));
+    list.appendChild(btn);
+  });
+  wrap.querySelectorAll('[data-act]').forEach(b => {
+    b.addEventListener('click', () => slideAction(topic, b.dataset.act));
+  });
+  wrap.querySelectorAll('[data-panel]').forEach(b => {
+    b.addEventListener('click', () => togglePanel(topic, b.dataset.panel));
+  });
+  wrap.querySelectorAll('[data-jump]').forEach(b => {
+    b.addEventListener('click', () => jumpTopic(topic, b.dataset.jump));
+  });
+  return wrap;
+}
+
+const deckState = {};
+
+function initDeckState(topic, deck) {
+  deckState[topic] = { idx: 0, scale: 1, panX: 0, panY: 0, panel: null, fitted: true };
+  goSlide(topic, 0);
+  const stage = document.getElementById('sv-stage-' + topic);
+  if (!stage) return;
+  setupPanZoom(topic, stage);
+  const ro = new ResizeObserver(() => {
+    const st = deckState[topic];
+    if (st && st.fitted) fitSlideToStage(topic);
+  });
+  ro.observe(stage);
+  window.addEventListener('resize', () => {
+    const st = deckState[topic];
+    if (st && st.fitted) fitSlideToStage(topic);
+  });
+}
+
+function goSlide(topic, idx) {
+  const deck = SLIDE_DECKS[topic];
+  const st = deckState[topic];
+  if (!deck || !st) return;
+  idx = Math.max(0, Math.min(deck.slides.length - 1, idx));
+  st.idx = idx;
+  st.fitted = true;
+  st.panX = 0; st.panY = 0;
+  const s = deck.slides[idx];
+  const img = document.getElementById('sv-img-' + topic);
+  if (img) {
+    const onReady = () => requestAnimationFrame(() => fitSlideToStage(topic));
+    img.onload = onReady;
+    img.src = slideImgUrl(s.img);
+    img.alt = 'Diapositiva ' + s.num;
+    if (img.complete && img.naturalWidth) onReady();
+  }
+  document.getElementById('sv-pos-' + topic).textContent = (idx + 1) + ' / ' + deck.slides.length + ' · Diapo ' + s.num;
+  document.getElementById('sv-res-body-' + topic).innerHTML = s.resumen || '<p class="muted">Sin resumen automático.</p>';
+  document.querySelectorAll('#sv-list-' + topic + ' .sv-slide-item').forEach((el, i) => {
+    el.classList.toggle('on', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  const drawer = document.getElementById('sv-drawer-' + topic);
+  drawer.classList.remove('open');
+  drawer.innerHTML = '';
+  st.panel = null;
+  document.querySelectorAll('#sv-deck-' + topic + ' [data-panel]').forEach(b => b.classList.remove('on'));
+  const bp = document.getElementById('sv-btn-preg-' + topic);
+  const be = document.getElementById('sv-btn-ej-' + topic);
+  if (bp) { bp.style.display = s.hasPreg ? '' : 'none'; }
+  if (be) { be.style.display = s.hasEj ? '' : 'none'; }
+  requestAnimationFrame(() => { if (st.fitted) fitSlideToStage(topic); else applyTransform(topic); });
+}
+
+function slideAction(topic, act) {
+  const st = deckState[topic];
+  const deck = SLIDE_DECKS[topic];
+  if (!st || !deck) return;
+  if (act === 'prev') goSlide(topic, st.idx - 1);
+  else if (act === 'next') goSlide(topic, st.idx + 1);
+  else if (act === 'zoom-in') { st.fitted = false; st.scale = Math.min(6, st.scale * 1.2); applyTransform(topic); }
+  else if (act === 'zoom-out') { st.fitted = false; st.scale = Math.max(0.12, st.scale / 1.2); applyTransform(topic); }
+  else if (act === 'zoom-reset') { fitSlideToStage(topic); }
+  else if (act === 'fullscreen') openSlideFullscreen(topic);
+}
+
+function slideImgUrl(path) {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('../')) return path;
+  return '../' + path;
+}
+
+function fitSlideToStage(topic) {
+  const st = deckState[topic];
+  const img = document.getElementById('sv-img-' + topic);
+  const stage = document.getElementById('sv-stage-' + topic);
+  if (!st || !img || !stage || !img.naturalWidth) return;
+  const pad = 16;
+  const sw = stage.clientWidth - pad;
+  const sh = stage.clientHeight - pad;
+  if (sw < 40 || sh < 40) return;
+  const fit = Math.min(sw / img.naturalWidth, sh / img.naturalHeight);
+  st.scale = Math.max(0.08, Math.min(fit, 1));
+  st.panX = 0;
+  st.panY = 0;
+  st.fitted = true;
+  applyTransform(topic);
+}
+
+function applyTransform(topic) {
+  const st = deckState[topic];
+  const pz = document.getElementById('sv-pz-' + topic);
+  if (!pz || !st) return;
+  pz.style.transform = `translate(${st.panX}px, ${st.panY}px) scale(${st.scale})`;
+}
+
+function setupPanZoom(topic, stage) {
+  const st = deckState[topic];
+  let drag = false, sx = 0, sy = 0, ox = 0, oy = 0;
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    st.fitted = false;
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    st.scale = Math.min(6, Math.max(0.12, st.scale * delta));
+    applyTransform(topic);
+  }, { passive: false });
+  stage.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    st.fitted = false;
+    drag = true; sx = e.clientX; sy = e.clientY; ox = st.panX; oy = st.panY;
+    stage.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!drag) return;
+    st.panX = ox + (e.clientX - sx);
+    st.panY = oy + (e.clientY - sy);
+    applyTransform(topic);
+  });
+  window.addEventListener('mouseup', () => { drag = false; stage.classList.remove('dragging'); });
+  stage.addEventListener('dblclick', () => slideAction(topic, 'zoom-reset'));
+  let tx0 = 0;
+  stage.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    const dx = (e.changedTouches[0]?.clientX || 0) - tx0;
+    if (Math.abs(dx) > 60) slideAction(topic, dx > 0 ? 'prev' : 'next');
+  }, { passive: true });
+}
+
+function togglePanel(topic, panel) {
+  const st = deckState[topic];
+  const deck = SLIDE_DECKS[topic];
+  if (!st || !deck) return;
+  const s = deck.slides[st.idx];
+  const drawer = document.getElementById('sv-drawer-' + topic);
+  const html = panel === 'preguntas' ? s.preguntas : s.ejercicios;
+  if (!html) return;
+  if (st.panel === panel) {
+    drawer.classList.remove('open');
+    st.panel = null;
+    document.querySelectorAll('#sv-deck-' + topic + ' [data-panel]').forEach(b => b.classList.remove('on'));
+    return;
+  }
+  st.panel = panel;
+  drawer.innerHTML = html;
+  drawer.classList.add('open');
+  document.querySelectorAll('#sv-deck-' + topic + ' [data-panel]').forEach(b =>
+    b.classList.toggle('on', b.dataset.panel === panel));
+}
+
+function openSlideFullscreen(topic) {
+  const st = deckState[topic];
+  const deck = SLIDE_DECKS[topic];
+  if (!st || !deck) return;
+  let fs = document.getElementById('sv-fullscreen');
+  if (!fs) {
+    fs = document.createElement('div');
+    fs.id = 'sv-fullscreen';
+    fs.className = 'sv-fs';
+    fs.innerHTML = '<button type="button" class="sv-fs-close">Cerrar ✕</button><img alt=""/>';
+    fs.querySelector('.sv-fs-close').onclick = () => fs.classList.remove('open');
+    fs.onclick = e => { if (e.target === fs) fs.classList.remove('open'); };
+    document.body.appendChild(fs);
+  }
+  const s = deck.slides[st.idx];
+  fs.querySelector('img').src = slideImgUrl(s.img);
+  fs.classList.add('open');
+}
+
+function jumpTopic(topic, dir) {
+  const i = TOPIC_IDS.indexOf(topic);
+  if (i < 0) return;
+  const next = dir === 'next' ? TOPIC_IDS[i + 1] : TOPIC_IDS[i - 1];
+  if (next) goTopic(next);
+}
+
+document.addEventListener('keydown', e => {
+  const active = document.querySelector('.tema:target, .tema.visible');
+  if (!active) return;
+  const topic = active.id;
+  if (!SLIDE_DECKS[topic]) return;
+  if (['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)) return;
+  if (e.key === 'ArrowLeft') { e.preventDefault(); slideAction(topic, 'prev'); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); slideAction(topic, 'next'); }
+  if (e.key === '+' || e.key === '=') slideAction(topic, 'zoom-in');
+  if (e.key === '-') slideAction(topic, 'zoom-out');
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  if(typeof renderKatexIn==='function')renderKatexIn(document.body);
+  document.getElementById('totop')?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+});
+</script>
+</body></html>

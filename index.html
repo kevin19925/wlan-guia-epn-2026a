@@ -3,44 +3,56 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="Portal de estudio WLAN EPN 2026-A — teoría, fórmulas, pruebas P1-P4, guía interactiva"/>
-<title>WLAN EPN 2026-A — Portal de estudio completo</title>
+<meta name="description" content="WLAN EPN 2026-A — Guía de estudio y simulación de examen"/>
+<title>WLAN EPN 2026-A — Estudio WLAN</title>
 <link rel="stylesheet" href="assets/portal.css"/>
 </head>
 <body>
 <header class="site-header">
-<span class="badge">Curso completo WLAN · EPN 2026-A</span>
+<span class="badge">WLAN · EPN 2026-A</span>
 <h1>WLAN EPN 2026-A</h1>
-<p class="sub">Todo el material WLAN EPN 2026-A: portal de navegación, guía interactiva con tramas profesionales, fórmulas, mapa del material y preparación P1–P4.</p>
+<p class="sub">Dos guías de estudio (por PDF o por estándar 802.11) y simulación de examen.</p>
 </header>
 <nav class="nav-top">
-<a href="#" class="active">Portal</a>
-<a href="guia/">Guía interactiva</a>
-<a href="pages/formulas.html">Fórmulas</a>
-<a href="pages/desde-cero.html">Desde cero</a>
-<a href="pages/mapa-material.html">Mapa material</a>
+<a href="#" class="active">Inicio</a>
+<a href="guia/">Guía por PDF</a>
+<a href="guia-estandar/">Guía por estándar</a>
+<a href="simulacro/">Simulación</a>
 </nav>
 <div class="container">
 
 <div class="steps-box">
-<h2>🗺️ Cómo usar este portal — paso a paso</h2>
+<h2>🗺️ Tres entradas — elige tu forma de estudiar</h2>
 <ol class="steps-list">
-<li><div><strong>1. Empieza aquí (Portal)</strong> Revisa el mapa del material y el plan de 4 semanas para saber qué PDF estudiar cada día.</div></li>
-<li><div><strong>2. Abre la Guía interactiva</strong> 13 temas con teoría PDF 1–10, tramas SVG clicables, ejercicios con «¿Por qué?», flashcards y simulacro P3.</div></li>
-<li><div><strong>3. Fórmulas y desde cero</strong> Link budget, EIRP, eficiencia y fundamentos cuando necesites repasar la base.</div></li>
-<li><div><strong>4. Prepara cada prueba</strong> P1–P4 con correcciones, tipos de pregunta y bancos por tema.</div></li>
+<li><div><strong>1. Guía por PDF (1–10)</strong> Orden del curso: intro, capas, PMD, PLCP, MAC, DCF, tablas PHY, pruebas P1/P2 y preparación P3.</div></li>
+<li><div><strong>2. Guía por estándar</strong> Mismo material agrupado por 802.11 legacy → b → a → g → n → ac → ax → be. En cada uno: PMD, PLCP, MAC, DCF, tablas y ejercicios.</div></li>
+<li><div><strong>3. Simulación de examen</strong> Quiz, flashcards y ejercicios tipo Prueba 3 con solución paso a paso.</div></li>
 </ol>
 </div>
 
-<div class="hero-card">
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem">
+<a class="hero-card" href="guia/" style="text-decoration:none;color:inherit;display:block">
 <div>
-<h2>Guía interactiva WLAN — curso completo</h2>
-<p>13 temas (PDF 1–10): intro, capas, PMD, PLCP, MAC, DCF, eficiencia, link budget, Wireshark.
-Tramas <strong>SVG interactivas</strong> por campo, 45+ ejercicios con <strong>¿Por qué?</strong>, flashcards y simulacro Prueba 3.</p>
+<h2>📚 Guía por PDF</h2>
+<p>Teoría PDF 1–10 en orden del curso · Tramas SVG · Tablas PHY · P1/P2 · Preparación P3.</p>
 </div>
-<a class="btn" href="guia/">Abrir guía interactiva →</a>
+<span class="btn">Abrir guía PDF →</span>
+</a>
+<a class="hero-card" href="guia-estandar/" style="text-decoration:none;color:inherit;display:block;border-color:rgba(16,185,129,.35)">
+<div>
+<h2>📡 Guía por estándar</h2>
+<p>legacy → be · PMD + PLCP + MAC + DCF por generación Wi-Fi · Diapositivas y resúmenes agrupados.</p>
 </div>
-<div class="section-title">Fundamentos</div><div class="grid"><a class="card" href="pages/desde-cero.html"><h3>WLAN desde cero</h3><p>Conceptos base, capa física, MAC, fórmulas, seguridad y QoS resumido.</p><span class="tag tag-fundamentos">Fundamentos</span></a><a class="card" href="pages/modulos-16.html"><h3>16 módulos del curso (2025-B)</h3><p>Intro, componentes, física, PLCP, MAC, DCF, PCF, seguridad, diseño y QoS.</p><span class="tag tag-fundamentos">Fundamentos</span></a><a class="card" href="pages/mapa-material.html"><h3>Mapa del material</h3><p>Inventario de PDFs, pruebas, imágenes y orden de estudio.</p><span class="tag tag-fundamentos">Fundamentos</span></a><a class="card" href="pages/plan-estudio.html"><h3>Plan de estudio (4 semanas)</h3><p>Cronograma semana a semana para cubrir todo el temario.</p><span class="tag tag-fundamentos">Fundamentos</span></a></div><div class="section-title">Por prueba</div><div class="grid"><a class="card" href="pages/tipos-pregunta.html"><h3>Tipos de pregunta en examen</h3><p>Completar, V/F, opción múltiple, numéricos — cómo abordarlos.</p><span class="tag tag-examenes">Por prueba</span></a><a class="card" href="pages/p1-correccion.html"><h3>Prueba 1 — Corrección y banco</h3><p>17 preguntas tipo P1 resueltas + EIRP + checklist. Exporta el sdocx a PDF para corrección literal.</p><span class="tag tag-examenes">Por prueba</span></a><a class="card" href="pages/p1-fundamentos.html"><h3>Prueba 1 — Fundamentos</h3><p>BSS, ESS, capas, dBm, EIRP (~30% del curso).</p><span class="tag tag-examenes">Por prueba</span></a><a class="card" href="pages/p2-fisica.html"><h3>Prueba 2 — Capa física</h3><p>PMD, PLCP legacy, bits/símbolo OFDM.</p><span class="tag tag-examenes">Por prueba</span></a><a class="card" href="pages/p3-teoria.html"><h3>Prueba 3 — Teoría resumida</h3><p>Mapa PDF 1–10, reglas PLCP/MAC/DCF para P3.</p><span class="tag tag-examenes">Por prueba</span></a><a class="card" href="pages/p3-ejercicios.html"><h3>Prueba 3 — Ejercicios completos</h3><p>Banco de ejercicios tipo examen (tramas, tiempos, NAV).</p><span class="tag tag-examenes">Por prueba</span></a><a class="card" href="pages/p3-chuleta.html"><h3>Chuleta Prueba 3</h3><p>Números clave y recordatorios de última hora.</p><span class="tag tag-examenes">Por prueba</span></a></div><div class="section-title">Fórmulas</div><div class="grid"><a class="card" href="pages/formulas.html"><h3>Fórmulas y ejercicios</h3><p>Link budget, Fresnel, EIRP, eficiencia, FHSS/DSSS/OFDM.</p><span class="tag tag-formulas">Fórmulas</span></a></div><div class="section-title">Tramas / MAC</div><div class="grid"><a class="card" href="pages/teoria-tramas.html"><h3>Teoría tramas MAC (completa)</h3><p>Frame Control, tipos de trama, DCF en profundidad.</p><span class="tag tag-tramas">Tramas / MAC</span></a></div>
+<span class="btn" style="background:linear-gradient(135deg,#059669,#10b981)">Por estándar →</span>
+</a>
+<a class="hero-card" href="simulacro/" style="text-decoration:none;color:inherit;display:block;border-color:rgba(168,85,247,.35)">
+<div>
+<h2>🎯 Simulación de examen</h2>
+<p>Quiz aleatorio, flashcards y simulacro Prueba3-3 completo.</p>
 </div>
-<footer class="site-footer">WLAN — Escuela Politécnica Nacional · PhD. Soraya Sinche · 16 módulos + PDF 2026-A</footer>
+<span class="btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">Practicar →</span>
+</a>
+</div>
+</div>
+<footer class="site-footer">WLAN — Escuela Politécnica Nacional · PhD. Soraya Sinche</footer>
 </body></html>

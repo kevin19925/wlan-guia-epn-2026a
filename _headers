@@ -3,7 +3,9 @@
   Cache-Control: no-cache, must-revalidate
 /guia/*
   Cache-Control: no-cache, must-revalidate
-/pages/*
+/guia-estandar/*
+  Cache-Control: no-cache, must-revalidate
+/simulacro/*
   Cache-Control: no-cache, must-revalidate
 /assets/*
   Cache-Control: public, max-age=86400
