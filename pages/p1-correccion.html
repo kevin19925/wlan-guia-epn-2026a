@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="17 preguntas tipo P1 resueltas + EIRP + checklist. Exporta el sdocx a PDF para corrección literal."/>
+<title>Prueba 1 — Corrección y banco — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">Prueba 1 — Corrección y banco</h1>
+<p class="page-desc">17 preguntas tipo P1 resueltas + EIRP + checklist. Exporta el sdocx a PDF para corrección literal.</p>
+<h2 class="sec-h">Prueba 1 — Análisis y preparación (2026-A)</h2>
+<blockquote class="quote"><strong>Sobre el archivo `Corrección prueba 1_260603_143319.sdocx`:</strong> es un apunte de <strong>Samsung Notes</strong> con páginas escaneadas a mano (formato <code>.spi</code>, no texto). El PDF embebido es solo papel cuadriculado en blanco. <strong>No se pudo extraer la corrección literal página por página.</strong> Este documento cubre <strong>todo lo que entra en P1</strong> según PDF 1–3 (2026-A) y preguntas tipo examen (incl. montañita histórica).</blockquote>
+<p>---</p>
+<h3 class="sec-h3">Qué evalúa la Prueba 1 (~30 %)</h3>
+<table class='dat'><thead><tr>
+<th>Bloque</th><th>PDF 2026-A</th><th>Peso en examen</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Introducción WLAN</td><td>PDF 1</td><td>Alto</td>
+</tr>
+<tr>
+<td>Componentes (BSS, ESS, servicios)</td><td>PDF 2</td><td><strong>Muy alto</strong></td>
+</tr>
+<tr>
+<td>Capas + PHY básica (FHSS, DSSS, DFIR)</td><td>PDF 3 + módulo 3</td><td>Alto</td>
+</tr>
+<tr>
+<td>dBm, EIRP, link budget básico</td><td>Ejercicios</td><td>Medio-alto</td>
+</tr>
+</tbody></table>
+<p><strong>No entra en P1 (pero sí en P2/P3):</strong> PLCP tiempos µs, MAC Frame Control, DCF/NAV, seguridad WPA, QoS.</p>
+<p>---</p>
+<h3 class="sec-h3">Mapa mental P1 (memorizar al derecho y al revés)</h3>
+<div class="formula-card" data-latex="WLAN = capa física (RF/IR/VLC) + capa enlace (MAC) \\ IEEE 802.11 estandariza \cdot Wi-Fi Alliance certifica (ex WECA 1999) \\ Topologías: \\ BSS = 1 AP + STAs \cdot BSSID = MAC del AP \\ IBSS = ad-hoc sin AP \\ ESS = varios BSS, mismo SSID, DS entre APs \\ Servicios: \\ SS (estación): auth, privacidad, entrega datos, QoS… \\ DSS (distribución): assoc, reassoc, distribución MSDU \\ \Rightarrow Auth ≠ Assoc \cdot Orden: Scan \Rightarrow Auth \Rightarrow Assoc \Rightarrow 4-way (RSNA) \\ PHY legacy: \\ FHSS: 79 canales \times 1 MHz (USA/EU), 3 patrones de 26 saltos, 1–2 \,\text{Mbps} \\ DSSS: 22 MHz por canal, Barker 11 chips/bit, 11 Mcps \\ DFIR: IR 250 ns pulsos, 16-PPM / 4-PPM \\ CCK: 8 chips, 5.5 y 11 \,\text{Mbps} \\ Generaciones (trampa frecuente): \\ 4ª gen = 802.11n \cdot 5ª = ac \cdot 6ª = ax \cdot 7ª = be"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>W</mi><mi>L</mi><mi>A</mi><mi>N</mi><mo>&#x0003D;</mo><mi>c</mi><mi>a</mi><mi>p</mi><mi>a</mi><mi>f</mi><mi>í</mi><mi>s</mi><mi>i</mi><mi>c</mi><mi>a</mi><mo stretchy="false">&#x00028;</mo><mi>R</mi><mi>F</mi><mo>&#x0002F;</mo><mi>I</mi><mi>R</mi><mo>&#x0002F;</mo><mi>V</mi><mi>L</mi><mi>C</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mi>c</mi><mi>a</mi><mi>p</mi><mi>a</mi><mi>e</mi><mi>n</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>e</mi><mo stretchy="false">&#x00028;</mo><mi>M</mi><mi>A</mi><mi>C</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>I</mi><mi>E</mi><mi>E</mi><mi>E</mi><mn>802.11</mn><mi>e</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>d</mi><mi>a</mi><mi>r</mi><mi>i</mi><mi>z</mi><mi>a</mi><mo>&#x000B7;</mo><mi>W</mi><mi>i</mi><mo>&#x02212;</mo><mi>F</mi><mi>i</mi><mi>A</mi><mi>l</mi><mi>l</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>r</mi><mi>t</mi><mi>i</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>a</mi><mo stretchy="false">&#x00028;</mo><mi>e</mi><mi>x</mi><mi>W</mi><mi>E</mi><mi>C</mi><mi>A</mi><mn>1999</mn><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>T</mi><mi>o</mi><mi>p</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>í</mi><mi>a</mi><mi>s</mi><mi>:</mi><mspace linebreak="newline" /><mi>B</mi><mi>S</mi><mi>S</mi><mo>&#x0003D;</mo><mn>1</mn><mi>A</mi><mi>P</mi><mo>&#x0002B;</mo><mi>S</mi><mi>T</mi><mi>A</mi><mi>s</mi><mo>&#x000B7;</mo><mi>B</mi><mi>S</mi><mi>S</mi><mi>I</mi><mi>D</mi><mo>&#x0003D;</mo><mi>M</mi><mi>A</mi><mi>C</mi><mi>d</mi><mi>e</mi><mi>l</mi><mi>A</mi><mi>P</mi><mspace linebreak="newline" /><mi>I</mi><mi>B</mi><mi>S</mi><mi>S</mi><mo>&#x0003D;</mo><mi>a</mi><mi>d</mi><mo>&#x02212;</mo><mi>h</mi><mi>o</mi><mi>c</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>A</mi><mi>P</mi><mspace linebreak="newline" /><mi>E</mi><mi>S</mi><mi>S</mi><mo>&#x0003D;</mo><mi>v</mi><mi>a</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>s</mi><mi>B</mi><mi>S</mi><mi>S</mi><mo>&#x0002C;</mo><mi>m</mi><mi>i</mi><mi>s</mi><mi>m</mi><mi>o</mi><mi>S</mi><mi>S</mi><mi>I</mi><mi>D</mi><mo>&#x0002C;</mo><mi>D</mi><mi>S</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>A</mi><mi>P</mi><mi>s</mi><mspace linebreak="newline" /><mi>S</mi><mi>e</mi><mi>r</mi><mi>v</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>o</mi><mi>s</mi><mi>:</mi><mspace linebreak="newline" /><mi>S</mi><mi>S</mi><mo stretchy="false">&#x00028;</mo><mi>e</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mi>a</mi><mi>u</mi><mi>t</mi><mi>h</mi><mo>&#x0002C;</mo><mi>p</mi><mi>r</mi><mi>i</mi><mi>v</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>d</mi><mo>&#x0002C;</mo><mi>e</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mo>&#x0002C;</mo><mi>Q</mi><mi>o</mi><mi>S</mi><mi>…</mi><mspace linebreak="newline" /><mi>D</mi><mi>S</mi><mi>S</mi><mo stretchy="false">&#x00028;</mo><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>b</mi><mi>u</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mo>&#x0002C;</mo><mi>r</mi><mi>e</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mo>&#x0002C;</mo><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>b</mi><mi>u</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mi>M</mi><mi>S</mi><mi>D</mi><mi>U</mi><mspace linebreak="newline" /><mo>&#x021D2;</mo><mi>A</mi><mi>u</mi><mi>t</mi><mi>h</mi><mi>≠</mi><mi>A</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mo>&#x000B7;</mo><mi>O</mi><mi>r</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>:</mi><mi>S</mi><mi>c</mi><mi>a</mi><mi>n</mi><mo>&#x021D2;</mo><mi>A</mi><mi>u</mi><mi>t</mi><mi>h</mi><mo>&#x021D2;</mo><mi>A</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mo>&#x021D2;</mo><mn>4</mn><mo>&#x02212;</mo><mi>w</mi><mi>a</mi><mi>y</mi><mo stretchy="false">&#x00028;</mo><mi>R</mi><mi>S</mi><mi>N</mi><mi>A</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>P</mi><mi>H</mi><mi>Y</mi><mi>l</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>c</mi><mi>y</mi><mi>:</mi><mspace linebreak="newline" /><mi>F</mi><mi>H</mi><mi>S</mi><mi>S</mi><mi>:</mi><mn>79</mn><mi>c</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>e</mi><mi>s</mi><mo>&#x000D7;</mo><mn>1</mn><mi>M</mi><mi>H</mi><mi>z</mi><mo stretchy="false">&#x00028;</mo><mi>U</mi><mi>S</mi><mi>A</mi><mo>&#x0002F;</mo><mi>E</mi><mi>U</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002C;</mo><mn>3</mn><mi>p</mi><mi>a</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>s</mi><mi>d</mi><mi>e</mi><mn>26</mn><mi>s</mi><mi>a</mi><mi>l</mi><mi>t</mi><mi>o</mi><mi>s</mi><mo>&#x0002C;</mo><mn>1</mn><mi>–</mi><mn>2</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mspace linebreak="newline" /><mi>D</mi><mi>S</mi><mi>S</mi><mi>S</mi><mi>:</mi><mn>22</mn><mi>M</mi><mi>H</mi><mi>z</mi><mi>p</mi><mi>o</mi><mi>r</mi><mi>c</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>l</mi><mo>&#x0002C;</mo><mi>B</mi><mi>a</mi><mi>r</mi><mi>k</mi><mi>e</mi><mi>r</mi><mn>11</mn><mi>c</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><mi>b</mi><mi>i</mi><mi>t</mi><mo>&#x0002C;</mo><mn>11</mn><mi>M</mi><mi>c</mi><mi>p</mi><mi>s</mi><mspace linebreak="newline" /><mi>D</mi><mi>F</mi><mi>I</mi><mi>R</mi><mi>:</mi><mi>I</mi><mi>R</mi><mn>250</mn><mi>n</mi><mi>s</mi><mi>p</mi><mi>u</mi><mi>l</mi><mi>s</mi><mi>o</mi><mi>s</mi><mo>&#x0002C;</mo><mn>16</mn><mo>&#x02212;</mo><mi>P</mi><mi>P</mi><mi>M</mi><mo>&#x0002F;</mo><mn>4</mn><mo>&#x02212;</mo><mi>P</mi><mi>P</mi><mi>M</mi><mspace linebreak="newline" /><mi>C</mi><mi>C</mi><mi>K</mi><mi>:</mi><mn>8</mn><mi>c</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi><mo>&#x0002C;</mo><mn>5.5</mn><mi>y</mi><mn>11</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mspace linebreak="newline" /><mi>G</mi><mi>e</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>t</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>a</mi><mi>f</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>u</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mspace linebreak="newline" /><mn>4</mn><mi>ª</mi><mi>g</mi><mi>e</mi><mi>n</mi><mo>&#x0003D;</mo><mn>802.11</mn><mi>n</mi><mo>&#x000B7;</mo><mn>5</mn><mi>ª</mi><mo>&#x0003D;</mo><mi>a</mi><mi>c</mi><mo>&#x000B7;</mo><mn>6</mn><mi>ª</mi><mo>&#x0003D;</mo><mi>a</mi><mi>x</mi><mo>&#x000B7;</mo><mn>7</mn><mi>ª</mi><mo>&#x0003D;</mo><mi>b</mi><mi>e</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Preguntas tipo P1 — resueltas con ¿Por qué?</h3>
+<h4 class="sec-h4">1. FHSS — patrones de salto</h4>
+<p><strong>P:</strong> Cada BSS puede seleccionar uno de tres patrones de 26 saltos pseudoaleatorios.  </p>
+<p><strong>✓ Verdadero (c en MC).</strong>  </p>
+<p><strong>¿Por qué?</strong> FHSS divide 79 canales en 3 grupos desfasados (0,3,6… / 1,4,7… / 2,5,8…) para reducir colisiones entre BSS vecinos.</p>
+<h4 class="sec-h4">2. Ancho de banda canal FHSS</h4>
+<p><strong>✓ 1 MHz (c).</strong>  </p>
+<p><strong>¿Por qué?</strong> Cada canal FHSS es de <strong>1 MHz</strong>; el salto cubre ~79 MHz total, no cada canal.</p>
+<h4 class="sec-h4">3. Canales FHSS USA</h4>
+<p><strong>✓ 79 (c).</strong>  </p>
+<p><strong>¿Por qué?</strong> USA/Europa 79 canales; Japón 23.</p>
+<h4 class="sec-h4">4. Medición RF de APs vecinos</h4>
+<p><strong>✓ Falso.</strong>  </p>
+<p><strong>¿Por qué?</strong> Es <strong>active/passive scanning</strong> (servicio de estación), no “servicio de infraestructura” del DS.</p>
+<h4 class="sec-h4">5. Multitrayectoria 180°</h4>
+<p><strong>✓ Verdadero.</strong>  </p>
+<p><strong>¿Por qué?</strong> Ondas desfasadas π radianes pueden <strong>cancelarse</strong> (fading destructivo).</p>
+<h4 class="sec-h4">6. Tres propiedades interrelacionadas</h4>
+<p><strong>✓ b) Frecuencia, longitud de onda, velocidad de la luz</strong> — λ = c/f.</p>
+<h4 class="sec-h4">7. Auth y asociación como únicos servicios de estación</h4>
+<p><strong>✓ Falso.</strong>  </p>
+<p><strong>¿Por qué?</strong> <strong>Auth</strong> es SS; <strong>asociación</strong> en infraestructura es <strong>DSS</strong> (en el AP). SS incluye también privacidad, entrega, QoS, medición…</p>
+<h4 class="sec-h4">8. Relacionar PHY y función</h4>
+<table class='dat'><thead><tr>
+<th>PHY</th><th>Función</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>DSSS</td><td>11 chips Barker por bit</td>
+</tr>
+<tr>
+<td>DFIR</td><td>Pulso 250 ns</td>
+</tr>
+<tr>
+<td>DSSS-CCK</td><td>Códigos ortogonales 8 chips</td>
+</tr>
+<tr>
+<td>FHSS</td><td>3 patrones de 26 saltos</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">9. Ancho de banda canal DSSS</h4>
+<p><strong>✓ 22 MHz (c).</strong>  </p>
+<p><strong>¿Por qué?</strong> Canales 2.4 GHz espaciados 5 MHz pero ocupan <strong>22 MHz</strong> efectivos.</p>
+<h4 class="sec-h4">10. PBSS — varios PCP simultáneos</h4>
+<p><strong>✓ Falso.</strong>  </p>
+<p><strong>¿Por qué?</strong> En <strong>802.11ad @ 60 GHz</strong> solo <strong>un</strong> PCP (Point Control) por PBSS.</p>
+<h4 class="sec-h4">11. Cuarta generación Wi-Fi</h4>
+<p><strong>✓ 802.11n (a).</strong>  </p>
+<p><strong>¿Por qué?</strong> 1ª=11, 2ª=b, 3ª=a/g, <strong>4ª=n</strong>, 5ª=ac, 6ª=ax, 7ª=be.</p>
+<h4 class="sec-h4">12. Mismo alcance g y a misma potencia</h4>
+<p><strong>✓ Falso.</strong>  </p>
+<p><strong>¿Por qué?</strong> <strong>g = 2.4 GHz</strong>, <strong>a = 5 GHz</strong> → distinta atenuación y penetración; distinto alcance.</p>
+<h4 class="sec-h4">13. dBi mide</h4>
+<p><strong>✓ c) Ganancia de antena</strong> (respecto a isotrópica). No es EIRP ni Pt.</p>
+<h4 class="sec-h4">14. 256-CCK agrupa 4 bits</h4>
+<p><strong>✓ Falso.</strong>  </p>
+<p><strong>¿Por qué?</strong> CCK 11 Mbps usa palabras de <strong>8 bits</strong> → 64 codewords + fase DQPSK.</p>
+<h4 class="sec-h4">15. 802.11a — 54 Mbps menos cobertura que 6 Mbps</h4>
+<p><strong>✓ Verdadero.</strong>  </p>
+<p><strong>¿Por qué?</strong> Mayor constelación (64-QAM) → necesita <strong>mejor SNR</strong> → menor alcance.</p>
+<h4 class="sec-h4">16. EIRP — ejercicio numérico clásico</h4>
+<p><strong>Datos:</strong> Pt = 100 mW, pérdidas cable 3 dB, antena 16 dBi.</p>
+<div class="formula-card" data-latex="Pt = 100 mW = 20 dBm \\ EIRP = 20 − 3 + 16 = 33 dBm \\ mW = 10^(\frac{33}{10}) = 10^3.3 \approx 1995 mW \approx 2000 mW"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>t</mi><mo>&#x0003D;</mo><mn>100</mn><mi>m</mi><mi>W</mi><mo>&#x0003D;</mo><mn>20</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>E</mi><mi>I</mi><mi>R</mi><mi>P</mi><mo>&#x0003D;</mo><mn>20</mn><mi>−</mi><mn>3</mn><mo>&#x0002B;</mo><mn>16</mn><mo>&#x0003D;</mo><mn>33</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>m</mi><mi>W</mi><mo>&#x0003D;</mo><msup><mn>10</mn><mo stretchy="false">&#x00028;</mo></msup><mfrac><mrow><mn>33</mn></mrow><mrow><mn>10</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><msup><mn>10</mn><mn>3</mn></msup><mi>.3</mi><mo>&#x02248;</mo><mn>1995</mn><mi>m</mi><mi>W</mi><mo>&#x02248;</mo><mn>2000</mn><mi>m</mi><mi>W</mi></mrow></math></div></div>
+<p><strong>✓ Respuesta: ~2000 mW o 33 dBm</strong></p>
+<p><strong>¿Por qué?</strong> En dB: pérdidas <strong>restan</strong>, ganancia antena <strong>suma</strong>. Siempre convierte mW→dBm antes.</p>
+<h4 class="sec-h4">17. Longitud trama MAC = máximo 802.3</h4>
+<p><strong>✓ Falso (típico).</strong>  </p>
+<p><strong>¿Por qué?</strong> 802.11 MSDU máx ~2304 B (antes de encapsular); Ethernet payload 1500 B típico — <strong>no son iguales</strong>.</p>
+<p>---</p>
+<h3 class="sec-h3">Fórmulas P1 — tabla de bolsillo</h3>
+<table class='dat'><thead><tr>
+<th>Fórmula</th><th>Uso</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>dBm = 10·log₁₀(mW)</td><td>Convertir potencia</td>
+</tr>
+<tr>
+<td>EIRP(dBm) = Pt − L + G_ant</td><td>Cadena TX</td>
+</tr>
+<tr>
+<td>Pr = Pt + Gt + Gr − Lp − pérdidas</td><td>Link budget</td>
+</tr>
+<tr>
+<td>λ = c / f</td><td>RF básico</td>
+</tr>
+<tr>
+<td>Chips/símbolo FHSS = R_spread / (Rb/log₂M)</td><td>PHY FHSS</td>
+</tr>
+<tr>
+<td>Gp DSSS = chips/bit → Rb = Rc/Gp</td><td>DSSS</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">Checklist “sé P1 al derecho y al revés”</h3>
+<ul class='concept-list'>
+<li>[ ] Diferencio BSS / IBSS / ESS / PBSS / MBSS / QBSS</li>
+<li>[ ] SSID (32 chars) ≠ BSSID (MAC 48 bits)</li>
+<li>[ ] Servicios SS vs DSS y orden Auth → Assoc</li>
+<li>[ ] 8 generaciones Wi-Fi hasta <strong>bn</strong></li>
+<li>[ ] FHSS: 79 canales, 1 MHz, 3×26 saltos</li>
+<li>[ ] DSSS: 22 MHz, 11 Mcps, Barker 11 chips</li>
+<li>[ ] CCK 8 chips — 5.5 y 11 Mbps</li>
+<li>[ ] dBi = ganancia antena; EIRP en cadena dB</li>
+<li>[ ] 4ª gen = <strong>n</strong>; g y a <strong>no</strong> mismo alcance</li>
+<li>[ ] Mayor Mbps OFDM → <strong>menor</strong> cobertura</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Cómo usar la corrección oficial (sdocx)</h3>
+<ol class='step-list'>
+<li>1. Abre el archivo en <strong>Samsung Notes</strong> en tablet/teléfono.</li>
+<li>2. <strong>Compartir → PDF</strong> o exporta cada página como imagen.</li>
+<li>3. Coloca el PDF en <code>estudio/Corrección p1.pdf</code> para integrarlo al portal.</li>
+</ol>
+<p>Cuando tengas el PDF exportado, se puede añadir pregunta por pregunta la corrección exacta de la profe.</p>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>

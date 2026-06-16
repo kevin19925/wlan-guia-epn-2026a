@@ -288,15 +288,23 @@ table.dat code{font-family:var(--mono);color:var(--warn);font-size:.82rem;backgr
 .frame-sub{font-size:.74rem;color:var(--muted);margin-bottom:12px}
 .frame-exam{font-size:.76rem;color:var(--ok2);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
   padding:10px 14px;border-radius:8px;margin-bottom:14px;line-height:1.5}
-.frame-diagram{display:flex;gap:4px;min-height:76px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
-.fblock{flex:1;min-width:54px;background:var(--accent-g);border-radius:8px 8px 0 0;
-  padding:10px 6px;cursor:pointer;text-align:center;transition:all .2s var(--ease);border:2px solid transparent;
-  min-height:68px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
-.fblock::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent);border-radius:6px 6px 0 0;pointer-events:none}
-.fblock:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(56,189,248,.4)}
-.fblock.active{border-color:var(--warn);box-shadow:0 0 0 2px var(--warn),0 8px 24px rgba(245,158,11,.2)}
-.fblock .fn{font-size:.58rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.03em;position:relative;z-index:1}
-.fblock .fb{font-family:var(--mono);font-size:.54rem;color:rgba(255,255,255,.9);margin-top:4px;position:relative;z-index:1}
+.frame-scroll{overflow-x:auto;margin-bottom:14px;padding:4px 2px 8px;-webkit-overflow-scrolling:touch}
+.frame-scroll::-webkit-scrollbar{height:6px}
+.frame-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.frame-svg{display:block;min-width:100%;height:auto}
+.frame-svg .fv-field{cursor:pointer;transition:filter .2s,transform .2s}
+.frame-svg .fv-field:hover rect{filter:brightness(1.15)}
+.frame-svg .fv-field.active rect{stroke:var(--warn);stroke-width:3}
+.frame-svg .fv-name{font:700 10px var(--sans);fill:#fff;text-transform:uppercase;letter-spacing:.04em}
+.frame-svg .fv-bits{font:500 9px var(--mono);fill:rgba(255,255,255,.88)}
+.frame-svg .fv-arrow{stroke:var(--muted);stroke-width:1.5;fill:none;marker-end:url(#fv-arrow)}
+.frame-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.68rem;color:var(--muted)}
+.frame-legend span{display:inline-flex;align-items:center;gap:5px}
+.frame-legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.tema-body:has(.tema-pane[data-pane="tramas"]) .tema-pane[data-pane="teoria"] .frame-slide,
+.tema-body:has(.tema-pane[data-pane="tramas"]) .tema-pane[data-pane="teoria"] .frame-annotated{display:none}
+.sidebar-head{cursor:pointer;transition:background .2s}
+.sidebar-head:hover{background:rgba(56,189,248,.06)}
 .field-panel{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px;min-height:96px;
   animation:fadeIn .3s var(--ease)}
 .field-panel .ph{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
@@ -467,7 +475,8 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <div id="progress-top"><i></i></div>
 <div class="layout">
 <nav class="sidebar">
-<div class="sidebar-head">
+<div class="sidebar-head" role="button" tabindex="0" title="Volver al inicio"
+  onclick="goTopic('portada')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTopic('portada');}">
 <h1>WLAN Master<br/><span class="brand-sub">EPN 2026-A · Curso completo</span></h1>
 <div class="progress-ring-wrap">
 <div class="progress-ring">
@@ -481,7 +490,7 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 </div>
 <div class="search-wrap"><input type="search" id="global-search" placeholder="Buscar… (/)" autocomplete="off"/></div>
 <div class="nav-links ng-sub" style="padding:4px 14px 6px;font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700">Temas</div>
-<div class="nav-links"><a href="#portada" class="nav-home">🏠 Inicio</a><a href="#intro" data-topic="intro" class=""><span class="nav-num">01</span><span>Introducción y componentes WLA</span><span class="nav-check">✓</span></a><a href="#capas" data-topic="capas" class="priority"><span class="nav-num">02</span><span>Capas IEEE 802.11 — MSDU a PPD</span><span class="nav-check">✓</span></a><a href="#pmd" data-topic="pmd" class=""><span class="nav-num">03</span><span>Capa física PMD — modulación y</span><span class="nav-check">✓</span></a><a href="#plcp_legacy" data-topic="plcp_legacy" class="priority"><span class="nav-num">04</span><span>PLCP legacy — FHSS, DSSS, 802.</span><span class="nav-check">✓</span></a><a href="#plcp_modern" data-topic="plcp_modern" class=""><span class="nav-num">05</span><span>PLCP moderno — 802.11g, n, ac,</span><span class="nav-check">✓</span></a><a href="#mac" data-topic="mac" class="priority"><span class="nav-num">06</span><span>Subcapa MAC — tramas, Frame Co</span><span class="nav-check">✓</span></a><a href="#dcf" data-topic="dcf" class="priority"><span class="nav-num">07</span><span>DCF — CSMA/CA, IFS, RTS/CTS, N</span><span class="nav-check">✓</span></a><a href="#eficiencia" data-topic="eficiencia" class="priority"><span class="nav-num">08</span><span>Eficiencia, tiempos y ejercici</span><span class="nav-check">✓</span></a><a href="#link_budget" data-topic="link_budget" class=""><span class="nav-num">09</span><span>Link budget — dBm, EIRP, FHSS</span><span class="nav-check">✓</span></a><a href="#wireshark" data-topic="wireshark" class=""><span class="nav-num">10</span><span>Análisis Wireshark — tramas re</span><span class="nav-check">✓</span></a><a href="#siglas" data-topic="siglas" class=""><span class="nav-num">11</span><span>Siglas y acrónimos WLAN</span><span class="nav-check">✓</span></a><a href="#chuleta" data-topic="chuleta" class="priority"><span class="nav-num">12</span><span>Chuleta examen — números, fórm</span><span class="nav-check">✓</span></a></div>
+<div class="nav-links"><a href="#portada" class="nav-home">🏠 Inicio</a><a href="#intro" data-topic="intro" class=""><span class="nav-num">01</span><span>Introducción y componentes WLA</span><span class="nav-check">✓</span></a><a href="#p1_examen" data-topic="p1_examen" class=""><span class="nav-num">P1</span><span>Prueba 1 — Fundamentos y corre</span><span class="nav-check">✓</span></a><a href="#capas" data-topic="capas" class="priority"><span class="nav-num">02</span><span>Capas IEEE 802.11 — MSDU a PPD</span><span class="nav-check">✓</span></a><a href="#pmd" data-topic="pmd" class="priority"><span class="nav-num">03</span><span>Capa física PMD — modulación y</span><span class="nav-check">✓</span></a><a href="#plcp_legacy" data-topic="plcp_legacy" class="priority"><span class="nav-num">04</span><span>PLCP legacy — FHSS, DSSS, 802.</span><span class="nav-check">✓</span></a><a href="#plcp_modern" data-topic="plcp_modern" class="priority"><span class="nav-num">05</span><span>PLCP moderno — 802.11g, n, ac,</span><span class="nav-check">✓</span></a><a href="#mac" data-topic="mac" class="priority"><span class="nav-num">06</span><span>Subcapa MAC — tramas, Frame Co</span><span class="nav-check">✓</span></a><a href="#dcf" data-topic="dcf" class="priority"><span class="nav-num">07</span><span>DCF — CSMA/CA, IFS, RTS/CTS, N</span><span class="nav-check">✓</span></a><a href="#eficiencia" data-topic="eficiencia" class="priority"><span class="nav-num">08</span><span>Eficiencia, tiempos y ejercici</span><span class="nav-check">✓</span></a><a href="#link_budget" data-topic="link_budget" class=""><span class="nav-num">09</span><span>Link budget — dBm, EIRP, FHSS</span><span class="nav-check">✓</span></a><a href="#wireshark" data-topic="wireshark" class=""><span class="nav-num">10</span><span>Análisis Wireshark — tramas re</span><span class="nav-check">✓</span></a><a href="#siglas" data-topic="siglas" class=""><span class="nav-num">11</span><span>Siglas y acrónimos WLAN</span><span class="nav-check">✓</span></a><a href="#chuleta" data-topic="chuleta" class="priority"><span class="nav-num">12</span><span>Chuleta examen — números, fórm</span><span class="nav-check">✓</span></a></div>
 <div class="sidebar-actions">
 <button class="sbtn primary" onclick="openFlashcards()">🃏 Flashcards (27)</button>
 <button class="sbtn" onclick="openQuiz()">🎯 Simulacro examen (57)</button>
@@ -540,7 +549,7 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 </div>
 <div class="study-path">
 <h3>🗺️ Ruta al 100 — orden recomendado (~165 min)</h3>
-<div class="path-steps"><div class="path-step" data-topic="intro" onclick="goTopic('intro')"><div class="path-num">1</div><div class="path-body"><div class="path-title">Intro + componentes</div><div class="path-meta">15 min · PDF 1–2 · Base del curso</div></div></div><div class="path-step" data-topic="capas" onclick="goTopic('capas')"><div class="path-num">2</div><div class="path-body"><div class="path-title">Capas MSDU→PPDU</div><div class="path-meta">15 min · PDF 3 · Encapsulamiento</div></div></div><div class="path-step" data-topic="pmd" onclick="goTopic('pmd')"><div class="path-num">3</div><div class="path-body"><div class="path-title">PMD modulación</div><div class="path-meta">20 min · PDF 4–6 · b, g/n, ac/ax/be</div></div></div><div class="path-step" data-topic="plcp_legacy" onclick="goTopic('plcp_legacy')"><div class="path-num">4</div><div class="path-body"><div class="path-title">PLCP legacy 192/96 µs</div><div class="path-meta">20 min · PDF 7 · Tiempos clave P3</div></div></div><div class="path-step" data-topic="plcp_modern" onclick="goTopic('plcp_modern')"><div class="path-num">5</div><div class="path-body"><div class="path-title">PLCP g/n/ac/ax/be</div><div class="path-meta">15 min · PDF 8 · Mixed, HE, EHT</div></div></div><div class="path-step" data-topic="mac" onclick="goTopic('mac')"><div class="path-num">6</div><div class="path-body"><div class="path-title">MAC y Frame Control</div><div class="path-meta">25 min · PDF 9 · Tramas + 34 B</div></div></div><div class="path-step" data-topic="dcf" onclick="goTopic('dcf')"><div class="path-num">7</div><div class="path-body"><div class="path-title">DCF y NAV</div><div class="path-meta">30 min · PDF 10 · RTS/CTS</div></div></div><div class="path-step" data-topic="eficiencia" onclick="goTopic('eficiencia')"><div class="path-num">8</div><div class="path-body"><div class="path-title">Eficiencia + ejercicios</div><div class="path-meta">45 min · ★ Prueba 3 — sacar 100</div></div></div><div class="path-step" data-topic="link_budget" onclick="goTopic('link_budget')"><div class="path-num">9</div><div class="path-body"><div class="path-title">dBm, EIRP, FHSS</div><div class="path-meta">25 min · Prueba3-3 parte 2</div></div></div><div class="path-step" data-topic="wireshark" onclick="goTopic('wireshark')"><div class="path-num">10</div><div class="path-body"><div class="path-title">Wireshark</div><div class="path-meta">20 min · Decodificar FC hex</div></div></div><div class="path-step" data-topic="chuleta" onclick="goTopic('chuleta')"><div class="path-num">11</div><div class="path-body"><div class="path-title">Chuleta final</div><div class="path-meta">10 min · Repaso día del examen</div></div></div></div>
+<div class="path-steps"><div class="path-step" data-topic="intro" onclick="goTopic('intro')"><div class="path-num">1</div><div class="path-body"><div class="path-title">Intro + componentes</div><div class="path-meta">15 min · PDF 1–2 · Base del curso</div></div></div><div class="path-step" data-topic="p1_examen" onclick="goTopic('p1_examen')"><div class="path-num">2</div><div class="path-body"><div class="path-title">Prueba 1 — fundamentos</div><div class="path-meta">25 min · Topologías, FHSS, EIRP · ~30% nota</div></div></div><div class="path-step" data-topic="capas" onclick="goTopic('capas')"><div class="path-num">3</div><div class="path-body"><div class="path-title">Capas MSDU→PPDU</div><div class="path-meta">15 min · PDF 3 · Encapsulamiento</div></div></div><div class="path-step" data-topic="pmd" onclick="goTopic('pmd')"><div class="path-num">4</div><div class="path-body"><div class="path-title">PMD modulación</div><div class="path-meta">20 min · PDF 4–6 · b, g/n, ac/ax/be</div></div></div><div class="path-step" data-topic="plcp_legacy" onclick="goTopic('plcp_legacy')"><div class="path-num">5</div><div class="path-body"><div class="path-title">PLCP legacy 192/96 µs</div><div class="path-meta">20 min · PDF 7 · Tiempos clave P3</div></div></div><div class="path-step" data-topic="plcp_modern" onclick="goTopic('plcp_modern')"><div class="path-num">6</div><div class="path-body"><div class="path-title">PLCP g/n/ac/ax/be</div><div class="path-meta">15 min · PDF 8 · Mixed, HE, EHT</div></div></div><div class="path-step" data-topic="mac" onclick="goTopic('mac')"><div class="path-num">7</div><div class="path-body"><div class="path-title">MAC y Frame Control</div><div class="path-meta">25 min · PDF 9 · Tramas + 34 B</div></div></div><div class="path-step" data-topic="dcf" onclick="goTopic('dcf')"><div class="path-num">8</div><div class="path-body"><div class="path-title">DCF y NAV</div><div class="path-meta">30 min · PDF 10 · RTS/CTS</div></div></div><div class="path-step" data-topic="eficiencia" onclick="goTopic('eficiencia')"><div class="path-num">9</div><div class="path-body"><div class="path-title">Eficiencia + ejercicios</div><div class="path-meta">45 min · ★ Prueba 3 — sacar 100</div></div></div><div class="path-step" data-topic="link_budget" onclick="goTopic('link_budget')"><div class="path-num">10</div><div class="path-body"><div class="path-title">dBm, EIRP, FHSS</div><div class="path-meta">25 min · Prueba3-3 parte 2</div></div></div><div class="path-step" data-topic="wireshark" onclick="goTopic('wireshark')"><div class="path-num">11</div><div class="path-body"><div class="path-title">Wireshark</div><div class="path-meta">20 min · Decodificar FC hex</div></div></div><div class="path-step" data-topic="chuleta" onclick="goTopic('chuleta')"><div class="path-num">12</div><div class="path-body"><div class="path-title">Chuleta final</div><div class="path-meta">10 min · Repaso día del examen</div></div></div></div>
 </div>
 </section>
 <section class="tema" id="intro">
@@ -558,7 +567,8 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <div class="tema-body">
 
 
-<div class="cobertura-banner"><strong>📚 Lección completa PDF 1–2</strong> — Teoría íntegra del curso 2026-A, estilo clase. Lee en orden.</div>
+<div class="cobertura-banner"><strong>📚 PDF 1–2</strong> — Introducción y componentes WLAN (base del curso).</div>
+<div class="cobertura-banner" style="border-color:#6366f1;background:rgba(99,102,241,.08)"><strong>Mapa PDF 1→10:</strong> Tema 01 = PDF 1–2 · Tema 02 = PDF 3 · Tema 03 = PDF 4–6 · Tema 04 = PDF 7 · Tema 05 = PDF 8 · Tema 06 = PDF 9 · Tema 07 = PDF 10</div>
 <p class="lead">Orden del curso <strong>2026-A</strong> (<code>Teoria/</code>). WLAN es la capa de acceso inalámbrico IEEE 802.11. Wi-Fi Alliance certifica interoperabilidad.</p>
 <article class="subsec"><h3>Resumen rápido — mapa mental</h3>
 <table class="dat"><thead><tr><th>Estándar</th><th>Banda</th><th>Lo esencial</th></tr></thead><tbody>
@@ -641,7 +651,15 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 </ul></div>
 </div>
 <p>Las WLAN <strong>complementan</strong> — no reemplazan — las redes cableadas.</p>
-</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>Memoriza: FCC ISM ≤ <strong>1 W</strong> · Wi-Fi Alliance nació de WECA 1999 · 7ª gen = <strong>be</strong>, 8ª = <strong>bn</strong>.</p></div><p class="prof-voice">El PDF 2 define <strong>cómo se organiza una red 802.11</strong>: topologías (BSS, ESS…), SSID, servicios y modos del AP. Sin esto no entiendes asociación ni roaming.</p><article class="subsec leccion-pdf"><h3>PDF 2 · Componente principal: la STA (estación)</h3>
+</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>Memoriza: FCC ISM ≤ <strong>1 W</strong> · Wi-Fi Alliance nació de WECA 1999 · 7ª gen = <strong>be</strong>, 8ª = <strong>bn</strong>.</p></div><article class="subsec leccion-pdf"><h3>PDF 1 · Checklist completo</h3>
+<table class="dat"><thead><tr><th>Tema</th><th>Dato clave</th></tr></thead><tbody>
+<tr><td>Medios</td><td>RF (principal) · IR · VLC 802.15.7</td></tr>
+<tr><td>ISM FCC</td><td>≤ <strong>1 W</strong> · spread spectrum</td></tr>
+<tr><td>WECA 1999</td><td>→ Wi-Fi Alliance 2002</td></tr>
+<tr><td>8 generaciones</td><td>hasta <strong>802.11bn</strong> (UHR)</td></tr>
+<tr><td>Desafíos</td><td>Multitrayectoria · seguridad · interferencia · consumo</td></tr>
+</tbody></table>
+</article><div class="tip-box"><span class="tip-label">PDF 1–5</span><p>P1 pregunta generaciones: 4ª=<strong>n</strong>, 7ª=<strong>be</strong>.</p></div><p class="prof-voice">El PDF 2 define <strong>cómo se organiza una red 802.11</strong>: topologías (BSS, ESS…), SSID, servicios y modos del AP. Sin esto no entiendes asociación ni roaming.</p><article class="subsec leccion-pdf"><h3>PDF 2 · Componente principal: la STA (estación)</h3>
 <p>Toda radio 802.11 es una <strong>estación (STA)</strong> identificada por dirección MAC única de 48 bits. Puede estar en un AP o en un cliente.</p>
 </article><article class="subsec leccion-pdf"><h3>PDF 2 · Topologías 802.11-2020</h3>
 <table class="dat"><thead><tr><th>Topología</th><th>Descripción</th><th>Examen</th></tr></thead><tbody>
@@ -688,7 +706,14 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <li><strong>Infraestructura</strong> (default) — STA asociada a AP, participa en BSS/ESS.</li>
 <li><strong>Ad-hoc (IBSS)</strong> — peer-to-peer sin AP. Tablets/smartphones a menudo no lo soportan.</li>
 </ul>
-</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>Orden conexión: <strong>Scan → Auth → Assoc → 4-way (RSNA)</strong>. PBSS solo @ 60 GHz. ESS = mismo SSID, distinto BSSID por AP.</p></div>
+</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>Orden conexión: <strong>Scan → Auth → Assoc → 4-way (RSNA)</strong>. PBSS solo @ 60 GHz. ESS = mismo SSID, distinto BSSID por AP.</p></div><article class="subsec leccion-pdf"><h3>PDF 2 · Servicios — tabla examen</h3>
+<table class="dat"><thead><tr><th>Servicio</th><th>Funciones principales</th></tr></thead><tbody>
+<tr><td><strong>SS</strong></td><td>Auth, desauth, privacidad, entrega MSDU, QoS, medición RF, DFS, TPC</td></tr>
+<tr><td><strong>DSS</strong></td><td>Assoc, reassoc, desassoc, integración, distribución</td></tr>
+<tr><td><strong>PCPS</strong></td><td>Solo 802.11ad @ 60 GHz</td></tr>
+</tbody></table>
+<p>Scan → Auth → Assoc → 4-way. PBSS: <strong>un solo PCP</strong>.</p>
+</article>
 <div class="ej-tema-block" data-tema="intro"><h3 class="ej-tema-title">📚 Ejercicios y preguntas — Introducción y componentes</h3><div class="ej-section"><h4 class="ej-section-h">❓ Preguntas teóricas — clic para ver respuesta y por qué</h4><div class="preg-list"><details class="preg-item">
 <summary><span class="preg-n">I1</span> ¿Qué es una RSNA?</summary>
 <div class="preg-body">
@@ -750,6 +775,81 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <div class="porque-box"><span class="porque-label">¿Por qué?</span><p>Mesh 802.11s — backhaul 5 GHz, proactivo + reactivo.</p></div>
 </div>
 </details></div></div></div>
+</div>
+</section>
+<section class="tema" id="p1_examen">
+<header class="tema-head">
+<span class="tema-num">P1</span>
+<div style="flex:1">
+<h2>Prueba 1 — Fundamentos y corrección tipo</h2>
+<p class="tema-focus">PDF 1–3 · Topologías, servicios, FHSS/DSSS, EIRP, generaciones Wi-Fi.</p>
+</div>
+
+<div class="tema-actions">
+<button class="tbtn tbtn-mark" data-topic="p1_examen" onclick="markTopic('p1_examen')">Marcar estudiado</button>
+</div>
+</header>
+<div class="tema-body">
+
+
+<div class="cobertura-banner" style="border-color:#22c55e"><strong>📝 PRUEBA 1 (~30%)</strong> — Fundamentos WLAN. No incluye tramas MAC ni tiempos µs (eso es P3).</div>
+<p class="lead">Estudia esto <strong>antes</strong> de PLCP/MAC/DCF si vas mal en conceptos base. Incluye preguntas tipo examen resueltas con <strong>¿Por qué?</strong></p>
+<p class="prof-voice">La <strong>Prueba 1</strong> no es tramas ni tiempos µs: es <strong>fundamentos</strong> — topologías, servicios, PHY legacy (FHSS/DSSS/DFIR/CCK), generaciones Wi-Fi y <strong>EIRP en dB</strong>. Domina PDF 1, 2 y 3.</p><div class="exam-p3-box" style="border-color:#22c55e"><span class="exam-p3-label" style="background:#166534">Prueba 1</span><p><strong>Archivo corrección 2026-A:</strong> el <code>.sdocx</code> de Samsung Notes contiene apuntes <em>escaneados a mano</em> — exporta como PDF para la corrección literal. Abajo: preguntas tipo P1 resueltas (montañita + PDF).</p></div><article class="subsec leccion-pdf p1-deep"><h3>P1 · Topologías — trampa de examen</h3>
+<table class="dat"><thead><tr><th>Topología</th><th>Clave</th><th>V/F típico</th></tr></thead><tbody>
+<tr><td><strong>BSS</strong></td><td>1 AP + STAs, BSSID = MAC AP</td><td>Infraestructura estándar</td></tr>
+<tr><td><strong>IBSS</strong></td><td>Ad-hoc, sin AP</td><td>—</td></tr>
+<tr><td><strong>ESS</strong></td><td>Varios BSS, mismo SSID, DS</td><td>Roaming</td></tr>
+<tr><td><strong>PBSS</strong></td><td>802.11ad @ 60 GHz, <strong>un solo PCP</strong></td><td><strong>F</strong> si dicen varios PCP</td></tr>
+<tr><td><strong>MBSS</strong></td><td>Mesh 5 GHz backhaul</td><td>—</td></tr>
+<tr><td><strong>QBSS</strong></td><td>QoS / WMM</td><td>—</td></tr>
+</tbody></table>
+</article><article class="subsec leccion-pdf p1-deep"><h3>P1 · Servicios SS vs DSS</h3>
+<table class="dat"><thead><tr><th>Servicio</th><th>¿Quién?</th><th>Funciones</th></tr></thead><tbody>
+<tr><td><strong>SS</strong></td><td>Toda STA</td><td>Auth, privacidad, entrega, QoS, medición RF</td></tr>
+<tr><td><strong>DSS</strong></td><td>AP + DS</td><td>Assoc, reassoc, distribución MSDU</td></tr>
+</tbody></table>
+<p><strong>Trampa:</strong> «Auth y asociación son los únicos servicios de estación» → <strong>FALSO</strong>. Asociación en infraestructura es DSS.</p>
+<p><strong>Orden:</strong> Scan → Auth → Assoc → 4-way (RSNA/WPA).</p>
+</article><article class="subsec leccion-pdf p1-deep"><h3>P1 · PHY legacy — memorizar tabla</h3>
+<table class="dat"><thead><tr><th>PHY</th><th>Canal / chips</th><th>Velocidad</th><th>Detalle examen</th></tr></thead><tbody>
+<tr><td><strong>FHSS</strong></td><td>79 ch × <strong>1 MHz</strong> (USA)</td><td>1–2 Mbps</td><td><strong>3 patrones</strong> de 26 saltos</td></tr>
+<tr><td><strong>DSSS</strong></td><td><strong>22 MHz</strong> por canal</td><td>1–2 Mbps</td><td>Barker <strong>11 chips/bit</strong>, 11 Mcps</td></tr>
+<tr><td><strong>CCK</strong></td><td>8 chips</td><td>5.5, 11 Mbps</td><td>256-CCK = <strong>8 bits</strong> (no 4)</td></tr>
+<tr><td><strong>DFIR</strong></td><td>IR 850–950 nm</td><td>1–2 Mbps</td><td>Pulso <strong>250 ns</strong>, 16-PPM / 4-PPM</td></tr>
+</tbody></table>
+</article><article class="subsec leccion-pdf p1-deep"><h3>P1 · Generaciones Wi-Fi</h3>
+<table class="dat"><thead><tr><th>Gen</th><th>Estándar</th><th>Vel. ref.</th></tr></thead><tbody>
+<tr><td>1ª</td><td>802.11</td><td>2 Mbps</td></tr>
+<tr><td>2ª</td><td>b</td><td>11 Mbps</td></tr>
+<tr><td>3ª</td><td>a/g</td><td>54 Mbps</td></tr>
+<tr><td><strong>4ª</strong></td><td><strong>n</strong></td><td>600 Mbps</td></tr>
+<tr><td>5ª</td><td>ac</td><td>3.6 Gbps</td></tr>
+<tr><td>6ª</td><td>ax</td><td>~10 Gbps</td></tr>
+<tr><td>7ª</td><td>be</td><td>46 Gbps</td></tr>
+<tr><td>8ª</td><td>bn (dev)</td><td>UHR</td></tr>
+</tbody></table>
+</article><article class="subsec leccion-pdf p1-deep"><h3>P1 · EIRP — ejercicio resuelto paso a paso</h3>
+<p><strong>Enunciado:</strong> Pt = 100 mW, pérdidas cable 3 dB, antena 16 dBi. ¿EIRP?</p>
+<ol class="step-list">
+<li>Pt = 100 mW = <strong>20 dBm</strong> (10·log₁₀(100) = 20)</li>
+<li>Pérdidas 3 dB <strong>restan</strong> → −3</li>
+<li>Ganancia antena 16 dBi <strong>suma</strong> → +16</li>
+<li>EIRP = 20 − 3 + 16 = <strong>33 dBm</strong></li>
+<li>mW = 10^(33/10) = 10^3.3 ≈ <strong>1995 mW ≈ 2000 mW</strong></li>
+</ol>
+</article><article class="subsec leccion-pdf p1-deep"><h3>P1 · Preguntas V/F y MC — banco rápido</h3>
+<table class="dat"><thead><tr><th>#</th><th>Pregunta</th><th>Respuesta</th><th>¿Por qué?</th></tr></thead><tbody>
+<tr><td>1</td><td>Canal FHSS = 1 MHz</td><td><strong>V</strong></td><td>79 canales de 1 MHz cada uno</td></tr>
+<tr><td>2</td><td>Medir AP vecinos = servicio infraestructura</td><td><strong>F</strong></td><td>Es scanning (SS)</td></tr>
+<tr><td>3</td><td>Multitrayectoria 180° cancela señal</td><td><strong>V</strong></td><td>Fading destructivo</td></tr>
+<tr><td>4</td><td>dBi = ganancia antena</td><td><strong>V</strong></td><td>vs isotrópica</td></tr>
+<tr><td>5</td><td>g y a mismo alcance misma Pt</td><td><strong>F</strong></td><td>Bandas distintas 2.4 vs 5 GHz</td></tr>
+<tr><td>6</td><td>54 Mbps en 802.11a menos cobertura que 6 Mbps</td><td><strong>V</strong></td><td>Mayor SNR requerido</td></tr>
+<tr><td>7</td><td>4ª generación = 802.11n</td><td><strong>V</strong></td><td>Tabla generaciones</td></tr>
+<tr><td>8</td><td>256-CCK agrupa 4 bits</td><td><strong>F</strong></td><td>Agrupa 8 bits</td></tr>
+</tbody></table>
+</article><div class="tip-box"><span class="tip-label">Prueba 1</span><p>P1 no pregunta NAV ni RTS/CTS. Si ves µs o Frame Control, es P3. Repasa también: bandas ISM, Wi-Fi Alliance, beneficios/desafíos WLAN (PDF 1).</p></div>
+
 </div>
 </section>
 <section class="tema priority" id="capas">
@@ -868,7 +968,15 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <li><strong>PMD</strong> — define modulación y codificación sobre el medio RF.</li>
 <li>Preámbulo + cabecera legacy DSSS/FHSS/DFIR: siempre @ <strong>1 Mbps</strong>.</li>
 </ul>
-</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>SAP = Service Access Point entre capas. PLME gestiona canal y potencia; MLME gestiona asociación y roaming.</p></div>
+</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>SAP = Service Access Point entre capas. PLME gestiona canal y potencia; MLME gestiona asociación y roaming.</p></div><article class="subsec leccion-pdf"><h3>PDF 3 · Pila completa — repetir hasta memorizar</h3>
+<div class="stack-diagram">
+<div class="stack-row hl"><span class="stack-label">MSDU</span><span>LLC + datos</span></div>
+<div class="stack-row mac"><span class="stack-label">MPDU</span><span>Cabecera MAC + Body + FCS</span></div>
+<div class="stack-row plcp"><span class="stack-label">PSDU</span><span>= MPDU en PHY</span></div>
+<div class="stack-row plcp"><span class="stack-label">PPDU</span><span>Preámbulo PLCP + Cabecera PLCP + PSDU</span></div>
+</div>
+<p><strong>RSNA:</strong> WPA2/WPA3, AES-CCMP, FT, tramas gestión robustas.</p>
+</article>
 <div class="ej-tema-block" data-tema="capas"><h3 class="ej-tema-title">📚 Ejercicios y preguntas — Capas MSDU → PPDU</h3><div class="ej-section"><h4 class="ej-section-h">✏️ Ejercicios resueltos — Prueba3-3 y ejercicios varios</h4><article class="ej-card ej-resuelto-card" id="ej-capas-mpdu">
 <div class="ej-tag">Capas MSDU → PPDU</div>
 <h4 class="ej-title">Calcular MPDU y PPDU — overhead por capas</h4>
@@ -930,14 +1038,14 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 </details></div></div></div>
 </div>
 </section>
-<section class="tema" id="pmd">
+<section class="tema priority" id="pmd">
 <header class="tema-head">
 <span class="tema-num">03</span>
 <div style="flex:1">
 <h2>Capa física PMD — modulación y MIMO</h2>
 <p class="tema-focus">PDF 4–6 · CCK, OFDM, MCS, MIMO (b, g/n, ac/ax/be).</p>
 </div>
-
+<span class="badge-p3">★ PRUEBA 3</span>
 <div class="tema-actions">
 <button class="tbtn tbtn-mark" data-topic="pmd" onclick="markTopic('pmd')">Marcar estudiado</button>
 </div>
@@ -945,8 +1053,8 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <div class="tema-body">
 
 
-<div class="cobertura-banner"><strong>⭐ PRUEBA 3 · PDF 4–6</strong> — PMD ac/ax/be: velocidades, MU-MIMO, OFDMA, RU, tabla comparativa slide 166.</div>
-<p class="lead">PMD es la modulación real en RF. PLCP dice <em>cuánto</em> dura; PMD define <em>cómo</em> se codifican los bits. En 2026-A va <strong>antes</strong> de PLCP (PDF 4–6, luego 7–8).</p>
+<div class="cobertura-banner"><strong>⭐ PDF 4–6 — ÉNFASIS P3</strong> — PMD b/g/n + ac/ax/be: MU-MIMO, OFDMA, RU, tabla slide 166, 9607/46000 Mbps.</div>
+<p class="lead">PMD es la modulación real en RF. PLCP dice <em>cuánto</em> dura; PMD define <em>cómo</em> se codifican los bits. <strong>PDF 6 es el más preguntado en completar datos.</strong></p>
 <article class="subsec"><h3>802.11b — DSSS/CCK</h3>
 <ul class="concept-list">
 <li>Chips a 11 Mcps; CCK para 5.5 y 11 Mbps.</li>
@@ -1012,7 +1120,14 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <tr><td>802.11a</td><td>OFDM</td><td>1999</td><td>54 Mbps</td></tr>
 <tr><td>802.11g</td><td>ERP</td><td>2003</td><td>54 Mbps</td></tr>
 </tbody></table>
-</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>Fórmula OFDM: <span class="math-inline" data-latex-inline="N = 48 \times \log_2(M) \times R_{cod}"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>N</mi><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mi>M</mi><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><msub><mi>R</mi><mrow><mi>c</mi><mi>o</mi><mi>d</mi></mrow></msub></mrow></math></span>. Ej: QPSK 1/2 → 48×2×0.5 = 48 bits/símbolo → 24 Mbps.</p></div><p class="prof-voice">802.11n (2009) introduce <strong>HT, MIMO y canales 40 MHz</strong>. Es la base de todo lo moderno: spatial streams, beamforming y MCS.</p><article class="subsec leccion-pdf"><h3>PDF 5 · 802.11n — características HT</h3>
+</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>Fórmula OFDM: <span class="math-inline" data-latex-inline="N = 48 \times \log_2(M) \times R_{cod}"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>N</mi><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mi>M</mi><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><msub><mi>R</mi><mrow><mi>c</mi><mi>o</mi><mi>d</mi></mrow></msub></mrow></math></span>. Ej: QPSK 1/2 → 48×2×0.5 = 48 bits/símbolo → 24 Mbps.</p></div><article class="subsec leccion-pdf"><h3>PDF 4 · Tabla velocidades b/a/g — completa</h3>
+<table class="dat"><thead><tr><th>Estándar</th><th>Técnica</th><th>Máx</th><th>Nota</th></tr></thead><tbody>
+<tr><td>b</td><td>CCK/DSSS</td><td>11 Mbps</td><td>11 Mcps, Barker 11 chips @ 1-2M</td></tr>
+<tr><td>a</td><td>OFDM 5 GHz</td><td>54 Mbps</td><td>48 subp. datos, símbolo 4 µs</td></tr>
+<tr><td>g</td><td>ERP OFDM+DSSS</td><td>54 Mbps</td><td>2.4 GHz, retrocompatible b</td></tr>
+</tbody></table>
+<p>OFDM: <span class="math-inline" data-latex-inline="N = 48 \times \log_2(M) \times R_{cod}"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>N</mi><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mi>M</mi><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><msub><mi>R</mi><mrow><mi>c</mi><mi>o</mi><mi>d</mi></mrow></msub></mrow></math></span> · QPSK 1/2 → 48 bits/símb → 12 Mbps.</p>
+</article><p class="prof-voice">802.11n (2009) introduce <strong>HT, MIMO y canales 40 MHz</strong>. Es la base de todo lo moderno: spatial streams, beamforming y MCS.</p><article class="subsec leccion-pdf"><h3>PDF 5 · 802.11n — características HT</h3>
 <ul class="concept-list">
 <li>Aprobado <strong>sept. 2009</strong> · hasta <strong>600 Mbps</strong> (4×4, 40 MHz)</li>
 <li>Canales <strong>40 MHz</strong>: une dos de 20 MHz → <strong>52 subportadoras datos</strong> (vs 48 en legacy)</li>
@@ -1038,7 +1153,17 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <tr><td>15</td><td>64-QAM</td><td>5/6</td><td>—</td><td>150 (2 SS)</td></tr>
 </tbody></table>
 <p>Tabla completa en PDF: incluye GI 800 ns y 400 ns, SNR mínimo y sensibilidad RX.</p>
-</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>n obliga mínimo 2 antenas para certificación Wi-Fi. Mixed Mode PLCP es obligatorio (PDF 8).</p></div><p class="prof-voice">PDF 6 cubre <strong>Wi-Fi 5, 6 y 7</strong>: ac (VHT), ax (HE), be (EHT) y bn en desarrollo. Aquí están los números que la profesora pregunta en Prueba 3.</p><article class="subsec leccion-pdf"><h3>PDF 6 · 802.11ac — VHT (Wi-Fi 5)</h3>
+</article><div class="tip-box"><span class="tip-label">Para el examen</span><p>n obliga mínimo 2 antenas para certificación Wi-Fi. Mixed Mode PLCP es obligatorio (PDF 8).</p></div><article class="subsec leccion-pdf"><h3>PDF 5 · 802.11n — números del PDF</h3>
+<table class="dat"><thead><tr><th>Concepto</th><th>Valor</th></tr></thead><tbody>
+<tr><td>Vel. máx n</td><td><strong>600 Mbps</strong> (4×4, 40 MHz)</td></tr>
+<tr><td>Subp. datos @ 40 MHz</td><td><strong>52</strong> (vs 48 en 20 MHz)</td></tr>
+<tr><td>Canales 40 MHz 5 GHz</td><td><strong>12</strong></td></tr>
+<tr><td>Canales 40 MHz 2.4 GHz</td><td><strong>2</strong></td></tr>
+<tr><td>Certificación Wi-Fi n mín.</td><td><strong>2 spatial streams</strong></td></tr>
+<tr><td>SU-MIMO máx</td><td><strong>4×4:4</strong></td></tr>
+</tbody></table>
+<p>PDF 8: <strong>Mixed Mode obligatorio</strong> en 802.11n.</p>
+</article><p class="prof-voice">PDF 6 cubre <strong>Wi-Fi 5, 6 y 7</strong>: ac (VHT), ax (HE), be (EHT) y bn en desarrollo. Aquí están los números que la profesora pregunta en Prueba 3.</p><article class="subsec leccion-pdf"><h3>PDF 6 · 802.11ac — VHT (Wi-Fi 5)</h3>
 <ul class="concept-list">
 <li>Ratificado <strong>dic. 2013</strong> · meta ≥1 Gbps multi-STA · solo <strong>5 GHz</strong></li>
 <li>Canales <strong>80 y 160 MHz</strong> (160 = dos bloques 80 MHz, adyacentes o 80+80)</li>
@@ -1183,6 +1308,24 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <tr><td>7</td><td>802.11be</td><td>2.4/5/6</td><td>20–<strong>320</strong></td><td>OFDMA</td><td>UL+DL MU 16×16</td><td><strong>46000 Mbps</strong></td><td>2025</td></tr>
 </tbody></table>
 <p><strong>802.11bn (Wi-Fi 8, desarrollo):</strong> UHR — se espera 8192-QAM, ~100 Gbps teórico.</p>
+</article><article class="subsec leccion-pdf p3-deep"><h3>PDF 6 · ac — SDMA y beamforming</h3>
+<ul class="concept-list">
+<li><strong>SDMA</strong> — acceso múltiple con diversidad espacial (slide ac).</li>
+<li><strong>Beamforming estandarizado</strong> IEEE en 802.11ac.</li>
+<li>256-QAM + 160 MHz + 8×8 → <strong>6933 Mbps</strong> teórico.</li>
+</ul>
+</article><article class="subsec leccion-pdf p3-deep"><h3>PDF 6 · ax Trigger-Based UL — pasos</h3>
+<ol class="step-list">
+<li>AP envía trama <strong>trigger</strong> (HE-TB).</li>
+<li>STAs transmiten UL simultáneo (OFDMA o MU-MIMO).</li>
+<li>AP responde <strong>Block ACK</strong>.</li>
+</ol>
+</article><article class="subsec leccion-pdf p3-deep"><h3>PDF 6 · be — MLO y Multi-RU</h3>
+<ul class="concept-list">
+<li><strong>MLO</strong> — STA en varias bandas/radios al mismo AP.</li>
+<li><strong>Multi-RU</strong> — varias RU por usuario (ax: 1 RU/usuario).</li>
+<li>320 MHz = <strong>4×996 tonos</strong> en 6 GHz.</li>
+</ul>
 </article>
 <div class="ej-tema-block" data-tema="pmd"><h3 class="ej-tema-title">📚 Ejercicios y preguntas — PMD — modulación y estándares</h3><div class="ej-section"><h4 class="ej-section-h">✏️ Ejercicios resueltos — Prueba3-3 y ejercicios varios</h4><article class="ej-card ej-resuelto-card" id="ej-p3-completar">
 <div class="ej-tag">PMD — modulación y estándares</div>
@@ -1318,8 +1461,8 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <div class="tema-body">
 <div class="iframe-wrap" data-frame="plcp_fhss"></div><div class="iframe-wrap" data-frame="plcp_dsss"></div><div class="iframe-wrap" data-frame="plcp_11b_l"></div><div class="iframe-wrap" data-frame="plcp_11b_s"></div><div class="iframe-wrap" data-frame="plcp_11a"></div>
 
-<div class="cobertura-banner"><strong>⭐ PRUEBA 3 · PDF 7</strong> — PLCP legacy: 192/96 µs, Signal hex, OFDM 48 subp., bits/símbolo, ejercicios numéricos.</div>
-<p class="lead">PLCP añade preámbulo y cabecera para sincronizar y decir velocidad/longitud. Regla de oro del PDF: <strong>preámbulo + cabecera legacy se transmiten a 1 Mbps</strong>; los datos pueden ir a otra tasa.</p>
+<div class="cobertura-banner"><strong>⭐ PDF 7 — CRÍTICO P3</strong> — PLCP legacy: 192/96 µs, Signal hex, OFDM 48 subp., bits/símbolo, FHSS/DSSS/DFIR.</div>
+<p class="lead">PLCP añade preámbulo y cabecera para sincronizar y decir velocidad/longitud. Regla de oro: <strong>preámbulo + cabecera legacy @ 1 Mbps</strong>; datos a otra tasa.</p>
 <div class="frame-slide" role="img" aria-label="PLCP DSSS / 802.11b/g — Cabecera física">
 <div class="fs-head">
 <div class="fs-title">PLCP DSSS / 802.11b/g — Cabecera física</div>
@@ -1532,6 +1675,20 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 </tbody></table>
 <p><strong>48 subportadoras de datos</strong> en 64 totales (resto: pilotos, DC, guarda).</p>
 <p><span class="math-inline" data-latex-inline="N_{bits/símbolo} = 48 \times \log_2(M) \times R_{cod}"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>N</mi><mrow><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi></mrow></msub><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mi>M</mi><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><msub><mi>R</mi><mrow><mi>c</mi><mi>o</mi><mi>d</mi></mrow></msub></mrow></math></span> · símbolo = 4 µs (+ GI si aplica).</p>
+</article><article class="subsec leccion-pdf p3-deep"><h3>PDF 7 · DFIR — PLCP infrarrojo (legacy)</h3>
+<table class="dat"><thead><tr><th>Campo</th><th>Detalle PDF</th></tr></thead><tbody>
+<tr><td>Medio</td><td>LEDs 850–950 nm · pulsos <strong>250 ns</strong> · hasta ~20 m</td></tr>
+<tr><td>Modulación</td><td><strong>16-PPM</strong> → 1 Mbps · <strong>4-PPM</strong> → 2 Mbps</td></tr>
+<tr><td>Regla PLCP</td><td>Preámbulo + cabecera DFIR @ <strong>1 Mbps</strong> (igual FHSS/DSSS)</td></tr>
+</tbody></table>
+<p>En P1 relacionan: DFIR = pulso 250 ns. No confundir con DSSS (11 chips) ni FHSS (26 saltos).</p>
+</article><article class="subsec leccion-pdf p3-deep"><h3>PDF 7 · Comparativa rápida PLCP legacy — examen</h3>
+<table class="dat"><thead><tr><th>PHY</th><th>Preámbulo+cabecera</th><th>Campo velocidad</th><th>Campo longitud</th></tr></thead><tbody>
+<tr><td>FHSS</td><td>@ 1 Mbps</td><td>PSF 4 bits (0.5 Mbps steps)</td><td>12 bits bytes</td></tr>
+<tr><td>DSSS/b</td><td>@ 1M / 2M (corta)</td><td>Signal 8 bits (hex)</td><td>Length en <strong>µs</strong></td></tr>
+<tr><td>802.11a OFDM</td><td>16 µs STF+LTF</td><td>Rate 6 bits en Signal</td><td>Length en <strong>bytes</strong></td></tr>
+<tr><td>802.11g ERP</td><td>192 µs @ 1M</td><td>SIGNAL hex (tabla g)</td><td>LENGTH + SERVICE bits</td></tr>
+</tbody></table>
 </article>
 <div class="ej-tema-block" data-tema="plcp_legacy"><h3 class="ej-tema-title">📚 Ejercicios y preguntas — PLCP legacy — tiempos y OFDM</h3><div class="ej-section"><h4 class="ej-section-h">✏️ Ejercicios resueltos — Prueba3-3 y ejercicios varios</h4><article class="ej-card ej-resuelto-card" id="ej-a4">
 <div class="ej-tag">PLCP legacy — tiempos y OFDM</div>
@@ -1682,14 +1839,14 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 </details></div></div></div>
 </div>
 </section>
-<section class="tema" id="plcp_modern">
+<section class="tema priority" id="plcp_modern">
 <header class="tema-head">
 <span class="tema-num">05</span>
 <div style="flex:1">
 <h2>PLCP moderno — 802.11g, n, ac, ax, be</h2>
 <p class="tema-focus">PDF 8 · PPDU g (192 µs). Mixed Mode n. HT/VHT/HE/EHT-SIG.</p>
 </div>
-
+<span class="badge-p3">★ PRUEBA 3</span>
 <div class="tema-actions">
 <button class="tbtn tbtn-mark" data-topic="plcp_modern" onclick="markTopic('plcp_modern')">Marcar estudiado</button>
 </div>
@@ -1697,8 +1854,8 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <div class="tema-body">
 <div class="iframe-wrap" data-frame="plcp_11g"></div><div class="iframe-wrap" data-frame="plcp_11n"></div><div class="iframe-wrap" data-frame="plcp_11ac"></div>
 
-<div class="cobertura-banner"><strong>⭐ PRUEBA 3 · PDF 8</strong> — PLCP g/n/ac/ax/be: 0xDC, Mixed Mode, HT-SIG, VHT-SIG, PPDU HE/EHT.</div>
-<p class="lead">802.11g usa ERP sobre 2.4 GHz. 802.11n introduce HT y obliga Mixed Mode. ac/ax/be añaden campos SIG propios.</p>
+<div class="cobertura-banner"><strong>⭐ PDF 8 — CRÍTICO P3</strong> — PLCP g/n/ac/ax/be: 0xDC, Mixed Mode, HT/VHT/HE/EHT-SIG, PPDU HE.</div>
+<p class="lead">802.11g ERP · 802.11n Mixed Mode obligatorio · ac/ax/be campos SIG. <strong>L-SIG falso @ 6 Mbps</strong> en Mixed Mode n.</p>
 <article class="subsec"><h3>802.11g — PPDU</h3>
 <table class="dat"><thead><tr><th>Campo</th><th>Bits</th><th>Notas</th></tr></thead><tbody>
 <tr><td>SYNC + SFD</td><td>144</td><td>@ 1 Mbps</td></tr>
@@ -1964,8 +2121,8 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <div class="tema-body">
 <div class="iframe-wrap" data-frame="mpdu"></div><div class="iframe-wrap" data-frame="fc"></div>
 
-<div class="cobertura-banner"><strong>⭐ PRUEBA 3 · PDF 9</strong> — MAC: FC, Duration/NAV, A-MPDU, overhead 34 B, RTS/CTS tamaños.</div>
-<p class="lead">La trama MAC (<abbr title="MAC Protocol Data Unit">MPDU</abbr>) es lo que analizas en Wireshark y en ejercicios de eficiencia. <abbr title="Frame Control">FC</abbr> y Duration son los campos más preguntados.</p>
+<div class="cobertura-banner"><strong>⭐ PDF 9 — CRÍTICO P3</strong> — MAC: FC, Duration/NAV, subtipos, A-MPDU, overhead 34 B, RTS/CTS.</div>
+<p class="lead">La trama MAC (MPDU) es lo que analizas en Wireshark. <strong>FC, Duration y subtipos</strong> son lo más preguntado.</p>
 <div class="frame-slide" role="img" aria-label="Estructura de la Trama MAC (MPDU) — IEEE 802.11">
 <div class="fs-head">
 <div class="fs-title">Estructura de la Trama MAC (MPDU) — IEEE 802.11</div>
@@ -2246,6 +2403,21 @@ footer{text-align:center;padding:48px 0;color:var(--muted);font-size:.72rem}
 <tr><td>802.11ac VHT</td><td><strong>0–11496</strong></td><td>Igual que n + cambios HT Control</td></tr>
 </tbody></table>
 <p>QoS Control: clase de tráfico, política ACK (normal, sin ACK, block ACK), indicación MSDU agregados.</p>
+</article><article class="subsec leccion-pdf p3-deep"><h3>PDF 9 · Subtipos de trama — memorizar (slide 220+)</h3>
+<table class="dat"><thead><tr><th>Tipo</th><th>Subtipo (ejemplos)</th><th>Hex FC típico</th><th>Examen</th></tr></thead><tbody>
+<tr><td rowspan="6"><strong>Gestión 00</strong></td><td>Association Request</td><td><code>0x0000</code></td><td>Cliente → AP</td></tr>
+<tr><td>Association Response</td><td><code>0x1000</code></td><td>AP asigna AID</td></tr>
+<tr><td>Probe Request</td><td><code>0x0500</code></td><td>Scan activo</td></tr>
+<tr><td>Probe Response</td><td><code>0x1500</code></td><td>AP responde scan</td></tr>
+<tr><td>Beacon</td><td><code>0x0080</code></td><td><strong>Gestión</strong>, no control</td></tr>
+<tr><td>Authentication</td><td><code>0xb000</code></td><td>Antes de Assoc</td></tr>
+<tr><td rowspan="4"><strong>Control 01</strong></td><td>ACK</td><td>—</td><td><strong>14 B</strong>, sin Seq</td></tr>
+<tr><td>RTS</td><td>—</td><td><strong>20 B</strong></td></tr>
+<tr><td>CTS</td><td>—</td><td><strong>14 B</strong></td></tr>
+<tr><td>Block ACK</td><td>—</td><td>802.11e+</td></tr>
+<tr><td><strong>Datos 10</strong></td><td>Data, QoS Data, Null</td><td>—</td><td>Llevan Seq Control</td></tr>
+</tbody></table>
+<p>Decodificar FC: leer bits 2-3 (tipo) + bits 4-7 (subtipo) <strong>LSB primero</strong>.</p>
 </article>
 <div class="ej-tema-block" data-tema="mac"><h3 class="ej-tema-title">📚 Ejercicios y preguntas — MAC — Frame Control y overhead</h3><div class="ej-section"><h4 class="ej-section-h">✏️ Ejercicios resueltos — Prueba3-3 y ejercicios varios</h4><article class="ej-card ej-resuelto-card" id="ej-a7">
 <div class="ej-tag">MAC — Frame Control y overhead</div>
@@ -2445,8 +2617,8 @@ Pregunta directa Prueba WLAN-1. Bits 8-9 del Frame Control.</div>
 <div class="tema-body">
 <div class="iframe-wrap" data-frame="control"></div><div class="iframe-wrap" data-frame="dcf_seq"></div><div class="iframe-wrap" data-frame="ppdu_aire"></div>
 
-<div class="cobertura-banner"><strong>⭐ PRUEBA 3 · PDF 10</strong> — DCF: SIFS/DIFS/backoff, RTS/CTS, NAV, terminal oculto, secuencia µs.</div>
-<p class="lead">DCF (Distributed Coordination Function) es acceso al medio con escucha antes de transmitir. Los ejercicios piden dibujar la secuencia y sumar tiempos.</p>
+<div class="cobertura-banner"><strong>⭐ PDF 10 — CRÍTICO P3</strong> — DCF: SIFS/DIFS/backoff, RTS/CTS, NAV, terminal oculto, secuencia µs.</div>
+<p class="lead">DCF (CSMA/CA) es acceso al medio. Los ejercicios piden <strong>dibujar la secuencia y sumar tiempos</strong> — domina SIFS=10, DIFS=50, slot=20.</p>
 <article class="subsec"><h3>Intervalos entre tramas (802.11g típico)</h3><div class="formula-card" data-latex="\text{SIFS} = 10\,\mu\text{s} \qquad \text{Slot} = 20\,\mu\text{s} \qquad \text{DIFS} = \text{SIFS} + 2 \times \text{Slot} = 50\,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>SIFS</mtext><mo>&#x0003D;</mo><mn>10</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace width="2em" /><mtext>Slot</mtext><mo>&#x0003D;</mo><mn>20</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace width="2em" /><mtext>DIFS</mtext><mo>&#x0003D;</mo><mtext>SIFS</mtext><mo>&#x0002B;</mo><mn>2</mn><mo>&#x000D7;</mo><mtext>Slot</mtext><mo>&#x0003D;</mo><mn>50</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
 <table class="dat"><thead><tr><th>IFS</th><th>Fórmula</th><th>µs</th></tr></thead><tbody>
 <tr><td>SIFS</td><td>—</td><td>10</td></tr>
@@ -2563,6 +2735,21 @@ Pregunta directa Prueba WLAN-1. Bits 8-9 del Frame Control.</div>
 <p><strong>Overhead PLCP ejercicio Prueba3-3 @ 22 Mbps:</strong> 48 bits cabecera + 72 bits preámbulo = 120 bits → <span class="math-inline" data-latex-inline="\frac{120}{22} \approx 5.45\,\mu\text{s}"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mfrac><mrow><mn>120</mn></mrow><mrow><mn>22</mn></mrow></mfrac><mo>&#x02248;</mo><mn>5.45</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></span> de PLCP adicional por trama.</p>
 <p><strong>Eficiencia MAC estación B (payload 200 B):</strong> <span class="math-inline" data-latex-inline="\eta = 200/(200+34) = \frac{200}{234} \approx 85.5\%"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>&#x003B7;</mi><mo>&#x0003D;</mo><mn>200</mn><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mn>200</mn><mo>&#x0002B;</mo><mn>34</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mfrac><mrow><mn>200</mn></mrow><mrow><mn>234</mn></mrow></mfrac><mo>&#x02248;</mo><mn>85.5</mn><mi>&#x00025;</mi></mrow></math></span></p>
 <p><strong>Eficiencia MAC estación A (payload 400 B):</strong> <span class="math-inline" data-latex-inline="\eta = \frac{400}{434} \approx 92.2\%"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>&#x003B7;</mi><mo>&#x0003D;</mo><mfrac><mrow><mn>400</mn></mrow><mrow><mn>434</mn></mrow></mfrac><mo>&#x02248;</mo><mn>92.2</mn><mi>&#x00025;</mi></mrow></math></span></p>
+</article><article class="subsec leccion-pdf p3-deep"><h3>PDF 10 · Backoff exponencial — ventana CW</h3>
+<p>Tras colisión o pérdida de ACK, la ventana de contención crece:</p>
+<table class="dat"><thead><tr><th>Intento</th><th>CW máx (típico)</th></tr></thead><tbody>
+<tr><td>1.º</td><td><strong>31</strong></td></tr>
+<tr><td>2.º</td><td>63</td></tr>
+<tr><td>3.º</td><td>127</td></tr>
+<tr><td>4.º</td><td>255</td></tr>
+<tr><td>5.º</td><td>511</td></tr>
+<tr><td>máx</td><td><strong>1023</strong></td></tr>
+</tbody></table>
+<p>Backoff = valor aleatorio [0, CW] × <strong>Slot (20 µs)</strong>. Ejemplo Prueba3-3: CW=5 → 5×20 = <strong>100 µs</strong>.</p>
+</article><article class="subsec leccion-pdf p3-deep"><h3>PDF 10 · EIFS — trama corrupta</h3>
+<p>Cuando PHY notifica recepción <strong>incorrecta</strong>, la STA usa <strong>EIFS</strong> antes de transmitir:</p>
+<p><span class="math-inline" data-latex-inline="EIFS = SIFS + DIFS + T_{ACK} + SIFS"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>E</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi></mrow></math></span> (aprox. — depende de tasa de la trama errónea)</p>
+<p>Prioridad más baja que SIFS/DIFS normales — da tiempo a retransmitir al emisor original.</p>
 </article><div class="tip-box"><span class="tip-label">Para el examen</span><p>En el examen: dibuja la línea de tiempo con etiquetas SIFS entre cada par de tramas. Olvidar un SIFS en NAV es el error #1.</p></div>
 <div class="ej-tema-block" data-tema="dcf"><h3 class="ej-tema-title">📚 Ejercicios y preguntas — DCF — NAV, RTS/CTS, tiempos</h3><div class="ej-section"><h4 class="ej-section-h">✏️ Ejercicios resueltos — Prueba3-3 y ejercicios varios</h4><article class="ej-card ej-resuelto-card" id="ej-a2">
 <div class="ej-tag">DCF — NAV, RTS/CTS, tiempos</div>
@@ -4782,7 +4969,7 @@ Cada respuesta incluye <strong>¿Por qué?</strong> citando el PDF del curso.</p
 
 </div>
 </section>
-<footer>WLAN EPN 2026-A · 12 temas · 27 flashcards · 57 preguntas · Ctrl+P imprimir</footer>
+<footer>WLAN EPN 2026-A · 13 temas · 27 flashcards · 57 preguntas · Ctrl+P imprimir</footer>
 </main>
 </div>
 
@@ -4834,14 +5021,75 @@ Cada respuesta incluye <strong>¿Por qué?</strong> citando el PDF del curso.</p
 const FRAMES = {"mpdu": {"title": "Trama MAC (MPDU) — PDF 9 diapos 219, 238", "subtitle": "Subcapa MAC · IEEE 802.11", "exam": "Overhead fijo = 34 B (30 cabecera + 4 FCS). Tramas control no llevan Seq. Control ni body.", "fields": [{"id": "fc", "name": "Control de trama", "bits": "2 B", "flex": 2, "desc": "Frame Control — 16 bits: versión, tipo (00 gestión, 01 control, 10 datos), subtipo y flags (To DS, From DS, Retry, Protected…).", "exam": "Decodificar FC es pregunta frecuente. 0xb000 = Auth gestión."}, {"id": "dur", "name": "Duración / ID", "bits": "2 B", "flex": 2, "desc": "Duration — tiempo en µs que otras STAs deben esperar (NAV). Bit 15=0 → NAV. Bits 14-15=11 → AID en PS-Poll.", "exam": "NAV en Data ≈ SIFS + T_ACK. En RTS incluye toda la secuencia CTS+DATA+ACK."}, {"id": "a1", "name": "Dirección 1", "bits": "6 B", "flex": 4, "desc": "Address 1 — receptor inmediato (siempre presente). En STA→AP es la MAC del AP.", "exam": "Addr1 siempre es el next hop inmediato."}, {"id": "a2", "name": "Dirección 2", "bits": "6 B", "flex": 4, "desc": "Address 2 — transmisor inmediato.", "exam": "Con To DS=1, From DS=0: Addr2=STA, Addr1=AP."}, {"id": "a3", "name": "Dirección 3", "bits": "6 B", "flex": 4, "desc": "Address 3 — BSSID o destino/origen final según bits To DS / From DS.", "exam": "Memoriza tabla To/From DS → significado de Addr1-3."}, {"id": "seq", "name": "Contr. secuencia", "bits": "2 B", "flex": 2, "desc": "Sequence Control — 4 bits fragmento + 12 bits número de secuencia. No en tramas de control.", "exam": "Retry=1 indica retransmisión; usar seq para detectar duplicados."}, {"id": "a4", "name": "Dirección 4", "bits": "6 B", "flex": 3, "desc": "Address 4 — opcional. Solo WDS cuando To DS=1 y From DS=1.", "exam": "Casi nunca en examen salvo pregunta teórica WDS."}, {"id": "body", "name": "Cuerpo de trama", "bits": "0–2312 B", "flex": 8, "desc": "Frame Body — carga útil MSDU/LLC o campos gestión (SSID, Status Code…). 802.11n hasta 7955 B.", "exam": "Payload ≠ MPDU. MPDU = body + cabecera + FCS."}, {"id": "fcs", "name": "FCS", "bits": "4 B", "flex": 2, "desc": "Frame Check Sequence — CRC-32 sobre cabecera + body.", "exam": "Los 4 bytes FCS cuentan en overhead MAC (=34 B total con cabecera 30 B)."}]}, "fc": {"title": "Frame Control — 16 bits", "subtitle": "PDF 9 diapos 220–224", "exam": "Orden bits: Protocol(2) Tipo(2) Subtipo(4) ToDS FromDS MoreFrag Retry PwrMgmt MoreData Protected Order", "fields": [{"id": "ver", "name": "Versión", "bits": "2 b", "flex": 1, "desc": "Siempre 0 en 802.11 actual.", "exam": ""}, {"id": "tipo", "name": "Tipo", "bits": "2 b", "flex": 1, "desc": "00=Gestión, 01=Control, 10=Datos, 11=Extensión.", "exam": "00 Auth, 01 RTS/CTS/ACK, 10 Data."}, {"id": "sub", "name": "Subtipo", "bits": "4 b", "flex": 2, "desc": "Especifica Auth(1011), Beacon(1000), Assoc Req(0000)…", "exam": "Beacon=gestión 1000, NO control."}, {"id": "tds", "name": "To DS", "bits": "1 b", "flex": 1, "desc": "1 = hacia Distribution System (hacia AP).", "exam": ""}, {"id": "fds", "name": "From DS", "bits": "1 b", "flex": 1, "desc": "1 = desde AP hacia STA.", "exam": ""}, {"id": "mf", "name": "Más Frag", "bits": "1 b", "flex": 1, "desc": "1 si hay más fragmentos MSDU.", "exam": ""}, {"id": "retry", "name": "Retry", "bits": "1 b", "flex": 1, "desc": "1 = retransmisión.", "exam": ""}, {"id": "pm", "name": "Pwr Mgmt", "bits": "1 b", "flex": 1, "desc": "1 = STA en ahorro energía.", "exam": ""}, {"id": "md", "name": "More Data", "bits": "1 b", "flex": 1, "desc": "AP tiene tramas buffered para STA dormida.", "exam": ""}, {"id": "prot", "name": "Protected", "bits": "1 b", "flex": 1, "desc": "1 = trama cifrada (WPA/WEP).", "exam": ""}, {"id": "ord", "name": "Order", "bits": "1 b", "flex": 1, "desc": "Entrega estrictamente ordenada.", "exam": ""}]}, "plcp_fhss": {"title": "PLCP FHSS — PDF 7 diapo 170", "subtitle": "Preámbulo + cabecera @ 1 Mbps", "exam": "MSDU @ 1 o 2 Mbps. PSF bits 1-2-3 codifican velocidad 1.0–4.5 Mbps.", "fields": [{"id": "sync", "name": "SYNC", "bits": "80 b", "flex": 5, "desc": "Patrón 010101… sincroniza reloj y portadora.", "exam": ""}, {"id": "sfd", "name": "SFD", "bits": "16 b", "flex": 1, "desc": "0000110010111101 — inicio de trama.", "exam": ""}, {"id": "len", "name": "Longitud", "bits": "12 b", "flex": 1, "desc": "Payload < 4096 bytes.", "exam": ""}, {"id": "psf", "name": "Señal PSF", "bits": "4 b", "flex": 1, "desc": "Velocidad MSDU en pasos de 500 kbps (000=1M … 111=4.5M).", "exam": "Tabla PSF en examen teórico."}, {"id": "crc", "name": "CRC HEC", "bits": "16 b", "flex": 1, "desc": "Control errores cabecera · pol. x16+x12+x5+1.", "exam": ""}, {"id": "msdu", "name": "MSDU", "bits": "Variable", "flex": 6, "desc": "Trama MAC (PSDU) @ velocidad PSF.", "exam": ""}]}, "plcp_dsss": {"title": "PLCP DSSS — PDF 7 diapo 172", "subtitle": "128 bits SYNC de 1s", "exam": "Signal 0x0A=1M, 0x14=2M. Length = µs de transmisión (entero).", "fields": [{"id": "sync", "name": "SYNC", "bits": "128 b", "flex": 8, "desc": "128 bits en 1.", "exam": ""}, {"id": "sfd", "name": "SFD", "bits": "16 b", "flex": 1, "desc": "1111001111010000.", "exam": ""}, {"id": "sig", "name": "Signal", "bits": "8 b", "flex": 1, "desc": "Velocidad PSDU.", "exam": "Hex Signal memorizar para b/g."}, {"id": "svc", "name": "Service", "bits": "8 b", "flex": 1, "desc": "Reservado (ceros) + extensiones b.", "exam": "Bit 3 reloj, bit 4 CCK/PBCC."}, {"id": "len", "name": "Length", "bits": "16 b", "flex": 2, "desc": "Duración transmisión en µs.", "exam": ""}, {"id": "crc", "name": "CRC", "bits": "16 b", "flex": 1, "desc": "HEC cabecera.", "exam": ""}, {"id": "msdu", "name": "MSDU", "bits": "Variable", "flex": 6, "desc": "MPDU @ Signal.", "exam": ""}]}, "plcp_11b_l": {"title": "802.11b PLCP — Trama LARGA", "subtitle": "PDF 7 diapos 173–175", "exam": "Sync 128×1s. Preámbulo 144 b @ 1M = 144 µs. Signal 0x0A solo en larga (1 Mbps).", "fields": [{"id": "sync", "name": "SYNC", "bits": "128 b (1s)", "flex": 8, "desc": "Compatibilidad 802.11 original.", "exam": "≠ sync corta (56×0s)."}, {"id": "sfd", "name": "SFD", "bits": "16 b", "flex": 1, "desc": "1111001111010000.", "exam": "Corta = inverso."}, {"id": "sig", "name": "Signal", "bits": "8 b", "flex": 1, "desc": "0x0A,0x14,0x37,0x6E.", "exam": "Memorizar hex."}, {"id": "svc", "name": "Service", "bits": "8 b", "flex": 1, "desc": "Bit8 extiende Length a 17 bits.", "exam": ""}, {"id": "len", "name": "Length", "bits": "16 b", "flex": 2, "desc": "Tiempo trama µs.", "exam": ""}, {"id": "crc", "name": "CRC", "bits": "16 b", "flex": 1, "desc": "HEC.", "exam": ""}, {"id": "psdu", "name": "PSDU", "bits": "Variable", "flex": 6, "desc": "1, 2, 5.5, 11 Mbps.", "exam": ""}]}, "plcp_11b_s": {"title": "802.11b PLCP — Trama CORTA", "subtitle": "PDF 7 diapos 173–175", "exam": "72 b preámbulo @ 1M + 48 b header @ 2M = 96 µs total PLCP corto.", "fields": [{"id": "sync", "name": "SYNC", "bits": "56 b (0s)", "flex": 4, "desc": "Distinto a larga.", "exam": ""}, {"id": "sfd", "name": "SFD", "bits": "16 b", "flex": 1, "desc": "0000110001011111.", "exam": ""}, {"id": "sig", "name": "Signal", "bits": "8 b", "flex": 1, "desc": "2, 5.5, 11 Mbps (no 1M).", "exam": ""}, {"id": "svc", "name": "Service", "bits": "8 b", "flex": 1, "desc": "Igual larga.", "exam": ""}, {"id": "len", "name": "Length", "bits": "16 b", "flex": 2, "desc": "µs transmisión.", "exam": ""}, {"id": "crc", "name": "CRC", "bits": "16 b", "flex": 1, "desc": "HEC.", "exam": ""}, {"id": "psdu", "name": "PSDU", "bits": "Variable", "flex": 6, "desc": "Datos @ tasa Signal.", "exam": ""}]}, "plcp_11g": {"title": "802.11g PPDU — PDF 8 diapos 183–186", "subtitle": "192 bits @ 1 Mbps = 192 µs (PLCP largo)", "exam": "Preámb 144 b + header 48 b. Datos @ SIGNAL. 0x1E = cualquier DSSS-OFDM.", "fields": [{"id": "sync", "name": "SYNC", "bits": "128 b", "flex": 8, "desc": "DBPSK sincronización.", "exam": ""}, {"id": "sfd", "name": "SFD", "bits": "16 b", "flex": 1, "desc": "Start frame delimiter.", "exam": ""}, {"id": "sig", "name": "SIGNAL", "bits": "8 b", "flex": 1, "desc": "Velocidad/modulación (tabla hex).", "exam": "Clave en ejercicios tiempo."}, {"id": "svc", "name": "SERVICE", "bits": "8 b", "flex": 1, "desc": "Bit2=1 relojes sync, bit3 PBCC.", "exam": ""}, {"id": "len", "name": "LENGTH", "bits": "16 b", "flex": 2, "desc": "µs para transmitir PPDU.", "exam": ""}, {"id": "crc", "name": "CRC", "bits": "16 b", "flex": 1, "desc": "Integridad cabecera PLCP.", "exam": ""}, {"id": "psdu", "name": "PSDU", "bits": "Variable", "flex": 8, "desc": "MPDU completa @ tasa SIGNAL.", "exam": "T_cuerpo = bytes×8/Mbps_datos."}]}, "plcp_11a": {"title": "802.11a PLCP OFDM — PDF 7 diapos 178–182", "subtitle": "48 subportadoras datos · 4 µs/símbolo", "exam": "Rate 6Mbps=110110 … 54Mbps=101110. 216 bits/símbolo @ 54M.", "fields": [{"id": "preamb", "name": "STF + LTF", "bits": "16 µs", "flex": 3, "desc": "10 STF + 2 LTF · sync tiempo/frecuencia.", "exam": ""}, {"id": "signal", "name": "Signal OFDM", "bits": "4 µs", "flex": 1, "desc": "1 símbolo: Rate + Length + Tail + paridad.", "exam": "Rate en 6 bits."}, {"id": "service", "name": "Service", "bits": "16 b", "flex": 1, "desc": "8 primeros = 0 descrambler.", "exam": ""}, {"id": "data", "name": "Datos OFDM", "bits": "Variable", "flex": 8, "desc": "PLCP header restante + PSDU + Pad.", "exam": ""}, {"id": "tail", "name": "Tail", "bits": "6 b", "flex": 1, "desc": "Cerar convolucional.", "exam": ""}]}, "plcp_11n": {"title": "802.11n Mixed Mode — PDF 8 diapos 188–196", "subtitle": "Mixed obligatorio · L-SIG falsa @ 6 Mbps", "exam": "HT-SIG: MCS(7), Length(16), Aggregation, STBC, FEC, Short GI, BW.", "fields": [{"id": "lstf", "name": "L-STF", "bits": "8 µs", "flex": 1, "desc": "Non-HT short training.", "exam": ""}, {"id": "lltf", "name": "L-LTF", "bits": "8 µs", "flex": 1, "desc": "Non-HT long training.", "exam": ""}, {"id": "lsig", "name": "L-SIG", "bits": "4 µs", "flex": 1, "desc": "Legacy: 6 Mbps + longitud FALSA para protección a/g.", "exam": "Pregunta clásica P3."}, {"id": "htsig", "name": "HT-SIG", "bits": "8 µs", "flex": 2, "desc": "MCS, length real, agregación, BW 20/40.", "exam": ""}, {"id": "htstf", "name": "HT-STF", "bits": "4 µs", "flex": 1, "desc": "Refinar AGC.", "exam": ""}, {"id": "htltf", "name": "HT-LTF", "bits": "4µs×N", "flex": 2, "desc": "Estimación canal MIMO.", "exam": "1/2/4 según streams."}, {"id": "data", "name": "Data HT", "bits": "Variable", "flex": 8, "desc": "PSDU + Pad + Tail + Service 16b.", "exam": ""}]}, "plcp_11ac": {"title": "802.11ac VHT — PDF 8 diapos 197–206", "subtitle": "A-MPDU obligatorio", "exam": "VHT-SIG-A: BW 0=20,1=40,2=80,3=160 MHz. VHT-SIG-B: longitud en unidades 4 B.", "fields": [{"id": "lstf", "name": "L-STF/L-LTF", "bits": "16 µs", "flex": 2, "desc": "Legacy training.", "exam": ""}, {"id": "lsig", "name": "L-SIG", "bits": "4 µs", "flex": 1, "desc": "Rate + length legacy.", "exam": ""}, {"id": "vhta", "name": "VHT-SIG-A", "bits": "8 µs", "flex": 2, "desc": "BW, MCS, STBC, GI, LDPC.", "exam": ""}, {"id": "vhtstf", "name": "VHT-STF", "bits": "4 µs", "flex": 1, "desc": "Training VHT.", "exam": ""}, {"id": "vhtltf", "name": "VHT-LTF", "bits": "4–32 µs", "flex": 2, "desc": "1–8 símbolos por streams.", "exam": ""}, {"id": "vhtb", "name": "VHT-SIG-B", "bits": "4 µs", "flex": 1, "desc": "Longitud payload ×4 bytes.", "exam": ""}, {"id": "data", "name": "Data", "bits": "Variable", "flex": 8, "desc": "PSDU A-MPDU.", "exam": ""}]}, "control": {"title": "Tramas de control — tamaños fijos", "subtitle": "PDF 9 · Examen numérico", "exam": "RTS=20 B, CTS=14 B, ACK=14 B. Sin body, sin Sequence Control.", "fields": [{"id": "rts", "name": "RTS", "bits": "20 B", "flex": 4, "desc": "Request To Send · Duration = NAV completo.", "exam": "Memorizar 20 bytes."}, {"id": "cts", "name": "CTS", "bits": "14 B", "flex": 3, "desc": "Clear To Send · NAV para estaciones ocultas.", "exam": "Memorizar 14 bytes."}, {"id": "ack", "name": "ACK", "bits": "14 B", "flex": 3, "desc": "Confirmación unicast.", "exam": "Igual tamaño que CTS."}]}, "ppdu_aire": {"title": "PPDU completa en el aire (802.11g)", "subtitle": "Vista integrada PLCP + MAC", "exam": "T_PLCP=192µs largo. T_trama = T_PLCP + (MPDU_bytes×8)/Mbps_datos.", "fields": [{"id": "pre", "name": "Preámbulo PLCP", "bits": "144 b", "flex": 4, "desc": "@ 1 Mbps — SYNC+SFD.", "exam": "Siempre 1 Mbps."}, {"id": "hdr", "name": "Header PLCP", "bits": "48 b", "flex": 2, "desc": "@ 1 Mbps (o 2M si corto).", "exam": ""}, {"id": "mac", "name": "Cabecera MAC", "bits": "30 B", "flex": 4, "desc": "FC, Duration, Addr, Seq…", "exam": "+4 FCS = 34 overhead."}, {"id": "body", "name": "Body", "bits": "Payload", "flex": 8, "desc": "MSDU o gestión.", "exam": "@ Mbps del enunciado."}, {"id": "fcs", "name": "FCS", "bits": "4 B", "flex": 1, "desc": "CRC-32.", "exam": ""}]}, "eth8023": {"title": "Trama Ethernet 802.3 — comparación", "subtitle": "Capa 2 cableada · sin NAV ni Duration", "exam": "Ethernet: Dest(6)+Src(6)+Type(2)+Payload+FCS(4). WLAN añade FC, Duration y hasta 4 direcciones.", "fields": [{"id": "dst", "name": "Destino MAC", "bits": "6 B", "flex": 4, "desc": "MAC destino — broadcast FF:FF:FF:FF:FF:FF si desconocido.", "exam": ""}, {"id": "src", "name": "Origen MAC", "bits": "6 B", "flex": 4, "desc": "MAC del emisor.", "exam": ""}, {"id": "type", "name": "Type / Length", "bits": "2 B", "flex": 2, "desc": "Ethertype (≥1536) o longitud LLC si ≤1500.", "exam": "0x0800=IPv4, 0x0806=ARP."}, {"id": "payload", "name": "Payload", "bits": "46–1500 B", "flex": 8, "desc": "Datos capa superior (IP, ARP…).", "exam": "Mínimo 46 B con padding."}, {"id": "fcs", "name": "FCS", "bits": "4 B", "flex": 2, "desc": "CRC-32 — igual concepto que FCS 802.11.", "exam": ""}]}, "dcf_seq": {"title": "Secuencia DCF RTS/CTS — PDF 10 diapo 255", "subtitle": "Terminal oculto · CSMA/CA", "exam": "DIFS=50µs (SIFS+2×slot). Backoff=CW×20µs. NAV en RTS reserva todo el diálogo.", "fields": [{"id": "difs", "name": "DIFS", "bits": "50 µs", "flex": 2, "desc": "Espera antes contención.", "exam": "SIFS+2×slot en b/g."}, {"id": "bo", "name": "Backoff", "bits": "CW×20µs", "flex": 2, "desc": "Contador aleatorio × slot.", "exam": ""}, {"id": "rts", "name": "RTS", "bits": "20 B", "flex": 2, "desc": "Reserva canal.", "exam": ""}, {"id": "s1", "name": "SIFS", "bits": "10 µs", "flex": 1, "desc": "Pausa.", "exam": ""}, {"id": "cts", "name": "CTS", "bits": "14 B", "flex": 2, "desc": "Confirma reserva.", "exam": ""}, {"id": "s2", "name": "SIFS", "bits": "10 µs", "flex": 1, "desc": "Pausa.", "exam": ""}, {"id": "data", "name": "DATA", "bits": "MPDU", "flex": 4, "desc": "Payload+34 B MAC.", "exam": ""}, {"id": "s3", "name": "SIFS", "bits": "10 µs", "flex": 1, "desc": "Pausa.", "exam": ""}, {"id": "ack", "name": "ACK", "bits": "14 B", "flex": 2, "desc": "Confirmación.", "exam": ""}]}};
 const FLASHCARDS = [{"q": "¿Overhead MAC típico en ejercicios?", "tag": "P3", "a": "34 bytes (30 cabecera + 4 FCS)"}, {"q": "¿Tiempo PLCP largo 802.11g?", "tag": "P3", "a": "192 µs (144 bits @ 1 Mbps + 48 bits @ 1 Mbps)"}, {"q": "¿Tiempo PLCP corto?", "tag": "P3", "a": "96 µs (72 @ 1M + 48 @ 2M)"}, {"q": "SIFS · Slot · DIFS en 802.11g?", "tag": "P3", "a": "10 µs · 20 µs · 50 µs (DIFS = SIFS + 2×slot)"}, {"q": "Tamaño RTS / CTS / ACK", "tag": "P3", "a": "20 B / 14 B / 14 B"}, {"q": "Fórmula η_MAC", "tag": "P3", "a": "η_MAC = payload / (payload + 34)", "a_html": "<span class=\"math-inline\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><mrow><msub><mi>&#x003B7;</mi><mrow><mi>M</mi><mi>A</mi><mi>C</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi></mrow><mrow><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002B;</mo><mn>34</mn></mrow></mfrac></mrow></math></span>"}, {"q": "Fórmula T_trama", "tag": "P3", "a": "T = T_PLCP + (8 × bytes) / Mbps", "a_html": "<span class=\"math-inline\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><mrow><mi>T</mi><mo>&#x0003D;</mo><msub><mi>T</mi><mrow><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0002B;</mo><mfrac><mrow><mn>8</mn><mo>&#x000D7;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>s</mi></mrow><mrow><mi>M</mi><mi>b</mi><mi>p</mi><mi>s</mi></mrow></mfrac></mrow></math></span>"}, {"q": "NAV en RTS incluye…", "tag": "P3", "a": "SIFS + T_CTS + SIFS + T_DATA + SIFS + T_ACK"}, {"q": "Preámbulo PLCP legacy se transmite a…", "tag": "P2", "a": "Siempre 1 Mbps (datos pueden ir a otra tasa)"}, {"q": "Subportadoras de datos OFDM 802.11a/g", "tag": "P2", "a": "48 (de 64 total)"}, {"q": "QPSK 1/2 → bits/símbolo", "tag": "P2", "a": "48 × 2 × 0.5 = 48 bits/símbolo"}, {"q": "64-QAM 3/4 → bits/símbolo y Mbps", "tag": "P2", "a": "216 bits/símbolo → 54 Mbps"}, {"q": "Tipo trama Beacon (bits 2-3)", "tag": "P3", "a": "00 = Gestión (NO control)"}, {"q": "Frame Control 0xb000", "tag": "P3", "a": "Authentication (gestión)"}, {"q": "Signal hex 11 Mbps / 22 Mbps", "tag": "P3", "a": "0x6E / 0xDC"}, {"q": "MSDU vs MPDU vs PSDU vs PPDU", "tag": "P3", "a": "Datos LLC → trama MAC → MPDU en física → + preámbulo PLCP"}, {"q": "802.11n Mixed Mode", "tag": "P2", "a": "Obligatorio; L-SIG 6 Mbps + longitud falsa; tasa real en HT-SIG"}, {"q": "802.11ax @ 20 MHz subportadoras", "tag": "P4", "a": "256"}, {"q": "802.11ax velocidad máx (Mbps)", "tag": "P4", "a": "9607 Mbps"}, {"q": "802.11be velocidad máx (Mbps)", "tag": "P4", "a": "46000 Mbps"}, {"q": "802.11be ancho máx / modulación máx", "tag": "P4", "a": "320 MHz / 4096-QAM"}, {"q": "Autenticación ≠ Asociación. Orden", "tag": "P1", "a": "Auth → Assoc → 4-way handshake (RSNA)"}, {"q": "100 mW en dBm", "tag": "P2", "a": "20 dBm"}, {"q": "EIRP fórmula cadena", "tag": "P2", "a": "Pt(dBm) − pérdidas(dB) + ganancia antena(dBi)"}, {"q": "EIRP Prueba3 (100mW, 3dB, 7dBi)", "tag": "P2", "a": "24 dBm = 251.2 mW"}, {"q": "FHSS chips PN Prueba3", "tag": "P2", "a": "14 chips (100MHz/10kHz → 2^14)"}, {"q": "Cadena dB Prueba3 total", "tag": "P2", "a": "+10.04 dB (13.2×, +8.3, 28.5×, −1.6)"}];
 const QUIZ = [{"q": "¿Beacon es trama de control?", "opts": ["Sí", "No, es gestión", "Es datos", "Es extensión"], "a": 1, "exp": "Tipo 00 = gestión. Beacon subtipo 1000. Control solo ACK/RTS/CTS.", "topic": "mac"}, {"q": "PLCP preámbulo DSSS/g se transmite a:", "opts": ["Misma tasa que datos", "1 Mbps", "2 Mbps siempre", "54 Mbps"], "a": 1, "exp": "Regla PDF: preámbulo+cabecera legacy @ 1 Mbps. Datos van aparte.", "topic": "plcp_legacy"}, {"q": "Overhead MAC en ejercicios Prueba 3:", "opts": ["28 B", "30 B", "34 B", "38 B"], "a": 2, "exp": "30 cabecera + 4 FCS = 34 bytes. Sin esto η_MAC sale mal.", "topic": "mac"}, {"q": "DIFS en ejercicios 802.11g (SIFS=10, slot=20):", "opts": ["30 µs", "40 µs", "50 µs", "60 µs"], "a": 2, "exp": "DIFS = SIFS + 2×slot = 10 + 40 = 50 µs. Va ANTES del backoff.", "topic": "dcf"}, {"q": "PLCP corto total:", "opts": ["72 µs", "96 µs", "144 µs", "192 µs"], "a": 1, "exp": "72@1M + 48@2M = 96 µs. Se suma a cada trama física.", "topic": "plcp_legacy"}, {"q": "Tamaño trama RTS:", "opts": ["14 B", "20 B", "28 B", "34 B"], "a": 1, "exp": "RTS = 20 bytes MAC. CTS/ACK = 14 B.", "topic": "mac"}, {"q": "η_MAC con payload 400 B:", "opts": ["85.47%", "92.17%", "96.66%", "100%"], "a": 1, "exp": "400/(400+34) = 92.17%. Solo payload es útil.", "topic": "eficiencia"}, {"q": "48 subportadoras OFDM significa:", "opts": ["48 total incl. pilotos", "48 de datos", "48 MHz ancho", "48 Mbps"], "a": 1, "exp": "64 total − pilotos − DC = 48 datos. Base de bits/símbolo.", "topic": "plcp_legacy"}, {"q": "NAV en CTS incluye:", "opts": ["Solo T_DATA", "SIFS+T_DATA+SIFS+T_ACK", "DIFS+Backoff", "Toda sec RTS"], "a": 1, "exp": "CTS reserva solo lo que falta: DATA + ACK (+ SIFS entre ellos).", "topic": "dcf"}, {"q": "802.11n modo obligatorio:", "opts": ["Greenfield", "Mixed", "Legacy only", "Cualquiera"], "a": 1, "exp": "Mixed Mode obligatorio para coexistir con a/g.", "topic": "plcp_modern"}, {"q": "ToDS=0 FromDS=1 significa:", "opts": ["STA→AP", "AP→STA", "Ad-hoc", "WDS"], "a": 1, "exp": "From DS=1 → trama sale del AP hacia STA.", "topic": "mac"}, {"q": "Signal hex 802.11g modo DSSS-OFDM:", "opts": ["0x0A (1 Mbps)", "0x6E (11 Mbps)", "0x1E (ERP-OFDM)", "0xDC (22 Mbps PBCC)"], "a": 2, "exp": "0x1E=30 decimal indica DSSS-OFDM. 0x6E=11M DSSS, 0xDC=22M PBCC.", "topic": "plcp_legacy"}, {"q": "¿Misma Mbps PLCP y datos en ejercicio?", "opts": ["Siempre sí", "Nunca, PLCP@1M datos@N", "Solo en 802.11a", "Solo en n"], "a": 1, "exp": "Error clásico: PLCP legacy @ 1 Mbps, cuerpo @ tasa del enunciado.", "topic": "plcp_legacy"}, {"q": "MPDU = payload + ?", "opts": ["Solo FCS", "Overhead MAC 34 B", "PLCP 192 µs", "SIFS"], "a": 1, "exp": "MPDU = payload + cabecera MAC + FCS (34 B típico).", "topic": "capas"}, {"q": "Frame Control 0xb000 es:", "opts": ["Control RTS", "Gestión Auth", "Datos", "Beacon"], "a": 1, "exp": "0xb000 = Authentication. Primer paso conexión Wireshark.", "topic": "wireshark"}, {"q": "¿Qué indica el campo Duration?", "opts": ["Mbps de datos", "µs de NAV", "Número de retry", "Tamaño payload"], "a": 1, "exp": "Duration = microsegundos que el medio estará ocupado (NAV).", "topic": "dcf"}, {"q": "PIFS en 802.11g (SIFS=10, slot=20):", "opts": ["20 µs", "30 µs", "40 µs", "50 µs"], "a": 1, "exp": "PIFS = SIFS + 1×slot = 30 µs. DIFS = 50 µs.", "topic": "dcf"}, {"q": "η_PLCP con MPDU 1872 bits y PLCP 120 bits:", "opts": ["85.47%", "93.98%", "96.66%", "98.82%"], "a": 1, "exp": "1872/(1872+120) = 93.98%. Overhead PLCP en bits, no bytes.", "topic": "eficiencia"}, {"q": "Orden correcto conexión STA:", "opts": ["Assoc→Auth", "Auth→Assoc", "Data→Auth", "Beacon→Data"], "a": 1, "exp": "Auth (#871) → Auth Resp → Assoc Req → Assoc Resp. Luego datos.", "topic": "wireshark"}, {"q": "PSDU en capa física es:", "opts": ["Solo payload", "El MPDU", "Preámbulo PLCP", "MSDU LLC"], "a": 1, "exp": "PSDU = MPDU visto desde PHY. PLCP lo envuelve → PPDU.", "topic": "capas"}, {"q": "100 mW equivale a:", "opts": ["10 dBm", "17 dBm", "20 dBm", "27 dBm"], "a": 2, "exp": "10·log10(100)=20 dBm. Tabla clave Prueba3.", "topic": "link_budget"}, {"q": "EIRP (100mW, cable −3dB, antena 7dBi) en mW:", "opts": ["100 mW", "200 mW", "251 mW", "500 mW"], "a": 2, "exp": "20−3+7=24 dBm → 10^2.4≈251 mW.", "topic": "link_budget"}, {"q": "FHSS 100MHz / 10kHz → chips PN mínimos:", "opts": ["10", "12", "14", "16"], "a": 2, "exp": "N=10000 → 2^14=16384≥10000.", "topic": "link_budget"}, {"q": "Atenuación 13.2 veces en dB ≈", "opts": ["−6 dB", "−11 dB", "+11 dB", "−13 dB"], "a": 1, "exp": "−10·log10(13.2)≈−11.21 dB. No confundir × con dB.", "topic": "link_budget"}, {"q": "¿Para qué sirve RTS/CTS?", "opts": ["Terminal expuesto", "Terminal oculto", "Ahorrar energía", "Cifrar datos"], "a": 1, "exp": "RTS/CTS resuelve terminal oculto: reserva medio antes de DATA.", "topic": "dcf"}, {"q": "Duration en trama = 0x0398 → NAV:", "opts": ["398 µs", "920 µs", "256 µs", "1000 µs"], "a": 1, "exp": "0x0398 = 3×256+9×16+8 = 920 µs.", "topic": "dcf"}, {"q": "3 dB de pérdida significa potencia:", "opts": ["Se triplica", "Se reduce a la mitad", "Sin cambio", "÷10"], "a": 1, "exp": "3 dB ≈ ÷2 en potencia. Cable Prueba3.", "topic": "link_budget"}, {"q": "Velocidad máxima IEEE 802.11ax (Mbps):", "opts": ["600 Mbps", "9607 Mbps", "46000 Mbps", "6933 Mbps"], "a": 1, "exp": "Tabla PMD: 9607 Mbps (8×8, 160 MHz). ac≈6933, be=46000.", "topic": "plcp_modern"}, {"q": "Velocidad máxima IEEE 802.11be (Mbps):", "opts": ["9607 Mbps", "46000 Mbps", "32000 Mbps", "10000 Mbps"], "a": 1, "exp": "Wi-Fi 7 EHT: 46000 Mbps teórico (16×16, 320 MHz).", "topic": "plcp_modern"}, {"q": "Modulación máxima 802.11be:", "opts": ["256-QAM", "1024-QAM", "4096-QAM", "64-QAM"], "a": 2, "exp": "be=EHT con 4096-QAM. ax usa 1024-QAM.", "topic": "plcp_modern"}, {"q": "V/F: Beacon es trama de control.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "Beacon=gestión tipo 00. Control solo ACK/RTS/CTS.", "topic": "mac"}, {"q": "V/F: El campo Signal indica velocidad del preámbulo PLCP.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "Signal=velocidad PSDU. Preámbulo legacy @ 1 Mbps fijo.", "topic": "plcp_legacy"}, {"q": "V/F: Ethernet 802.3 tiene campo Duration/NAV.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "Duration es exclusivo 802.11 para reserva virtual.", "topic": "capas"}, {"q": "Campo FCS del MPDU ocupa:", "opts": ["2 B", "4 B", "6 B", "8 B"], "a": 1, "exp": "CRC-32 = 4 bytes. Overhead MAC = 30+4=34 B.", "topic": "mac"}, {"q": "802.11ac MU-MIMO dirección:", "opts": ["Solo uplink", "Solo downlink", "UL y DL", "No tiene MU-MIMO"], "a": 1, "exp": "ac=DL only. ax añade UL MU-MIMO.", "topic": "plcp_modern"}, {"q": "Subportadoras OFDMA 802.11ax @ 20 MHz:", "opts": ["48", "64", "256", "320"], "a": 2, "exp": "ax usa 256 tonos @ 20 MHz. Legacy OFDM=48 datos.", "topic": "plcp_modern"}, {"q": "RIFS en 802.11n vale:", "opts": ["2 µs", "10 µs", "20 µs", "50 µs"], "a": 0, "exp": "RIFS=2 µs solo n. SIFS=10 µs es el IFS más corto en b/g.", "topic": "dcf"}, {"q": "Duration en periodo CF vale:", "opts": ["44 µs", "920 µs", "32768 µs", "65535 µs"], "a": 2, "exp": "CF period: bits 14=0, 15=1 → 32768 µs fijo.", "topic": "mac"}, {"q": "PBSS opera en:", "opts": ["2.4 GHz", "5 GHz", "60 GHz", "6 GHz"], "a": 2, "exp": "PBSS = 802.11ad DMG @ 60 GHz con rol PCP.", "topic": "intro"}, {"q": "8ª generación Wi-Fi es:", "opts": ["802.11be", "802.11ax", "802.11bn", "802.11ac"], "a": 2, "exp": "7ª=be, 8ª=bn (Ultra High Reliability, en desarrollo).", "topic": "intro"}, {"q": "Modulación máxima 802.11be (Prueba3-3):", "opts": ["1024-QAM", "256-QAM", "4096-QAM", "64-QAM"], "a": 2, "exp": "Pregunta repetida Prueba3-3 parte 1. be=EHT.", "topic": "pmd"}, {"q": "Canales no solapados 2.4 GHz @ 20 MHz:", "opts": ["1", "3", "11", "14"], "a": 1, "exp": "Canales 1, 6, 11. Prueba3-3 pregunta n @ 2.4 GHz.", "topic": "pmd"}, {"q": "AB máximo 802.11n:", "opts": ["20 MHz", "40 MHz", "80 MHz", "160 MHz"], "a": 1, "exp": "n máx 40 MHz. 80/160 es ac.", "topic": "pmd"}, {"q": "WPA3 Personal usa autenticación:", "opts": ["PSK", "SAE", "Shared Key", "EAP-TLS"], "a": 1, "exp": "WLAN-1 #13: SAE reemplaza PSK para mitigar diccionario.", "topic": "intro"}, {"q": "To DS=0, From DS=0 indica red:", "opts": ["Infraestructura", "Ad-hoc IBSS", "WDS", "Mesh"], "a": 1, "exp": "WLAN-1 #5: 00=ad-hoc. 10=STA→AP.", "topic": "mac"}, {"q": "Con cifrado, se protege principalmente:", "opts": ["MPDU completa", "MSDU (payload)", "PLCP", "Preámbulo"], "a": 1, "exp": "WLAN-1 #15: privacidad a nivel MSDU.", "topic": "mac"}, {"q": "16-QAM 1/2 → bits/símbolo OFDM:", "opts": ["48", "96", "216", "288"], "a": 1, "exp": "48×4×0.5=96 → 24 Mbps. Prueba3-3 OFDM.", "topic": "plcp_legacy"}, {"q": "BPSK 3/4 → bits/símbolo OFDM:", "opts": ["24", "36", "48", "72"], "a": 1, "exp": "48×1×0.75=36 → 9 Mbps.", "topic": "plcp_legacy"}, {"q": "Cadena dB Prueba3-3 (13.2×, +8.3, 28.5×, −1.6) total:", "opts": ["−10 dB", "+10.04 dB", "+20 dB", "0 dB"], "a": 1, "exp": "Convierte × a dB antes de sumar.", "topic": "link_budget"}, {"q": "η_MAC payload 200 B:", "opts": ["85.47%", "92.17%", "93.77%", "96.66%"], "a": 0, "exp": "200/(200+34)=85.47%. Estación B Prueba3-3.", "topic": "eficiencia"}, {"q": "T_PLCP corto (72+48 bits):", "opts": ["72 µs", "96 µs", "120 µs", "192 µs"], "a": 1, "exp": "72@1M + 48@2M = 96 µs. Prueba3-3 usa corto.", "topic": "plcp_legacy"}, {"q": "Mixed Mode obligatorio en:", "opts": ["802.11ac", "802.11n", "802.11be", "802.11b"], "a": 1, "exp": "n exige Mixed para coexistir con legacy.", "topic": "plcp_modern"}, {"q": "A-MSDU vs A-MPDU — ¿cuál usa Block ACK?", "opts": ["A-MSDU", "A-MPDU", "Ambas", "Ninguna"], "a": 1, "exp": "PDF 9: A-MPDU cifrado individual + Block ACK.", "topic": "mac"}, {"q": "SSID máximo caracteres:", "opts": ["16", "32", "64", "256"], "a": 1, "exp": "PDF 2: 32 chars, case-sensitive.", "topic": "intro"}, {"q": "Signal hex 22 Mbps PBCC:", "opts": ["0x6E", "0xDC", "0x21", "0x1E"], "a": 1, "exp": "0xDC=22M PBCC. 0x21=33M. 0x1E=DSSS-OFDM.", "topic": "plcp_legacy"}, {"q": "V/F: Length PLCP DSSS mide bytes.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "DSSS Length=µs. OFDM Signal Length=bytes.", "topic": "plcp_legacy"}, {"q": "V/F: PCF es obligatorio en todas las STAs.", "opts": ["Verdadero", "Falso"], "a": 1, "exp": "DCF obligatorio. PCF opcional (casi no implementado).", "topic": "dcf"}];
-const STUDY_PATH = [{"step": 1, "topic": "intro", "title": "Intro + componentes", "time": "15 min", "why": "PDF 1–2 · Base del curso"}, {"step": 2, "topic": "capas", "title": "Capas MSDU→PPDU", "time": "15 min", "why": "PDF 3 · Encapsulamiento"}, {"step": 3, "topic": "pmd", "title": "PMD modulación", "time": "20 min", "why": "PDF 4–6 · b, g/n, ac/ax/be"}, {"step": 4, "topic": "plcp_legacy", "title": "PLCP legacy 192/96 µs", "time": "20 min", "why": "PDF 7 · Tiempos clave P3"}, {"step": 5, "topic": "plcp_modern", "title": "PLCP g/n/ac/ax/be", "time": "15 min", "why": "PDF 8 · Mixed, HE, EHT"}, {"step": 6, "topic": "mac", "title": "MAC y Frame Control", "time": "25 min", "why": "PDF 9 · Tramas + 34 B"}, {"step": 7, "topic": "dcf", "title": "DCF y NAV", "time": "30 min", "why": "PDF 10 · RTS/CTS"}, {"step": 8, "topic": "eficiencia", "title": "Eficiencia + ejercicios", "time": "45 min", "why": "★ Prueba 3 — sacar 100"}, {"step": 9, "topic": "link_budget", "title": "dBm, EIRP, FHSS", "time": "25 min", "why": "Prueba3-3 parte 2"}, {"step": 10, "topic": "wireshark", "title": "Wireshark", "time": "20 min", "why": "Decodificar FC hex"}, {"step": 11, "topic": "chuleta", "title": "Chuleta final", "time": "10 min", "why": "Repaso día del examen"}];
-const TOPIC_IDS = ["intro", "capas", "pmd", "plcp_legacy", "plcp_modern", "mac", "dcf", "eficiencia", "link_budget", "wireshark", "siglas", "chuleta"];
+const STUDY_PATH = [{"step": 1, "topic": "intro", "title": "Intro + componentes", "time": "15 min", "why": "PDF 1–2 · Base del curso"}, {"step": 2, "topic": "p1_examen", "title": "Prueba 1 — fundamentos", "time": "25 min", "why": "Topologías, FHSS, EIRP · ~30% nota"}, {"step": 3, "topic": "capas", "title": "Capas MSDU→PPDU", "time": "15 min", "why": "PDF 3 · Encapsulamiento"}, {"step": 4, "topic": "pmd", "title": "PMD modulación", "time": "20 min", "why": "PDF 4–6 · b, g/n, ac/ax/be"}, {"step": 5, "topic": "plcp_legacy", "title": "PLCP legacy 192/96 µs", "time": "20 min", "why": "PDF 7 · Tiempos clave P3"}, {"step": 6, "topic": "plcp_modern", "title": "PLCP g/n/ac/ax/be", "time": "15 min", "why": "PDF 8 · Mixed, HE, EHT"}, {"step": 7, "topic": "mac", "title": "MAC y Frame Control", "time": "25 min", "why": "PDF 9 · Tramas + 34 B"}, {"step": 8, "topic": "dcf", "title": "DCF y NAV", "time": "30 min", "why": "PDF 10 · RTS/CTS"}, {"step": 9, "topic": "eficiencia", "title": "Eficiencia + ejercicios", "time": "45 min", "why": "★ Prueba 3 — sacar 100"}, {"step": 10, "topic": "link_budget", "title": "dBm, EIRP, FHSS", "time": "25 min", "why": "Prueba3-3 parte 2"}, {"step": 11, "topic": "wireshark", "title": "Wireshark", "time": "20 min", "why": "Decodificar FC hex"}, {"step": 12, "topic": "chuleta", "title": "Chuleta final", "time": "10 min", "why": "Repaso día del examen"}];
+const TOPIC_IDS = ["intro", "p1_examen", "capas", "pmd", "plcp_legacy", "plcp_modern", "mac", "dcf", "eficiencia", "link_budget", "wireshark", "siglas", "chuleta"];
 const STORAGE_KEY = 'wlan_study_v2';
 
 function loadProgress() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
 }
 function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+const FIELD_COLORS = {
+  fc:'#1d4ed8',dur:'#2563eb',a1:'#3b82f6',a2:'#60a5fa',a3:'#0ea5e9',a4:'#818cf8',seq:'#6366f1',
+  body:'#0d9488',fcs:'#d97706',payload:'#14b8a6',sync:'#0891b2',sfd:'#06b6d4',sig:'#0284c7',
+  svc:'#0369a1',len:'#1e40af',crc:'#b45309',psdu:'#059669',pre:'#0891b2',hdr:'#0e7490',mac:'#2563eb',
+  rts:'#7c3aed',cts:'#8b5cf6',ack:'#a78bfa',difs:'#f59e0b',bo:'#fbbf24',data:'#10b981',
+  dst:'#3b82f6',src:'#60a5fa',type:'#818cf8',s1:'#64748b',s2:'#64748b',s3:'#64748b',
+  preamb:'#0891b2',signal:'#0284c7',service:'#0369a1',tail:'#475569',lstf:'#0e7490',lltf:'#0e7490',
+  lsig:'#2563eb',htsig:'#7c3aed',htstf:'#8b5cf6',htltf:'#a78bfa',vhta:'#6366f1',vhtstf:'#818cf8',
+  vhtltf:'#a78bfa',vhtb:'#c084fc'
+};
+
+function fieldColor(id) {
+  if (FIELD_COLORS[id]) return FIELD_COLORS[id];
+  if (/^a[1-4]$/.test(id) || id.includes('addr')) return '#3b82f6';
+  if (/sync|ltf|stf|sfd|pre/i.test(id)) return '#0891b2';
+  if (/data|body|psdu|payload/i.test(id)) return '#0d9488';
+  return '#38bdf8';
+}
+
+function escSvg(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderFrameSvg(frameId, f) {
+  const fields = f.fields;
+  const isSeq = frameId === 'dcf_seq';
+  const minW = isSeq ? 88 : 64;
+  const barH = isSeq ? 72 : 88;
+  const totalFlex = fields.reduce((s, x) => s + (x.flex || 1), 0);
+  const svgW = Math.max(720, fields.reduce((s, x) => s + Math.max(minW, (x.flex || 1) / totalFlex * 720), 0));
+  const gap = isSeq ? 14 : 4;
+  let x = 8;
+  let rects = '';
+  let labels = '';
+  fields.forEach((field, i) => {
+    const fw = Math.max(minW, ((field.flex || 1) / totalFlex) * (svgW - 16));
+    const color = fieldColor(field.id);
+    const rx = 8;
+    const y = isSeq ? 28 : 12;
+    rects += `<g class="fv-field" data-frame="${frameId}" data-field="${field.id}"
+      onclick="selectField('${frameId}','${field.id}')" role="button" tabindex="0">
+      <rect x="${x}" y="${y}" width="${fw - gap}" height="${barH}" rx="${rx}"
+        fill="${color}" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+      <text class="fv-name" x="${x + (fw - gap) / 2}" y="${y + barH / 2 - 2}"
+        text-anchor="middle">${escSvg(field.name)}</text>
+      <text class="fv-bits" x="${x + (fw - gap) / 2}" y="${y + barH / 2 + 12}"
+        text-anchor="middle">${escSvg(field.bits)}</text>
+    </g>`;
+    if (isSeq && i < fields.length - 1) {
+      const ax = x + fw - gap + 2;
+      labels += `<line class="fv-arrow" x1="${ax}" y1="${y + barH / 2}" x2="${ax + gap - 2}" y2="${y + barH / 2}"/>`;
+    }
+    x += fw;
+  });
+  const h = isSeq ? barH + 48 : barH + 32;
+  return `<svg class="frame-svg" viewBox="0 0 ${svgW} ${h}" width="${svgW}" height="${h}" aria-label="${escSvg(f.title)}">
+    <defs><marker id="fv-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--muted)"/></marker></defs>
+    ${rects}${labels}</svg>`;
+}
 
 function initFrames() {
   document.querySelectorAll('.iframe-wrap').forEach(w => {
@@ -4851,13 +5099,13 @@ function initFrames() {
     let h = `<div class="frame-title">${f.title}</div>`;
     if (f.subtitle) h += `<div class="frame-sub">${f.subtitle}</div>`;
     if (f.exam) h += `<div class="frame-exam">🎯 Examen: ${f.exam}</div>`;
-    h += `<div class="frame-diagram">`;
-    f.fields.forEach(field => {
-      h += `<div class="fblock" style="flex:${field.flex||1}" data-frame="${id}" data-field="${field.id}"
-        onclick="selectField('${id}','${field.id}')">
-        <div class="fn">${field.name}</div><div class="fb">${field.bits}</div></div>`;
-    });
-    h += `</div><div class="field-panel" id="panel-${id}"><p class="ph">Clic en un campo ↑</p></div>`;
+    h += `<div class="frame-scroll">${renderFrameSvg(id, f)}</div>`;
+    h += `<div class="frame-legend"><span><i style="background:#1d4ed8"></i>MAC</span>
+      <span><i style="background:#0891b2"></i>PLCP</span>
+      <span><i style="background:#0d9488"></i>Datos</span>
+      <span><i style="background:#d97706"></i>FCS</span>
+      <span>Clic en cada bloque ↓</span></div>`;
+    h += `<div class="field-panel" id="panel-${id}"><p class="ph">Clic en un campo del diagrama ↑</p></div>`;
     w.innerHTML = h;
   });
 }
@@ -4866,7 +5114,7 @@ function selectField(frameId, fieldId) {
   const f = FRAMES[frameId];
   const field = f.fields.find(x => x.id === fieldId);
   if (!field) return;
-  document.querySelectorAll(`.fblock[data-frame="${frameId}"]`).forEach(b =>
+  document.querySelectorAll(`[data-frame="${frameId}"][data-field]`).forEach(b =>
     b.classList.toggle('active', b.dataset.field === fieldId));
   const html = `<p class="ph">${f.title}</p><h4>${field.name}</h4>
     <div class="bits">${field.bits}</div><div class="desc">${field.desc}</div>` +
@@ -4880,10 +5128,44 @@ function selectField(frameId, fieldId) {
 
 function toggleNav() { document.querySelector('nav.sidebar').classList.toggle('open'); }
 
+function activateTopicTab(tema, paneId) {
+  const tabs = tema.querySelector('.tema-tabs');
+  if (!tabs) return;
+  tabs.querySelectorAll('.ttab').forEach(t => {
+    const on = t.dataset.pane === paneId;
+    t.classList.toggle('on', on);
+  });
+  tema.querySelectorAll('.tema-pane').forEach(p => {
+    p.classList.toggle('on', p.dataset.pane === paneId);
+  });
+}
+
 function goTopic(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const targetId = id === 'portada' || !id ? 'portada' : id;
+  if (targetId === 'portada') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const topTitle = document.getElementById('top-title');
+    if (topTitle) topTitle.textContent = 'WLAN Master — Plataforma de estudio';
+    document.querySelectorAll('.nav-links a').forEach(a =>
+      a.classList.toggle('on', a.getAttribute('href') === '#portada'));
+    document.querySelector('nav.sidebar')?.classList.remove('open');
+    return;
+  }
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  el.classList.add('visible');
+  activateTopicTab(el, 'teoria');
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.querySelector('nav.sidebar')?.classList.remove('open');
+}
+
+function initNavLinks() {
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      goTopic(a.getAttribute('href').slice(1) || 'portada');
+    });
+  });
 }
 
 function updateProgressUI() {
@@ -4924,42 +5206,50 @@ function initTopicTabs() {
     if (tema.id === 'portada') return;
     const body = tema.querySelector('.tema-body');
     if (!body) return;
-    const frames = [...body.querySelectorAll(':scope > .iframe-wrap')];
-    const ejercicios = [...body.querySelectorAll(':scope > .ej-block')];
-    if (!frames.length && !ejercicios.length) return;
+    const frameEls = [...body.querySelectorAll('.iframe-wrap')];
+    const ejEls = [...body.querySelectorAll('.ej-tema-block, .ej-block')];
+    if (!frameEls.length && !ejEls.length) return;
 
-    const allDirect = [...body.children];
+    const toMove = [...body.children];
     const tabs = document.createElement('div');
     tabs.className = 'tema-tabs';
     const panes = {};
+    const frameSet = new Set(frameEls);
+    const ejSet = new Set(ejEls);
 
     const defs = [{ id: 'teoria', label: '📖 Teoría' }];
-    if (frames.length) defs.push({ id: 'tramas', label: '🔬 Tramas interactivas' });
-    if (ejercicios.length) defs.push({ id: 'ejercicios', label: '✏️ Ejercicios' });
+    if (frameEls.length) defs.push({ id: 'tramas', label: '🔬 Tramas interactivas' });
+    if (ejEls.length) defs.push({ id: 'ejercicios', label: '✏️ Ejercicios' });
 
     defs.forEach((d, i) => {
       const tab = document.createElement('button');
+      tab.type = 'button';
       tab.className = 'ttab' + (i === 0 ? ' on' : '');
+      tab.dataset.pane = d.id;
       tab.textContent = d.label;
-      tab.onclick = () => {
-        tabs.querySelectorAll('.ttab').forEach(t => t.classList.remove('on'));
-        tab.classList.add('on');
-        Object.values(panes).forEach(p => p.classList.remove('on'));
-        panes[d.id].classList.add('on');
-      };
+      tab.addEventListener('click', e => {
+        e.preventDefault();
+        activateTopicTab(tema, d.id);
+      });
       tabs.appendChild(tab);
       const pane = document.createElement('div');
       pane.className = 'tema-pane' + (i === 0 ? ' on' : '');
+      pane.dataset.pane = d.id;
       panes[d.id] = pane;
       body.appendChild(pane);
     });
 
-    allDirect.forEach(el => {
+    toMove.forEach(el => {
       if (el.classList.contains('tema-pane')) return;
-      if (frames.includes(el)) panes.tramas?.appendChild(el);
-      else if (ejercicios.includes(el)) panes.ejercicios?.appendChild(el);
-      else panes.teoria?.appendChild(el);
+      if (frameSet.has(el)) panes.tramas?.appendChild(el);
+      else if (ejSet.has(el)) panes.ejercicios?.appendChild(el);
+      else panes.teoria.appendChild(el);
     });
+
+    if (panes.ejercicios) {
+      [...panes.teoria.querySelectorAll('.ej-tema-block, .ej-block')].forEach(el =>
+        panes.ejercicios.appendChild(el));
+    }
 
     tema.insertBefore(tabs, body);
   });
@@ -5154,12 +5444,21 @@ function renderKatex() {
   });
 }
 
+function revealVisibleTemas() {
+  document.querySelectorAll('.tema').forEach(t => {
+    const r = t.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.92 && r.bottom > 40) t.classList.add('visible');
+  });
+}
+
 function boot() {
   renderKatex();
   initFrames();
   initTopicTabs();
+  initNavLinks();
   updateProgressUI();
   initScrollAnim();
+  revealVisibleTemas();
   initSearch();
   document.getElementById('totop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   document.getElementById('panel-float').onclick = e => {
