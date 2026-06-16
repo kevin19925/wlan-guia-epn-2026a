@@ -11,7 +11,7 @@ Sitio estático con **todo el material WLAN**, no solo tramas:
 ## Despliegue en Render
 
 1. [Render Dashboard](https://dashboard.render.com/) → **New** → **Static Site**
-2. Conectar repo `kevin19925/wlan-guia-tramas-epn` (o renombrar a `wlan-guia-epn-2026a`)
+2. Conectar repo `kevin19925/wlan-guia-epn-2026a`
 3. **Build command:** (vacío)
 4. **Publish directory:** `.` (raíz)
 5. Deploy
