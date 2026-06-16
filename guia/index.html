@@ -119,9 +119,9 @@ main{margin-left:var(--sw);flex:1;max-width:900px;padding:calc(var(--top) + 16px
 .path-why{font-size:.72rem;color:var(--warn);margin-top:2px}
 .tema{background:var(--glass);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:18px;
   margin-bottom:40px;overflow:hidden;scroll-margin-top:calc(var(--top) + 16px);
-  opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.tema.visible{opacity:1;transform:none}
-.tema:target{opacity:1!important;transform:none!important}
+  transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.tema:not(.visible):not(:target){opacity:0;transform:translateY(24px)}
+.tema.visible,.tema:target{opacity:1;transform:none}
 .tema.priority{border-color:rgba(245,158,11,.25);box-shadow:0 0 0 1px rgba(245,158,11,.08)}
 .tema-head{display:flex;gap:18px;padding:24px 28px;background:linear-gradient(135deg,var(--bg3),rgba(56,189,248,.06));
   border-bottom:1px solid var(--border);align-items:flex-start;flex-wrap:wrap}
