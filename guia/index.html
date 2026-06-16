@@ -121,6 +121,7 @@ main{margin-left:var(--sw);flex:1;max-width:900px;padding:calc(var(--top) + 16px
   margin-bottom:40px;overflow:hidden;scroll-margin-top:calc(var(--top) + 16px);
   opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 .tema.visible{opacity:1;transform:none}
+.tema:target{opacity:1!important;transform:none!important}
 .tema.priority{border-color:rgba(245,158,11,.25);box-shadow:0 0 0 1px rgba(245,158,11,.08)}
 .tema-head{display:flex;gap:18px;padding:24px 28px;background:linear-gradient(135deg,var(--bg3),rgba(56,189,248,.06));
   border-bottom:1px solid var(--border);align-items:flex-start;flex-wrap:wrap}
@@ -5177,6 +5178,7 @@ function goTopic(id) {
     if (topTitle) topTitle.textContent = 'WLAN Master — Plataforma de estudio';
     document.querySelectorAll('.nav-links a').forEach(a =>
       a.classList.toggle('on', a.getAttribute('href') === '#portada'));
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
     document.querySelector('nav.sidebar')?.classList.remove('open');
     return;
   }
@@ -5184,6 +5186,9 @@ function goTopic(id) {
   if (!el) return;
   el.classList.add('visible');
   activateTopicTab(el, 'teoria');
+  if (location.hash !== '#' + targetId) {
+    history.replaceState(null, '', '#' + targetId);
+  }
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.querySelector('nav.sidebar')?.classList.remove('open');
 }
@@ -5480,6 +5485,29 @@ function revealVisibleTemas() {
   });
 }
 
+function initHashNav() {
+  const id = (location.hash || '').replace(/^#/, '');
+  if (id && document.getElementById(id)) {
+    const el = document.getElementById(id);
+    el.classList.add('visible');
+    activateTopicTab(el, 'teoria');
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: 'auto', block: 'start' });
+      const title = el.querySelector('h2');
+      if (title) document.getElementById('top-title').textContent = title.textContent;
+      document.querySelectorAll('.nav-links a[data-topic]').forEach(a =>
+        a.classList.toggle('on', a.dataset.topic === id));
+    });
+  } else {
+    revealVisibleTemas();
+  }
+  window.addEventListener('hashchange', () => {
+    const hid = (location.hash || '').replace(/^#/, '');
+    if (hid) goTopic(hid);
+    else goTopic('portada');
+  });
+}
+
 function boot() {
   renderKatex();
   initFrames();
@@ -5487,7 +5515,7 @@ function boot() {
   initNavLinks();
   updateProgressUI();
   initScrollAnim();
-  revealVisibleTemas();
+  initHashNav();
   initSearch();
   document.getElementById('totop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   document.getElementById('panel-float').onclick = e => {
