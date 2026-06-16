@@ -1,0 +1,12 @@
+# Render — Static Site
+# https://render.com/docs/static-sites
+services:
+  - type: web
+    name: wlan-guia-tramas-epn
+    runtime: static
+    staticPublishPath: .
+    buildCommand: echo "Guia WLAN EPN — sitio estatico listo"
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=600
