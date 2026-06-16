@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="PMD, PLCP legacy, bits/símbolo OFDM."/>
+<title>Prueba 2 — Capa física — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">Prueba 2 — Capa física</h1>
+<p class="page-desc">PMD, PLCP legacy, bits/símbolo OFDM.</p>
+<h2 class="sec-h">Prueba 2 — Capa física y PLCP base</h2>
+<h3 class="sec-h3">Temas que entran</h3>
+<table class='dat'><thead><tr>
+<th>Tema</th><th>PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>PMD 802.11b CCK/DSSS</td><td>4.PMD_802_11_b</td>
+</tr>
+<tr>
+<td>PMD g/n OFDM MIMO</td><td>5, 6</td>
+</tr>
+<tr>
+<td>PLCP FHSS, DSSS, b, a</td><td>7.PLCP-legacy</td>
+</tr>
+<tr>
+<td>Bits/símbolo OFDM</td><td>ejercicios #12</td>
+</tr>
+</tbody></table>
+<h3 class="sec-h3">Fórmulas P2</h3>
+<div class="formula-card" data-latex="bits/símbolo = 48 \times \log_2(M) \times tasa_codificación \\ FHSS: chips/símbolo = R_spread / (bps / \log_2(M))"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mi>M</mi><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><mi>t</mi><mi>a</mi><mi>s</mi><msub><mi>a</mi><mi>c</mi></msub><mi>o</mi><mi>d</mi><mi>i</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mspace linebreak="newline" /><mi>F</mi><mi>H</mi><mi>S</mi><mi>S</mi><mi>:</mi><mi>c</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x0003D;</mo><msub><mi>R</mi><mi>s</mi></msub><mi>p</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>d</mi><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mi>b</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mi>M</mi><mo stretchy="false">&#x00029;</mo><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<h3 class="sec-h3">Tips P2</h3>
+<ul class='concept-list'>
+<li>802.11a/g/n/ac/ax usan OFDM; b usa DSSS/CCK</li>
+<li>48 subportadoras <strong>de datos</strong> (64 total − pilotos)</li>
+<li>Preámbulo PLCP <strong>siempre @ 1 Mbps</strong> (DSSS/g)</li>
+</ul>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>

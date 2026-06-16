@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Intro, componentes, física, PLCP, MAC, DCF, PCF, seguridad, diseño y QoS."/>
+<title>16 módulos del curso (2025-B) — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">16 módulos del curso (2025-B)</h1>
+<p class="page-desc">Intro, componentes, física, PLCP, MAC, DCF, PCF, seguridad, diseño y QoS.</p>
+<h2 class="sec-h">Resumen por módulo — Semestre 2025-B</h2>
+<blockquote class="quote">Condensado de los 16 PDFs en <code>material anterior/</code>. Lee el PDF completo si un tema no te queda claro.</blockquote>
+<p>---</p>
+<h3 class="sec-h3">Módulo 1 — Introducción WLAN</h3>
+<p><strong>Ideas clave:</strong></p>
+<ul class='concept-list'>
+<li>WLAN usa RF, luz visible o infrarrojo (RF es el más usado)</li>
+<li>Bandas <strong>ISM</strong> libres: 2.4 GHz, 5 GHz, 5.8 GHz, etc.</li>
+<li>IEEE 802.11 nació en los 90s; Wi-Fi Alliance certifica interoperabilidad</li>
+<li><strong>Desafíos:</strong> multitrayecto, atenuación, interferencia, seguridad, consumo energético</li>
+</ul>
+<p><strong>Generaciones (memorizar):</strong></p>
+<p>802.11 (2 Mbps) → b (11) → a/g (54) → n (600) → ac (3.6G) → ax (10G) → be (46G)</p>
+<p>---</p>
+<h3 class="sec-h3">Módulo 2 — Componentes básicos</h3>
+<p><strong>Topologías:</strong></p>
+<table class='dat'><thead><tr>
+<th>Topología</th><th>Descripción</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>BSS + AP</td><td>Infraestructura — la más común</td>
+</tr>
+<tr>
+<td>IBSS</td><td>Ad-hoc, sin AP, peer-to-peer</td>
+</tr>
+<tr>
+<td>PBSS</td><td>Personal BSS, 802.11ad 60 GHz</td>
+</tr>
+<tr>
+<td>ESS</td><td>Varios BSS con mismo SSID + Distribution System</td>
+</tr>
+<tr>
+<td>MBSS</td><td>Mesh, backhaul inalámbrico 5 GHz</td>
+</tr>
+<tr>
+<td>QBSS</td><td>BSS con QoS (WMM)</td>
+</tr>
+</tbody></table>
+<p><strong>SSID vs BSSID:</strong></p>
+<ul class='concept-list'>
+<li>SSID = nombre lógico (hasta 32 chars)</li>
+<li>BSSID = MAC del AP (48 bits, del fabricante)</li>
+</ul>
+<p><strong>Servicios:</strong></p>
+<ul class='concept-list'>
+<li><strong>Estación (SS):</strong> autenticación, privacidad, entrega de datos, QoS</li>
+<li><strong>Distribución (DSS):</strong> asociación, reasociación, roaming</li>
+<li><strong>PCPS:</strong> solo 802.11ad</li>
+</ul>
+<p><strong>RSNA:</strong> asociación segura (WPA2/WPA3).</p>
+<p>---</p>
+<h3 class="sec-h3">Módulo 3 — Capa física 802.11 (FHSS, DSSS, DFIR)</h3>
+<p><strong>Arquitectura:</strong></p>
+<div class="formula-card" data-latex="MAC PDU \Rightarrow PLCP (preámbulo + header + datos) \Rightarrow PMD (modulación RF)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>M</mi><mi>A</mi><mi>C</mi><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x021D2;</mo><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mo stretchy="false">&#x00028;</mo><mi>p</mi><mi>r</mi><mi>e</mi><mi>á</mi><mi>m</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>o</mi><mo>&#x0002B;</mo><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mo>&#x0002B;</mo><mi>d</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mi>P</mi><mi>M</mi><mi>D</mi><mo stretchy="false">&#x00028;</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mi>R</mi><mi>F</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p><strong>FHSS:</strong></p>
+<ul class='concept-list'>
+<li>79 canales × 1 MHz (USA/Europa), 23 (Japón)</li>
+<li>3 grupos de 26 saltos (0,3,6... / 1,4,7... / 2,5,8...)</li>
+<li>1-2 Mbps, 2GFSK/4GFSK, máx 100 mW</li>
+</ul>
+<p><strong>DSSS:</strong></p>
+<ul class='concept-list'>
+<li>11 canales × 5 MHz en 2.4 GHz (USA)</li>
+<li>Barker 11-chip → 11 Mcps → 1 Mbps DBPSK</li>
+<li>Máx 100 mW (USA hasta 1 W)</li>
+</ul>
+<p><strong>DFIR (infrarrojo):</strong></p>
+<ul class='concept-list'>
+<li>LEDs, 850-950 nm, 250 ns pulsos, hasta 20 m</li>
+<li>16-PPM (1 Mbps), 4-PPM (2 Mbps)</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Módulo 4 — Capa física 802.11b/a/g</h3>
+<p><strong>802.11b (HR-DSSS):</strong></p>
+<ul class='concept-list'>
+<li>CCK en lugar de Barker para &gt;2 Mbps</li>
+<li>1, 2, 5.5, 11 Mbps</li>
+<li>1.375 Msps</li>
+</ul>
+<p><strong>802.11a (OFDM, 5 GHz):</strong></p>
+<ul class='concept-list'>
+<li>6-54 Mbps</li>
+<li>64 subportadoras, 48 datos</li>
+<li>Símbolo 4 µs, GI 0.8 µs</li>
+<li>Modulación BPSK → 64-QAM</li>
+</ul>
+<p><strong>802.11g (ERP, 2.4 GHz):</strong></p>
+<ul class='concept-list'>
+<li>Compatible con b (DSSS/CCK) y a (OFDM)</li>
+<li>1-54 Mbps</li>
+<li>PLCP: preámbulo 144 bits + header 48 bits a 1 Mbps</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Módulo 5 — 802.11n/ac/ax</h3>
+<p><strong>802.11n (Wi-Fi 4):</strong></p>
+<ul class='concept-list'>
+<li>2.4/5 GHz, 20/40 MHz</li>
+<li>MIMO hasta 4×4, 600 Mbps</li>
+<li>GI corto 400 ns, GI largo 800 ns</li>
+<li>128 subportadoras en 40 MHz</li>
+</ul>
+<p><strong>802.11ac (Wi-Fi 5):</strong></p>
+<ul class='concept-list'>
+<li>Solo 5 GHz</li>
+<li>256-QAM, 80/160 MHz</li>
+<li>MU-MIMO downlink, 8 flujos</li>
+<li>~6.9 Gbps teórico</li>
+</ul>
+<p><strong>802.11ax (Wi-Fi 6/6E):</strong></p>
+<ul class='concept-list'>
+<li>2.4/5/6 GHz</li>
+<li>1024-QAM, OFDMA</li>
+<li>Símbolo 12.8 µs, 256 subportadoras (78.125 kHz)</li>
+<li>MU-MIMO UL/DL</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Módulo 6 — 802.11be (Wi-Fi 7)</h3>
+<ul class='concept-list'>
+<li>320 MHz canal</li>
+<li>4096-QAM (12 bits/símbolo)</li>
+<li>16 flujos espaciales</li>
+<li>~46 Gbps teórico</li>
+<li>Multi-Link Operation (MLO)</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Módulos 7-8 — PLCP</h3>
+<p><strong>Función:</strong> adaptar PDU MAC al formato PMD.</p>
+<p><strong>FHSS PLCP:</strong> 80 bits sync + 16 SFD + 12 length + 4 PSF + 16 CRC</p>
+<p><strong>DSSS PLCP:</strong> 128 sync + 16 SFD + 8 Signal + 8 Service + 16 Length + 16 CRC</p>
+<p><strong>802.11b:</strong> trama larga vs corta (56 bits sync corta)</p>
+<p><strong>802.11a/g OFDM PLCP:</strong> rate, length, service, tail, pad</p>
+<p><strong>Regla:</strong> preámbulo y header siempre a la velocidad más baja (1 Mbps legacy).</p>
+<p>---</p>
+<h3 class="sec-h3">Módulo 9 — Subcapa MAC</h3>
+<p><strong>3 tipos de trama:</strong> Gestión (00), Control (01), Datos (10)</p>
+<p><strong>Cabecera MAC:</strong></p>
+<ul class='concept-list'>
+<li>Frame Control (2B), Duration/NAV (2B), 4 direcciones (6B c/u)</li>
+<li>Sequence Control, FCS (4B CRC)</li>
+<li>Cuerpo: 0-2312 bytes (802.11n: 7955, ac: 11496)</li>
+</ul>
+<p><strong>IFS (orden de prioridad):</strong></p>
+<p>RIFS &lt; SIFS &lt; PIFS &lt; DIFS &lt; AIFS &lt; EIFS</p>
+<p><strong>802.11g:</strong> SIFS=10µs, slot=20µs, DIFS=28µs</p>
+<p>---</p>
+<h3 class="sec-h3">Módulo 10 — DCF (Distributed Coordination Function)</h3>
+<p><strong>Obligatorio en todos los dispositivos.</strong></p>
+<p><strong>CSMA/CA:</strong></p>
+<ol class='step-list'>
+<li>1. Escuchar canal ( física + virtual/NAV )</li>
+<li>2. Si libre → esperar DIFS</li>
+<li>3. Backoff aleatorio (0 a CW−1 slots)</li>
+<li>4. Transmitir → esperar SIFS → ACK</li>
+</ol>
+<p><strong>Backoff exponencial:</strong> CW = 2^n − 1 (31, 63, 127...)</p>
+<p><strong>NAV:</strong> campo Duration reserva canal para otras STAs</p>
+<p><strong>RTS/CTS:</strong> reserva para evitar terminal oculto</p>
+<p><strong>Fragmentación:</strong> fragmentos separados por SIFS+ACK+SIFS</p>
+<p><strong>Post-backoff:</strong> después de transmitir, siempre hace backoff aunque no tenga más datos</p>
+<p>---</p>
+<h3 class="sec-h3">Módulo 11 — PCF y Subcapa Administración</h3>
+<p><strong>PCF (opcional):</strong></p>
+<ul class='concept-list'>
+<li>Acceso libre de contención</li>
+<li>Punto coordinador usa PIFS (mayor prioridad que DIFS)</li>
+<li>Superframe: período libre contención + período contención</li>
+</ul>
+<p><strong>Subcapa administración:</strong></p>
+<ul class='concept-list'>
+<li>Autenticación (open, shared key)</li>
+<li>Asociación / Reasociación / Desasociación</li>
+<li>Beacon, Probe Request/Response</li>
+<li>Roaming entre APs en ESS</li>
+<li>Power management (doze/active)</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Módulo 12 — Componentes</h3>
+<table class='dat'><thead><tr>
+<th>Dispositivo</th><th>Función</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>AP</strong></td><td>Punto de acceso, BSS con infraestructura</td>
+</tr>
+<tr>
+<td><strong>Bridge</strong></td><td>Conecta dos LANs vía wireless</td>
+</tr>
+<tr>
+<td><strong>Repeater</strong></td><td>Extiende cobertura (retransmite)</td>
+</tr>
+<tr>
+<td><strong>Controller</strong></td><td>Gestiona múltiples APs (WLC)</td>
+</tr>
+<tr>
+<td><strong>NIC/STA</strong></td><td>Cliente inalámbrico</td>
+</tr>
+</tbody></table>
+<p><strong>Antenas:</strong> omnidireccional vs direccional (dBi mayor = más ganancia, más estrecha)</p>
+<p>---</p>
+<h3 class="sec-h3">Módulos 13-14 — Seguridad</h3>
+<p><strong>Evolución:</strong></p>
+<div class="formula-card" data-latex="WEP (RC4, IV débil) \Rightarrow WPA (TKIP) \Rightarrow WPA2 (AES-CCMP) \Rightarrow WPA3 (SAE)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>W</mi><mi>E</mi><mi>P</mi><mo stretchy="false">&#x00028;</mo><mi>R</mi><mi>C</mi><mn>4</mn><mo>&#x0002C;</mo><mi>I</mi><mi>V</mi><mi>d</mi><mi>é</mi><mi>b</mi><mi>i</mi><mi>l</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mi>W</mi><mi>P</mi><mi>A</mi><mo stretchy="false">&#x00028;</mo><mi>T</mi><mi>K</mi><mi>I</mi><mi>P</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mi>W</mi><mi>P</mi><mi>A</mi><mn>2</mn><mo stretchy="false">&#x00028;</mo><mi>A</mi><mi>E</mi><mi>S</mi><mo>&#x02212;</mo><mi>C</mi><mi>C</mi><mi>M</mi><mi>P</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mi>W</mi><mi>P</mi><mi>A</mi><mn>3</mn><mo stretchy="false">&#x00028;</mo><mi>S</mi><mi>A</mi><mi>E</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p><strong>802.1X + RADIUS:</strong> autenticación enterprise</p>
+<p><strong>4-Way Handshake:</strong> negocia claves WPA2</p>
+<p><strong>Ocultar SSID:</strong> NO es seguridad real (802.11-2020 no lo define como tal)</p>
+<p>---</p>
+<h3 class="sec-h3">Módulo 15 — Diseño WLAN</h3>
+<p><strong>Tipos de site survey:</strong></p>
+<table class='dat'><thead><tr>
+<th>Tipo</th><th>¿Necesita asociarse al AP?</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>Predictivo</strong></td><td>No (software/modelo)</td>
+</tr>
+<tr>
+<td><strong>Pasivo</strong></td><td>No (escucha beacons)</td>
+</tr>
+<tr>
+<td><strong>Activo</strong></td><td><strong>Sí</strong> (asociado, mide throughput real)</td>
+</tr>
+<tr>
+<td><strong>Asistido</strong></td><td>Con herramientas especiales</td>
+</tr>
+</tbody></table>
+<p><strong>PoE:</strong> Power over Ethernet — inyectores vs switches PoE</p>
+<p><strong>Para &gt;500 APs:</strong> switches de borde con PoE (no inyectores individuales)</p>
+<p>---</p>
+<h3 class="sec-h3">Módulo 16 — QoS</h3>
+<p><strong>802.11e → HCF:</strong></p>
+<ul class='concept-list'>
+<li><strong>EDCA</strong> (Enhanced Distributed Channel Access) — distribuido con prioridades</li>
+<li><strong>HCCA</strong> (HCF Controlled Channel Access) — centralizado</li>
+</ul>
+<p><strong>EDCA:</strong></p>
+<ul class='concept-list'>
+<li>4 <strong>Access Categories (AC):</strong> VO, VI, BE, BK</li>
+<li>8 <strong>TID</strong> (Traffic Identifier): 0-7</li>
+<li>Priorización con <strong>AIFS</strong> diferenciado por AC</li>
+<li>WMM = certificación Wi-Fi Alliance de QoS</li>
+</ul>
+<p><strong>802.11p / WAVE:</strong></p>
+<ul class='concept-list'>
+<li>Vehicular, basado en <strong>802.11a</strong></li>
+<li>Banda <strong>5.9 GHz</strong> (5900 MHz en USA)</li>
+<li>Stack completo: <strong>WAVE</strong></li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Tabla rápida de preguntas frecuentes</h3>
+<table class='dat'><thead><tr>
+<th>Pregunta</th><th>Respuesta</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>¿802.11p basado en?</td><td>802.11a</td>
+</tr>
+<tr>
+<td>¿Banda 802.11p USA?</td><td>5.9 GHz (5900 MHz)</td>
+</tr>
+<tr>
+<td>¿Stack vehicular?</td><td>WAVE</td>
+</tr>
+<tr>
+<td>¿QoS en 802.11-2020?</td><td>EDCA + HCF</td>
+</tr>
+<tr>
+<td>¿EDCA prioriza con?</td><td>AIFS</td>
+</tr>
+<tr>
+<td>¿ACK a Frag2?</td><td>SIFS</td>
+</tr>
+<tr>
+<td>¿Beacon en BSS?</td><td>Solo el AP transmite</td>
+</tr>
+<tr>
+<td>¿Scanning tipos?</td><td>Pasivo y activo</td>
+</tr>
+<tr>
+<td>¿AP responde probe request?</td><td>Cuando SSID coincide</td>
+</tr>
+<tr>
+<td>¿NAV en qué campo?</td><td>Duration/ID en MAC header</td>
+</tr>
+</tbody></table>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>

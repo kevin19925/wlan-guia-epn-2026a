@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Frame Control, tipos de trama, DCF en profundidad."/>
+<title>Teoría tramas MAC (completa) — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">Teoría tramas MAC (completa)</h1>
+<p class="page-desc">Frame Control, tipos de trama, DCF en profundidad.</p>
+<h2 class="sec-h">Parte 1 — Teoría de Tramas WLAN (desde PDFs 2026A)</h2>
+<blockquote class="quote">Fuente: <code>Teoria/3, 7, 8, 9, 10</code> — Soraya Sinche M., Ph.D. Semestre 2026-A  </blockquote>
+<blockquote class="quote"><strong>Solo estudiar.</strong> Los ejercicios están en <code>02_EJERCICIOS_RESUELTOS_Y_PRACTICA.md</code></blockquote>
+<p>---</p>
+<h3 class="sec-h3">Índice</h3>
+<ol class='step-list'>
+<li>1. [¿Dónde vive una trama? (capas)](#1-dónde-vive-una-trama)</li>
+<li>2. [Trama PLCP / PPDU (capa física)](#2-trama-plcp--ppdu)</li>
+<li>3. [Trama MAC (capa enlace)](#3-trama-mac)</li>
+<li>4. [Frame Control — campo más importante](#4-frame-control)</li>
+<li>5. [Campo Duration / NAV](#5-campo-duration--nav)</li>
+<li>6. [Tipos y subtipos de trama](#6-tipos-y-subtipos)</li>
+<li>7. [DCF y tiempos entre tramas](#7-dcf-y-tiempos)</li>
+<li>8. [Agregación 802.11n/ac (A-MSDU, A-MPDU)](#8-agregación)</li>
+<li>9. [Resumen visual rápido](#9-resumen)</li>
+</ol>
+<p>---</p>
+<h3 class="sec-h3">1. Dónde vive una trama</h3>
+<p><strong>PDF:</strong> <code>3.Capas_WLAN_2026A.pdf</code></p>
+<div class="formula-card" data-latex="Capas superiores (IP, TCP…) \\ ↓ \\ MSDU ← datos útiles \\ ↓ \\ ┌───────────────────────────────────┐ \\ │ SUBCAPA MAC │ ← trama 802.11 (MPDU) \\ │ Cabecera MAC + Body + FCS │ \\ └───────────────────────────────────┘ \\ ↓ encapsula PLCP \\ ┌───────────────────────────────────┐ \\ │ PLCP: Preámbulo + Cabecera + PSDU│ ← PPDU (trama física) \\ └───────────────────────────────────┘ \\ ↓ \\ PMD (modulación RF)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>C</mi><mi>a</mi><mi>p</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi>u</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>r</mi><mi>e</mi><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>I</mi><mi>P</mi><mo>&#x0002C;</mo><mi>T</mi><mi>C</mi><mi>P</mi><mi>…</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>↓</mi><mspace linebreak="newline" /><mi>M</mi><mi>S</mi><mi>D</mi><mi>U</mi><mi>←</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mi>ú</mi><mi>t</mi><mi>i</mi><mi>l</mi><mi>e</mi><mi>s</mi><mspace linebreak="newline" /><mi>↓</mi><mspace linebreak="newline" /><mi>┌</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┐</mi><mspace linebreak="newline" /><mi>│</mi><mi>S</mi><mi>U</mi><mi>B</mi><mi>C</mi><mi>A</mi><mi>P</mi><mi>A</mi><mi>M</mi><mi>A</mi><mi>C</mi><mi>│</mi><mi>←</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>a</mi><mn>802.11</mn><mo stretchy="false">&#x00028;</mo><mi>M</mi><mi>P</mi><mi>D</mi><mi>U</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>│</mi><mi>C</mi><mi>a</mi><mi>b</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>M</mi><mi>A</mi><mi>C</mi><mo>&#x0002B;</mo><mi>B</mi><mi>o</mi><mi>d</mi><mi>y</mi><mo>&#x0002B;</mo><mi>F</mi><mi>C</mi><mi>S</mi><mi>│</mi><mspace linebreak="newline" /><mi>└</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┘</mi><mspace linebreak="newline" /><mi>↓</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>a</mi><mi>p</mi><mi>s</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mspace linebreak="newline" /><mi>┌</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┐</mi><mspace linebreak="newline" /><mi>│</mi><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mi>:</mi><mi>P</mi><mi>r</mi><mi>e</mi><mi>á</mi><mi>m</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>o</mi><mo>&#x0002B;</mo><mi>C</mi><mi>a</mi><mi>b</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>r</mi><mi>a</mi><mo>&#x0002B;</mo><mi>P</mi><mi>S</mi><mi>D</mi><mi>U</mi><mi>│</mi><mi>←</mi><mi>P</mi><mi>P</mi><mi>D</mi><mi>U</mi><mo stretchy="false">&#x00028;</mo><mi>t</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>a</mi><mi>f</mi><mi>í</mi><mi>s</mi><mi>i</mi><mi>c</mi><mi>a</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>└</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┘</mi><mspace linebreak="newline" /><mi>↓</mi><mspace linebreak="newline" /><mi>P</mi><mi>M</mi><mi>D</mi><mo stretchy="false">&#x00028;</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mi>R</mi><mi>F</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<table class='dat'><thead><tr>
+<th>Sigla</th><th>Qué es</th><th>PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>MSDU</strong></td><td>Datos de capa superior dentro del body MAC</td><td>9.Subcapa_MAC</td>
+</tr>
+<tr>
+<td><strong>MPDU</strong></td><td>Trama MAC completa (cabecera + body + FCS)</td><td>9.Subcapa_MAC</td>
+</tr>
+<tr>
+<td><strong>PSDU</strong></td><td>MPDU dentro de la capa física</td><td>7.PLCP, 8.PLCP</td>
+</tr>
+<tr>
+<td><strong>PPDU</strong></td><td>Preámbulo PLCP + Cabecera PLCP + PSDU</td><td>8.PLCP (802.11g)</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">2. Trama PLCP / PPDU</h3>
+<p><strong>PDF:</strong> <code>7.PLCP-legacy_b_a_2026A.pdf</code>, <code>8.PLCP_g_ac_ax_2026A.pdf</code></p>
+<h4 class="sec-h4">Regla del PDF (diapo 167)</h4>
+<blockquote class="quote">El preámbulo y cabecera PLCP de <strong>DSSS, FHSS y DFIR se transmiten siempre a 1 Mbps.</strong></blockquote>
+<blockquote class="quote">La MSDU (datos) puede ir a otra velocidad.</blockquote>
+<h4 class="sec-h4">Estructura general PLCP</h4>
+<table class='dat'><thead><tr>
+<th>Parte</th><th>Función (PDF)</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>Preámbulo</strong></td><td>Sincronización e indicar inicio de trama</td>
+</tr>
+<tr>
+<td><strong>Cabecera PLCP</strong></td><td>Velocidad, longitud, CRC</td>
+</tr>
+<tr>
+<td><strong>PDU-PLCP (Datos)</strong></td><td>La trama MAC (PSDU)</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h4 class="sec-h4">2.1 FHSS — PLCP (PDF 7, diapos 170-171)</h4>
+<table class='dat'><thead><tr>
+<th>Campo</th><th>Tamaño</th><th>Notas del PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Sincronización</td><td>80 bits</td><td>Patrón 010101…</td>
+</tr>
+<tr>
+<td>Delimitador inicio (SFD)</td><td>16 bits</td><td><code>0000110010111101</code></td>
+</tr>
+<tr>
+<td>Longitud</td><td>12 bits</td><td>Payload &lt; 4096 bytes</td>
+</tr>
+<tr>
+<td>Señal (PSF)</td><td>4 bits</td><td>Velocidad carga útil</td>
+</tr>
+<tr>
+<td>CRC (HEC)</td><td>16 bits</td><td>Polinomio x16+x12+x5+1</td>
+</tr>
+</tbody></table>
+<p><strong>Velocidades PSF (bits 1-2-3):</strong></p>
+<table class='dat'><thead><tr>
+<th>Bits 1-2-3</th><th>Velocidad</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>000</td><td>1.0 Mbps</td>
+</tr>
+<tr>
+<td>001</td><td>1.5 Mbps</td>
+</tr>
+<tr>
+<td>010</td><td>2.0 Mbps</td>
+</tr>
+<tr>
+<td>011</td><td>2.5 Mbps</td>
+</tr>
+<tr>
+<td>100</td><td>3.0 Mbps</td>
+</tr>
+<tr>
+<td>101</td><td>3.5 Mbps</td>
+</tr>
+<tr>
+<td>110</td><td>4.0 Mbps</td>
+</tr>
+<tr>
+<td>111</td><td>4.5 Mbps</td>
+</tr>
+</tbody></table>
+<ul class='concept-list'>
+<li>Preámbulo + cabecera: <strong>1 Mbps</strong></li>
+<li>MSDU: <strong>1 o 2 Mbps</strong></li>
+</ul>
+<p>---</p>
+<h4 class="sec-h4">2.2 DSSS — PLCP (PDF 7, diapos 172)</h4>
+<table class='dat'><thead><tr>
+<th>Campo</th><th>Tamaño</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Sincronización</td><td>128 bits (1s)</td>
+</tr>
+<tr>
+<td>SFD</td><td>16 bits (<code>1111001111010000</code>)</td>
+</tr>
+<tr>
+<td>Signal</td><td>8 bits</td>
+</tr>
+<tr>
+<td>Service</td><td>8 bits</td>
+</tr>
+<tr>
+<td>Length</td><td>16 bits (µs de transmisión)</td>
+</tr>
+<tr>
+<td>CRC</td><td>16 bits</td>
+</tr>
+</tbody></table>
+<p><strong>Campo Signal DSSS:</strong></p>
+<table class='dat'><thead><tr>
+<th>Velocidad</th><th>Hex</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>1 Mbps</td><td>0x0A</td>
+</tr>
+<tr>
+<td>2 Mbps</td><td>0x14</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h4 class="sec-h4">2.3 802.11b — trama larga vs corta (PDF 7, diapos 173-175)</h4>
+<table class='dat'><thead><tr>
+<th>Tipo</th><th>Sync</th><th>SFD</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>Larga</strong></td><td>128 bits de 1s</td><td><code>1111001111010000</code></td>
+</tr>
+<tr>
+<td><strong>Corta</strong></td><td>56 bits de 0s</td><td><code>0000110001011111</code> (inverso)</td>
+</tr>
+</tbody></table>
+<p><strong>Campo Signal — trama larga:</strong></p>
+<table class='dat'><thead><tr>
+<th>Velocidad</th><th>Hex</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>1 Mbps</td><td>0x0A</td>
+</tr>
+<tr>
+<td>2 Mbps</td><td>0x14</td>
+</tr>
+<tr>
+<td>5.5 Mbps</td><td>0x37</td>
+</tr>
+<tr>
+<td>11 Mbps</td><td>0x6E</td>
+</tr>
+</tbody></table>
+<p><strong>Campo Signal — trama corta:</strong> 2, 5.5, 11 Mbps (mismos hex excepto 1 Mbps)</p>
+<p>---</p>
+<h4 class="sec-h4">2.4 802.11g — PPDU (PDF 8, diapos 183-186)</h4>
+<div class="formula-card" data-latex="PPDU = Preamble(144) + Header(48) + PSDU \\ @ 1 \,\text{Mbps} DBPSK"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0003D;</mo><mi>P</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo stretchy="false">&#x00028;</mo><mn>144</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mi>H</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mo stretchy="false">&#x00028;</mo><mn>48</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mi>P</mi><mi>S</mi><mi>D</mi><mi>U</mi><mspace linebreak="newline" /><mi>@</mi><mn>1</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mi>D</mi><mi>B</mi><mi>P</mi><mi>S</mi><mi>K</mi></mrow></math></div></div>
+<table class='dat'><thead><tr>
+<th>Campo PLCP g</th><th>Bits</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>SYNC</td><td>128</td>
+</tr>
+<tr>
+<td>SFD</td><td>16</td>
+</tr>
+<tr>
+<td>SIGNAL</td><td>8</td>
+</tr>
+<tr>
+<td>SERVICE</td><td>8</td>
+</tr>
+<tr>
+<td>LENGTH</td><td>8</td>
+</tr>
+<tr>
+<td>CRC</td><td>16</td>
+</tr>
+<tr>
+<td><strong>Total preámb+cab</strong></td><td><strong>192 bits</strong></td>
+</tr>
+</tbody></table>
+<p><strong>Campo SIGNAL 802.11g (PDF diapo 185):</strong></p>
+<table class='dat'><thead><tr>
+<th>Velocidad</th><th>Hex</th><th>Decimal</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>1 Mbps (ERP-DSSS)</td><td>0x0A</td><td>10</td>
+</tr>
+<tr>
+<td>2 Mbps (ERP-DSSS)</td><td>0x14</td><td>20</td>
+</tr>
+<tr>
+<td>5.5 Mbps (CCK/PBCC)</td><td>0x37</td><td>55</td>
+</tr>
+<tr>
+<td>11 Mbps (CCK/PBCC)</td><td>0x6E</td><td>110</td>
+</tr>
+<tr>
+<td>22 Mbps (PBCC)</td><td>0xDC</td><td>220</td>
+</tr>
+<tr>
+<td>33 Mbps (PBCC)</td><td>0x21</td><td>33</td>
+</tr>
+<tr>
+<td>Cualquier DSSS-OFDM</td><td>0x1E</td><td>30</td>
+</tr>
+</tbody></table>
+<p><strong>Preámbulo corto 802.11g:</strong> 72 bits @ 1 Mbps + header 48 bits @ 2 Mbps = <strong>96 µs</strong> total PLCP</p>
+<p>---</p>
+<h4 class="sec-h4">2.5 802.11a — PLCP OFDM (PDF 7, diapos 178-182)</h4>
+<table class='dat'><thead><tr>
+<th>Elemento</th><th>Valor PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Preámbulo total</td><td><strong>16 µs</strong> (STF + LTF)</td>
+</tr>
+<tr>
+<td>Campo Signal</td><td>1 símbolo OFDM (4 µs)</td>
+</tr>
+<tr>
+<td>Símbolos datos</td><td>Variable</td>
+</tr>
+<tr>
+<td>GI (guard interval)</td><td>Protege multitrayecto</td>
+</tr>
+</tbody></table>
+<p><strong>Campo Signal — Rate (Mbps) y bits (PDF diapo 180):</strong></p>
+<table class='dat'><thead><tr>
+<th>Mbps</th><th>Bits (orden transmisión)</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>6</td><td>110110</td>
+</tr>
+<tr>
+<td>9</td><td>111100</td>
+</tr>
+<tr>
+<td>12</td><td>110100</td>
+</tr>
+<tr>
+<td>18</td><td>111010</td>
+</tr>
+<tr>
+<td>24</td><td>110010</td>
+</tr>
+<tr>
+<td>36</td><td>101010</td>
+</tr>
+<tr>
+<td>48</td><td>101100</td>
+</tr>
+<tr>
+<td>54</td><td>101110</td>
+</tr>
+</tbody></table>
+<ul class='concept-list'>
+<li><strong>12 bits</strong> codifican longitud en bytes de trama MAC</li>
+<li><strong>Tail:</strong> 6 bits (0s) para codificador convolucional</li>
+<li><strong>Service:</strong> 16 bits (8 primeros = 0 para descrambler)</li>
+</ul>
+<p>---</p>
+<h4 class="sec-h4">2.6 802.11n — modos PLCP (PDF 8, diapos 188-196)</h4>
+<table class='dat'><thead><tr>
+<th>Modo</th><th>Descripción PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>Legacy</strong></td><td>Coexiste con a/g</td>
+</tr>
+<tr>
+<td><strong>Mixed</strong></td><td>Obligatorio en 802.11n; incluye L-STF, L-LTF, L-SIG, HT-SIG, HT-STF, HT-LTF</td>
+</tr>
+<tr>
+<td><strong>Greenfield</strong></td><td>Solo entre dispositivos n</td>
+</tr>
+</tbody></table>
+<p><strong>L-SIG en Mixed Mode (PDF diapo 194):</strong></p>
+<ul class='concept-list'>
+<li>Dispositivos 802.11n ponen velocidad en <strong>6 Mbps</strong> y longitud <strong>falsa</strong></li>
+<li>Para que estaciones a/g calculen duración compatible con trama HT</li>
+</ul>
+<p><strong>HT-SIG contiene (PDF diapo 191):</strong> MCS, Length, Aggregation, STBC, FEC, Short GI…</p>
+<p>---</p>
+<h3 class="sec-h3">3. Trama MAC</h3>
+<p><strong>PDF:</strong> <code>9.Subcapa_MAC_2026A.pdf</code> (diapos 215-240)</p>
+<h4 class="sec-h4">Funciones subcapa MAC (diapo 216)</h4>
+<ul class='concept-list'>
+<li>Confiabilidad en entrega de datos</li>
+<li>Acceso al medio</li>
+<li><strong>Formato de trama</strong></li>
+<li>Segmentación y reensamblaje</li>
+<li>Administración</li>
+<li>Privacidad (WEP legacy)</li>
+</ul>
+<h4 class="sec-h4">Tres tipos de trama (diapo 218)</h4>
+<table class='dat'><thead><tr>
+<th>Tipo</th><th>Código bits 2-3</th><th>Para qué</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>Gestión</strong></td><td>00</td><td>Asociación, autenticación, beacons</td>
+</tr>
+<tr>
+<td><strong>Control</strong></td><td>01</td><td>ACK, RTS, CTS — confirmar y reservar medio</td>
+</tr>
+<tr>
+<td><strong>Datos</strong></td><td>10</td><td>Transportar MSDU de capas superiores</td>
+</tr>
+<tr>
+<td><strong>Extensión</strong></td><td>11</td><td>802.11ad / 802.11ah</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">Estructura cabecera MAC (diapo 219)</h4>
+<table class='dat'><thead><tr>
+<th>Campo</th><th>Bytes</th><th>Función PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Frame Control</td><td>2</td><td>Tipo, subtipo, flags</td>
+</tr>
+<tr>
+<td>Duration/ID</td><td>2</td><td>Duración µs → <strong>NAV</strong></td>
+</tr>
+<tr>
+<td>Address 1</td><td>6</td><td>Dirección 1</td>
+</tr>
+<tr>
+<td>Address 2</td><td>6</td><td>Dirección 2</td>
+</tr>
+<tr>
+<td>Address 3</td><td>6</td><td>Dirección 3</td>
+</tr>
+<tr>
+<td>Sequence Control</td><td>2</td><td>Fragmento + secuencia</td>
+</tr>
+<tr>
+<td>Address 4</td><td>6</td><td>Opcional (WDS)</td>
+</tr>
+<tr>
+<td>Body</td><td>0–2312</td><td>Carga útil</td>
+</tr>
+<tr>
+<td>FCS</td><td>4</td><td>CRC 32 bits</td>
+</tr>
+</tbody></table>
+<p><strong>802.11n (diapo 238):</strong> body hasta <strong>7955 bytes</strong> + campos QoS y HT  </p>
+<p><strong>802.11ac (diapo 240):</strong> body hasta <strong>11496 bytes</strong></p>
+<h4 class="sec-h4">Sequence Control (diapo 229)</h4>
+<table class='dat'><thead><tr>
+<th>Parte</th><th>Bits</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Número de fragmento</td><td>4</td>
+</tr>
+<tr>
+<td>Número de secuencia</td><td>12</td>
+</tr>
+</tbody></table>
+<ul class='concept-list'>
+<li>No presente en tramas de <strong>control</strong></li>
+</ul>
+<h4 class="sec-h4">FCS (diapo 230)</h4>
+<ul class='concept-list'>
+<li>CRC <strong>32 bits</strong></li>
+<li>Polinomio: G(x) = x32 + x26 + x23 + x22 + x16 + x12 + x11 + x10 + x8 + x7 + x5 + x4 + x2 + x + 1</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">4. Frame Control</h3>
+<p><strong>PDF:</strong> diapos 219-224 — <strong>16 bits total</strong></p>
+<p>Leer de <strong>derecha a izquierda</strong> (LSB primero en transmisión):</p>
+<table class='dat'><thead><tr>
+<th>Bits</th><th>Campo</th><th>Valores</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0–1</td><td>Versión protocolo</td><td>Siempre 0</td>
+</tr>
+<tr>
+<td>2–3</td><td><strong>Tipo</strong></td><td>00=Gestión, 01=Control, 10=Datos</td>
+</tr>
+<tr>
+<td>4–7</td><td><strong>Subtipo</strong></td><td>Ver tabla sección 6</td>
+</tr>
+<tr>
+<td>8</td><td>To DS</td><td>Hacia distribution system</td>
+</tr>
+<tr>
+<td>9</td><td>From DS</td><td>Desde distribution system</td>
+</tr>
+<tr>
+<td>10</td><td>More Fragments</td><td>1 si hay más fragmentos</td>
+</tr>
+<tr>
+<td>11</td><td>Retry</td><td>1 si retransmisión</td>
+</tr>
+<tr>
+<td>12</td><td>Pwr Mgmt</td><td>1 = modo ahorro energía</td>
+</tr>
+<tr>
+<td>13</td><td>More Data</td><td>AP indica datos pendientes</td>
+</tr>
+<tr>
+<td>14</td><td>Protected</td><td>1 = cifrada (WPA/WEP)</td>
+</tr>
+<tr>
+<td>15</td><td>Order</td><td>Orden estricto</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">Significado flags (PDF diapo 224)</h4>
+<table class='dat'><thead><tr>
+<th>Flag</th><th>Si = 1 significa</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>More Frag</td><td>Hay más fragmentos de la misma MSDU</td>
+</tr>
+<tr>
+<td>Retry</td><td>Trama retransmitida (evitar duplicados)</td>
+</tr>
+<tr>
+<td>Pwr Mgmt</td><td>STA entrará en modo ahorro energía</td>
+</tr>
+<tr>
+<td>More Data</td><td>AP tiene tramas buffered para STA dormida</td>
+</tr>
+<tr>
+<td>Protected</td><td>Trama cifrada (antes bit WEP)</td>
+</tr>
+<tr>
+<td>Order</td><td>Entrega estrictamente ordenada</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">5. Campo Duration / NAV</h3>
+<p><strong>PDF:</strong> diapos 225-228</p>
+<h4 class="sec-h4">Uso normal (bit 15 = 0)</h4>
+<ul class='concept-list'>
+<li>Indica <strong>microsegundos</strong> que el medio estará ocupado</li>
+<li>Todas las STAs actualizan <strong>NAV</strong> (Network Allocation Vector)</li>
+<li>Detección de portadora <strong>virtual</strong></li>
+</ul>
+<p><strong>Ejemplo PDF diapo 227:</strong></p>
+<div class="formula-card" data-latex="Trama Datos \Rightarrow Duration = SIFS + T_{ACK} \\ Otras STAs: NAV = 44 \,\mu\text{s} (ejemplo con SIFS + ACK)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>T</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>a</mi><mi>D</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mo>&#x021D2;</mo><mi>D</mi><mi>u</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mspace linebreak="newline" /><mi>O</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>S</mi><mi>T</mi><mi>A</mi><mi>s</mi><mi>:</mi><mi>N</mi><mi>A</mi><mi>V</mi><mo>&#x0003D;</mo><mn>44</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo stretchy="false">&#x00028;</mo><mi>e</mi><mi>j</mi><mi>e</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mi>A</mi><mi>C</mi><mi>K</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<h4 class="sec-h4">Casos especiales Duration/ID</h4>
+<table class='dat'><thead><tr>
+<th>Condición</th><th>Valor</th><th>Uso PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Bit 15 = 0</td><td>µs normales</td><td>NAV estándar</td>
+</tr>
+<tr>
+<td>Bits 15,14 = 01</td><td>32768</td><td>Período sin contención (CF)</td>
+</tr>
+<tr>
+<td>Bits 14,15 = 11</td><td>AID 1–2007</td><td>PS-Poll (estaciones ahorro energía)</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">6. Tipos y subtipos</h3>
+<p><strong>PDF:</strong> diapos 220-221</p>
+<h4 class="sec-h4">Gestión (tipo 00) — subtipos importantes</h4>
+<table class='dat'><thead><tr>
+<th>Subtipo (4 bits)</th><th>Nombre</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0000</td><td>Association Request</td>
+</tr>
+<tr>
+<td>0001</td><td>Association Response</td>
+</tr>
+<tr>
+<td>0010</td><td>Reassociation Request</td>
+</tr>
+<tr>
+<td>0011</td><td>Reassociation Response</td>
+</tr>
+<tr>
+<td>0100</td><td>Probe Request</td>
+</tr>
+<tr>
+<td>0101</td><td>Probe Response</td>
+</tr>
+<tr>
+<td>1000</td><td>Beacon</td>
+</tr>
+<tr>
+<td>1010</td><td>Disassociation</td>
+</tr>
+<tr>
+<td>1011</td><td>Authentication</td>
+</tr>
+<tr>
+<td>1100</td><td>Deauthentication</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">Control (tipo 01)</h4>
+<table class='dat'><thead><tr>
+<th>Subtipo</th><th>Nombre</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>1011</td><td>RTS</td>
+</tr>
+<tr>
+<td>1100</td><td>CTS</td>
+</tr>
+<tr>
+<td>1101</td><td>ACK</td>
+</tr>
+<tr>
+<td>1010</td><td>PS-Poll</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">Datos (tipo 10)</h4>
+<table class='dat'><thead><tr>
+<th>Subtipo</th><th>Nombre</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0000</td><td>Data</td>
+</tr>
+<tr>
+<td>0100</td><td>Null (sin datos)</td>
+</tr>
+<tr>
+<td>1000</td><td>QoS Data</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">To DS / From DS → dirección del tráfico</h4>
+<table class='dat'><thead><tr>
+<th>To DS</th><th>From DS</th><th>Significado</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0</td><td>0</td><td>Ad-hoc / gestión directa</td>
+</tr>
+<tr>
+<td>1</td><td>0</td><td>STA → AP</td>
+</tr>
+<tr>
+<td>0</td><td>1</td><td>AP → STA</td>
+</tr>
+<tr>
+<td>1</td><td>1</td><td>WDS (bridge)</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">7. DCF y tiempos</h3>
+<p><strong>PDF:</strong> <code>10.DCF1_2026A.pdf</code></p>
+<h4 class="sec-h4">IFS — orden de prioridad (diapo 243)</h4>
+<table class='dat'><thead><tr>
+<th>IFS</th><th>Prioridad</th><th>PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>RIFS</td><td>Más alta</td><td>2 µs, solo 802.11n, sustituye SIFS para eficiencia</td>
+</tr>
+<tr>
+<td>SIFS</td><td>Alta</td><td>Separa tramas del mismo diálogo</td>
+</tr>
+<tr>
+<td>PIFS</td><td>Media</td><td>Solo punto coordinador (PCF)</td>
+</tr>
+<tr>
+<td>DIFS</td><td>Baja</td><td>Acceso contención DCF</td>
+</tr>
+<tr>
+<td>AIFS</td><td>QoS</td><td>Estaciones con QoS</td>
+</tr>
+<tr>
+<td>EIFS</td><td>Trama corrupta</td><td>Más largo</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">Valores 802.11b (PDF diapos 244-246)</h4>
+<table class='dat'><thead><tr>
+<th>Parámetro</th><th>Fórmula PDF</th><th>Valor</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>SIFS</td><td>—</td><td>10 µs</td>
+</tr>
+<tr>
+<td>Slot (TS)</td><td>—</td><td>20 µs</td>
+</tr>
+<tr>
+<td>PIFS</td><td>SIFS + 1 slot</td><td>30 µs</td>
+</tr>
+<tr>
+<td>DIFS</td><td>PIFS + 1 slot</td><td>50 µs</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">CSMA/CA (diapo 251)</h4>
+<ol class='step-list'>
+<li>1. Canal libre → esperar <strong>DIFS</strong></li>
+<li>2. Canal ocupado → <strong>backoff</strong> binario</li>
+<li>3. Transmitir datos</li>
+<li>4. Receptor responde <strong>ACK</strong> después de <strong>SIFS</strong></li>
+</ol>
+<h4 class="sec-h4">RTS/CTS (diapo 255) — terminal oculto</h4>
+<div class="formula-card" data-latex="DIFS \Rightarrow Backoff \Rightarrow RTS \Rightarrow SIFS \Rightarrow CTS \Rightarrow SIFS \Rightarrow DATA \Rightarrow SIFS \Rightarrow ACK"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>B</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>f</mi><mi>f</mi><mo>&#x021D2;</mo><mi>R</mi><mi>T</mi><mi>S</mi><mo>&#x021D2;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>C</mi><mi>T</mi><mi>S</mi><mo>&#x021D2;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi><mo>&#x021D2;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>A</mi><mi>C</mi><mi>K</mi></mrow></math></div></div>
+<ul class='concept-list'>
+<li><strong>RTS:</strong> estación reserva canal</li>
+<li><strong>CTS:</strong> receptor confirma y notifica a otras STAs (NAV)</li>
+<li>Evita colisiones por estaciones ocultas</li>
+</ul>
+<h4 class="sec-h4">Mecanismos acceso MAC (diapo 217)</h4>
+<table class='dat'><thead><tr>
+<th>Mecanismo</th><th>Tipo</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>DCF CSMA/CA</td><td>Contención (obligatorio)</td>
+</tr>
+<tr>
+<td>DCF RTS/CTS</td><td>Contención con reserva</td>
+</tr>
+<tr>
+<td>PCF</td><td>Sin contención (opcional)</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">8. Agregación</h3>
+<p><strong>PDF:</strong> diapos 231-237</p>
+<table class='dat'><thead><tr>
+<th>Método</th><th>Qué agrega</th><th>ACK</th><th>PDF</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>A-MSDU</strong></td><td>Varios MSDU en 1 trama</td><td>ACK normal</td><td>802.11n</td>
+</tr>
+<tr>
+<td><strong>A-MPDU</strong></td><td>Varios MPDU en 1 PPDU</td><td>Block ACK</td><td>802.11n; <strong>obligatorio en ac</strong></td>
+</tr>
+</tbody></table>
+<p><strong>Diferencias PDF:</strong></p>
+<ul class='concept-list'>
+<li>A-MSDU: un solo receptor, cifrado conjunto, misma categoría QoS</li>
+<li>A-MPDU: cada MPDU cifrada aparte, Block ACK, retransmite solo MPDU dañada</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">9. Resumen visual rápido</h3>
+<h4 class="sec-h4">Trama completa en el aire (802.11g)</h4>
+<div class="formula-card" data-latex="┌──────────── PLCP @ 1-2 \,\text{Mbps} ────────────┬──── PSDU @ tasa datos ────┐ \\ │ Preamb(144) │ Header(48) │ │ MAC hdr │ Body │ FCS │ \\ └─────────────┴────────────┴──────────────┴─────────┴───────┴─────────┘"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>┌</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mi>@</mi><mn>1</mn><mo>&#x02212;</mo><mn>2</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┬</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>P</mi><mi>S</mi><mi>D</mi><mi>U</mi><mi>@</mi><mi>t</mi><mi>a</mi><mi>s</mi><mi>a</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┐</mi><mspace linebreak="newline" /><mi>│</mi><mi>P</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>b</mi><mo stretchy="false">&#x00028;</mo><mn>144</mn><mo stretchy="false">&#x00029;</mo><mi>│</mi><mi>H</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mo stretchy="false">&#x00028;</mo><mn>48</mn><mo stretchy="false">&#x00029;</mo><mi>│</mi><mi>│</mi><mi>M</mi><mi>A</mi><mi>C</mi><mi>h</mi><mi>d</mi><mi>r</mi><mi>│</mi><mi>B</mi><mi>o</mi><mi>d</mi><mi>y</mi><mi>│</mi><mi>F</mi><mi>C</mi><mi>S</mi><mi>│</mi><mspace linebreak="newline" /><mi>└</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┴</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┴</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┴</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┴</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┴</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┘</mi></mrow></math></div></div>
+<h4 class="sec-h4">Lo que debes saber de memoria</h4>
+<table class='dat'><thead><tr>
+<th>Concepto</th><th>Valor</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>PLCP preámbulo largo g</td><td>144 bits @ 1 Mbps</td>
+</tr>
+<tr>
+<td>PLCP header largo g</td><td>48 bits @ 1 Mbps</td>
+</tr>
+<tr>
+<td>T_PLCP largo</td><td>192 µs</td>
+</tr>
+<tr>
+<td>Tipos trama</td><td>00=Gestión, 01=Control, 10=Datos</td>
+</tr>
+<tr>
+<td>NAV</td><td>Campo Duration en µs</td>
+</tr>
+<tr>
+<td>SIFS (802.11b)</td><td>10 µs</td>
+</tr>
+<tr>
+<td>DIFS (802.11b)</td><td>50 µs</td>
+</tr>
+<tr>
+<td>FCS</td><td>4 bytes CRC-32</td>
+</tr>
+<tr>
+<td>Body MAC clásico</td><td>0–2312 bytes</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<p><strong>Siguiente paso:</strong> abre <code>02_EJERCICIOS_RESUELTOS_Y_PRACTICA.md</code> — primero estudia los resueltos, luego haz la sección final tú solo.</p>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>

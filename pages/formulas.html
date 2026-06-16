@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Link budget, Fresnel, EIRP, eficiencia, FHSS/DSSS/OFDM."/>
+<title>Fórmulas y ejercicios — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">Fórmulas y ejercicios</h1>
+<p class="page-desc">Link budget, Fresnel, EIRP, eficiencia, FHSS/DSSS/OFDM.</p>
+<h2 class="sec-h">Fórmulas y ejercicios resueltos — WLAN</h2>
+<blockquote class="quote">Basado en <code>ejercicios varios.pdf</code>, fotos <code>img/</code>, y apuntes del semestre 2025-B.</blockquote>
+<p>---</p>
+<h3 class="sec-h3">Conversión dB (memoriza esto)</h3>
+<div class="formula-card" data-latex="dBm = 10 \cdot \log_{10}(mW) \Rightarrow 20 mW = 13 dBm, 100 mW = 20 dBm, 15 mW \approx 11.76 dBm \\ dB = 10 \cdot \log_{10}(veces) \Rightarrow 7 veces = 8.45 dB, 12 veces = 10.79 dB \\ dBi = ganancia antena vs isotrópica"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>d</mi><mi>B</mi><mi>m</mi><mo>&#x0003D;</mo><mn>10</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mi>m</mi><mi>W</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mn>20</mn><mi>m</mi><mi>W</mi><mo>&#x0003D;</mo><mn>13</mn><mi>d</mi><mi>B</mi><mi>m</mi><mo>&#x0002C;</mo><mn>100</mn><mi>m</mi><mi>W</mi><mo>&#x0003D;</mo><mn>20</mn><mi>d</mi><mi>B</mi><mi>m</mi><mo>&#x0002C;</mo><mn>15</mn><mi>m</mi><mi>W</mi><mo>&#x02248;</mo><mn>11.76</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>d</mi><mi>B</mi><mo>&#x0003D;</mo><mn>10</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mi>v</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>s</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mn>7</mn><mi>v</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>s</mi><mo>&#x0003D;</mo><mn>8.45</mn><mi>d</mi><mi>B</mi><mo>&#x0002C;</mo><mn>12</mn><mi>v</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>s</mi><mo>&#x0003D;</mo><mn>10.79</mn><mi>d</mi><mi>B</mi><mspace linebreak="newline" /><mi>d</mi><mi>B</mi><mi>i</mi><mo>&#x0003D;</mo><mi>g</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>a</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>a</mi><mi>v</mi><mi>s</mi><mi>i</mi><mi>s</mi><mi>o</mi><mi>t</mi><mi>r</mi><mi>ó</mi><mi>p</mi><mi>i</mi><mi>c</mi><mi>a</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 1 — Link Budget básico (img/1)</h3>
+<p><strong>Datos:</strong></p>
+<ul class='concept-list'>
+<li>Sensibilidad S = −63 dBm</li>
+<li>Margen desvanecimiento = 9 dB → Pr objetivo = −54 dBm</li>
+<li>Ptx = 20 mW = <strong>13 dBm</strong></li>
+<li>Gain Tx = 3 dBi, Grx = 2 dBi</li>
+<li>Pérdidas α = 5 dB</li>
+<li>Lfp = 67 dB</li>
+</ul>
+<p><strong>Fórmula:</strong></p>
+<div class="formula-card" data-latex="Pr = Pt + Gain − α + Gr − Lfp \\ Pr = 13 + 3 − 5 + 2 − 67 = −54 dBm \checkmark"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>r</mi><mo>&#x0003D;</mo><mi>P</mi><mi>t</mi><mo>&#x0002B;</mo><mi>G</mi><mi>a</mi><mi>i</mi><mi>n</mi><mi>−</mi><mi>α</mi><mo>&#x0002B;</mo><mi>G</mi><mi>r</mi><mi>−</mi><mi>L</mi><mi>f</mi><mi>p</mi><mspace linebreak="newline" /><mi>P</mi><mi>r</mi><mo>&#x0003D;</mo><mn>13</mn><mo>&#x0002B;</mo><mn>3</mn><mi>−</mi><mn>5</mn><mo>&#x0002B;</mo><mn>2</mn><mi>−</mi><mn>67</mn><mo>&#x0003D;</mo><mi>−</mi><mn>54</mn><mi>d</mi><mi>B</mi><mi>m</mi><mi>&#x02713;</mi></mrow></math></div></div>
+<p>Justo en el límite con margen incluido.</p>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 2 — EIRP con amplificadores (img/3, img/5)</h3>
+<p><strong>Datos:</strong> AP 35 dBm → α₁=7 veces → Amp 12 veces → α₂=11 dB → Antena 3.5 dBi</p>
+<p><strong>Paso 1 — convertir "veces" a dB:</strong></p>
+<div class="formula-card" data-latex="α₁ = 10 \cdot \log_{10}(7) = 8.45 dB \\ A = 10 \cdot \log_{10}(12) = 10.79 dB"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>α</mi><mi>₁</mi><mo>&#x0003D;</mo><mn>10</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>7</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>8.45</mn><mi>d</mi><mi>B</mi><mspace linebreak="newline" /><mi>A</mi><mo>&#x0003D;</mo><mn>10</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>12</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>10.79</mn><mi>d</mi><mi>B</mi></mrow></math></div></div>
+<p><strong>Paso 2:</strong></p>
+<div class="formula-card" data-latex="EIRP = 35 − 8.45 + 10.79 − 11 + 3.5 = 29.84 \approx 30 dBm"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>E</mi><mi>I</mi><mi>R</mi><mi>P</mi><mo>&#x0003D;</mo><mn>35</mn><mi>−</mi><mn>8.45</mn><mo>&#x0002B;</mo><mn>10.79</mn><mi>−</mi><mn>11</mn><mo>&#x0002B;</mo><mn>3.5</mn><mo>&#x0003D;</mo><mn>29.84</mn><mo>&#x02248;</mo><mn>30</mn><mi>d</mi><mi>B</mi><mi>m</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 3 — Potencia recibida 802.11ac (img/4)</h3>
+<p><strong>Datos:</strong> Pt=15 mW, Gap=2.14 dBi, Gcliente=0 dBi, Lp=130 dB, f=5800 MHz</p>
+<div class="formula-card" data-latex="Pt = 10 \cdot \log_{10}(15) = 11.76 dBm \\ Pr = 11.76 + 2.14 + 0 − 130 = −116.1 dBm"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>t</mi><mo>&#x0003D;</mo><mn>10</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>15</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>11.76</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>P</mi><mi>r</mi><mo>&#x0003D;</mo><mn>11.76</mn><mo>&#x0002B;</mo><mn>2.14</mn><mo>&#x0002B;</mo><mn>0</mn><mi>−</mi><mn>130</mn><mo>&#x0003D;</mo><mi>−</mi><mn>116.1</mn><mi>d</mi><mi>B</mi><mi>m</mi></mrow></math></div></div>
+<p><strong>Distancia (despejar FSPL):</strong></p>
+<div class="formula-card" data-latex="130 = 32.44 + 20 \cdot \log_{10}(5800) + 20 \cdot \log_{10}(d) \\ 130 = 32.44 + 75.27 + 20 \cdot \log_{10}(d) \\ 20 \cdot \log_{10}(d) = 22.29 \Rightarrow d \approx 13 km"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>130</mn><mo>&#x0003D;</mo><mn>32.44</mn><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>5800</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mi>d</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mn>130</mn><mo>&#x0003D;</mo><mn>32.44</mn><mo>&#x0002B;</mo><mn>75.27</mn><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mi>d</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mi>d</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>22.29</mn><mo>&#x021D2;</mo><mi>d</mi><mo>&#x02248;</mo><mn>13</mn><mi>k</mi><mi>m</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 4 — Zona Fresnel 80% (ejercicios varios #1, img/9, img/13)</h3>
+<p><strong>Datos:</strong> Edificios A, B, C a 20 m. A-B=500 m, A-C=900 m. 802.11g (2.4 GHz).</p>
+<p>Antenas 6 dBi, Pt=23 dBm, sensibilidad B=−80 dBm, C=−75 dBm.</p>
+<h4 class="sec-h4">Parte (a) — Fresnel</h4>
+<div class="formula-card" data-latex="r = 8.657 \cdot √(d_km / f_GHz) \\ A-B: r = 8.657 \cdot √(\frac{0.5}{2.4}) = 3.95 m \\ A-C: r = 8.657 \cdot √(\frac{0.9}{2.4}) = 5.30 m \\ 80% despejada \Rightarrow obstáculo puede invadir 20% de r desde abajo: \\ h_max = h_antena − 0.8 \cdot r \\ A-B: 20 − 0.8(3.95) = 16.84 m (apunte img/9: 16.85 m) \\ A-C: 20 − 0.8(5.30) = 15.76 m"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>r</mi><mo>&#x0003D;</mo><mn>8.657</mn><mo>&#x000B7;</mo><mi>√</mi><mo stretchy="false">&#x00028;</mo><msub><mi>d</mi><mi>k</mi></msub><mi>m</mi><mo>&#x0002F;</mo><msub><mi>f</mi><mi>G</mi></msub><mi>H</mi><mi>z</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>A</mi><mo>&#x02212;</mo><mi>B</mi><mi>:</mi><mi>r</mi><mo>&#x0003D;</mo><mn>8.657</mn><mo>&#x000B7;</mo><mi>√</mi><mo stretchy="false">&#x00028;</mo><mfrac><mrow><mn>0.5</mn></mrow><mrow><mn>2.4</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>3.95</mn><mi>m</mi><mspace linebreak="newline" /><mi>A</mi><mo>&#x02212;</mo><mi>C</mi><mi>:</mi><mi>r</mi><mo>&#x0003D;</mo><mn>8.657</mn><mo>&#x000B7;</mo><mi>√</mi><mo stretchy="false">&#x00028;</mo><mfrac><mrow><mn>0.9</mn></mrow><mrow><mn>2.4</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>5.30</mn><mi>m</mi><mspace linebreak="newline" /><mn>80</mn></mrow></math></div></div>
+<h4 class="sec-h4">Parte (b) — ¿Se reconoce la señal?</h4>
+<p><strong>Calcular Lp real (NO usar 150 dB del enunciado si te piden calcular):</strong></p>
+<div class="formula-card" data-latex="Lp = 32.44 + 20 \cdot \log_{10}(2400) + 20 \cdot \log_{10}(d_km) \\ A-B: Lp = 32.44 + 67.6 + (−6.02) = 94.02 dB \\ Pr = 23 + 6 + 6 − 94.02 = −59.02 dBm \\ B: −59 &gt; −80 \Rightarrow SÍ reconocida \checkmark"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>L</mi><mi>p</mi><mo>&#x0003D;</mo><mn>32.44</mn><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mn>2400</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><msub><mi>d</mi><mi>k</mi></msub><mi>m</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>A</mi><mo>&#x02212;</mo><mi>B</mi><mi>:</mi><mi>L</mi><mi>p</mi><mo>&#x0003D;</mo><mn>32.44</mn><mo>&#x0002B;</mo><mn>67.6</mn><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mi>−</mi><mn>6.02</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>94.02</mn><mi>d</mi><mi>B</mi><mspace linebreak="newline" /><mi>P</mi><mi>r</mi><mo>&#x0003D;</mo><mn>23</mn><mo>&#x0002B;</mo><mn>6</mn><mo>&#x0002B;</mo><mn>6</mn><mi>−</mi><mn>94.02</mn><mo>&#x0003D;</mo><mi>−</mi><mn>59.02</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>B</mi><mi>:</mi><mi>−</mi><mn>59</mn><mo>&#x0003E;</mo><mi>−</mi><mn>80</mn><mo>&#x021D2;</mo><mi>S</mi><mi>Í</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>&#x02713;</mi></mrow></math></div></div>
+<div class="formula-card" data-latex="A-C: d=0.9 km \Rightarrow Lp = 32.44 + 67.6 + (−0.92) = 99.12 dB \\ Pr = 23 + 6 + 6 − 99.12 = −64.12 dBm \\ C: −64 &gt; −75 \Rightarrow SÍ reconocida \checkmark"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>A</mi><mo>&#x02212;</mo><mi>C</mi><mi>:</mi><mi>d</mi><mo>&#x0003D;</mo><mn>0.9</mn><mi>k</mi><mi>m</mi><mo>&#x021D2;</mo><mi>L</mi><mi>p</mi><mo>&#x0003D;</mo><mn>32.44</mn><mo>&#x0002B;</mo><mn>67.6</mn><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mi>−</mi><mn>0.92</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>99.12</mn><mi>d</mi><mi>B</mi><mspace linebreak="newline" /><mi>P</mi><mi>r</mi><mo>&#x0003D;</mo><mn>23</mn><mo>&#x0002B;</mo><mn>6</mn><mo>&#x0002B;</mo><mn>6</mn><mi>−</mi><mn>99.12</mn><mo>&#x0003D;</mo><mi>−</mi><mn>64.12</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>C</mi><mi>:</mi><mi>−</mi><mn>64</mn><mo>&#x0003E;</mo><mi>−</mi><mn>75</mn><mo>&#x021D2;</mo><mi>S</mi><mi>Í</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>&#x02713;</mi></mrow></math></div></div>
+<blockquote class="quote">⚠️ En img/14 hay un error usando Lp=150 dB fijo (−115 dBm). Siempre recalcula con la fórmula FSPL.</blockquote>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 5 — Capacidad Shannon 802.11ac (img/2)</h3>
+<p><strong>Datos:</strong> AB=160 MHz, MIMO 1×1, S/N=50 dB=10000 lineal</p>
+<div class="formula-card" data-latex="C = AB \cdot \log_2(1 + S/N) \\ C = 160 \times 10⁶ \cdot \log_2(10001) \approx 2.13 Gbps \approx 2.6 Gbps (con redondeo del apunte)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>C</mi><mo>&#x0003D;</mo><mi>A</mi><mi>B</mi><mo>&#x000B7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x0002B;</mo><mi>S</mi><mo>&#x0002F;</mo><mi>N</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>C</mi><mo>&#x0003D;</mo><mn>160</mn><mo>&#x000D7;</mo><mn>10</mn><mi>⁶</mi><mo>&#x000B7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mn>10001</mn><mo stretchy="false">&#x00029;</mo><mo>&#x02248;</mo><mn>2.13</mn><mi>G</mi><mi>b</mi><mi>p</mi><mi>s</mi><mo>&#x02248;</mo><mn>2.6</mn><mi>G</mi><mi>b</mi><mi>p</mi><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>o</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>l</mi><mi>a</mi><mi>p</mi><mi>u</mi><mi>n</mi><mi>t</mi><mi>e</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 6 — Subportadoras OFDM (img/2, img/3)</h3>
+<table class='dat'><thead><tr>
+<th>Estándar</th><th>Canal</th><th>Subportadoras</th><th>Espaciado</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>802.11a/g/n (20 MHz)</td><td>20 MHz</td><td>64 (48 datos)</td><td>312.5 kHz</td>
+</tr>
+<tr>
+<td>802.11n (40 MHz)</td><td>40 MHz</td><td>128</td><td>312.5 kHz</td>
+</tr>
+<tr>
+<td>802.11ax (20 MHz)</td><td>20 MHz</td><td>256</td><td>78.125 kHz</td>
+</tr>
+</tbody></table>
+<div class="formula-card" data-latex="802.11n 40 MHz: \frac{40}{128} = 312.5 kHz \\ 802.11ax 20 MHz: \frac{20}{256} = 78.125 kHz"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>802.11</mn><mi>n</mi><mn>40</mn><mi>M</mi><mi>H</mi><mi>z</mi><mi>:</mi><mfrac><mrow><mn>40</mn></mrow><mrow><mn>128</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>312.5</mn><mi>k</mi><mi>H</mi><mi>z</mi><mspace linebreak="newline" /><mn>802.11</mn><mi>a</mi><mi>x</mi><mn>20</mn><mi>M</mi><mi>H</mi><mi>z</mi><mi>:</mi><mfrac><mrow><mn>20</mn></mrow><mrow><mn>256</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>78.125</mn><mi>k</mi><mi>H</mi><mi>z</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 7 — FHSS bits en secuencia PN (img/3)</h3>
+<p>Para cubrir 79 frecuencias: 2^k ≥ 79 → <strong>k = 7</strong> (porque 2⁶=64 &lt; 79 &lt; 128=2⁷)</p>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 8 — Bits por símbolo 802.11a (ejercicios #12, img/7, img/12)</h3>
+<p><strong>Datos:</strong> Símbolo=4 µs, GI=0.8 µs, 54 Mbps, 48 subportadoras de datos</p>
+<p><strong>a) QPSK, tasa 1/2:</strong></p>
+<div class="formula-card" data-latex="48 \times 2 bits \times (\frac{1}{2}) = 48 bits/símbolo"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>48</mn><mo>&#x000D7;</mo><mn>2</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x000D7;</mo><mo stretchy="false">&#x00028;</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>48</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi></mrow></math></div></div>
+<p><strong>b) 64-QAM, tasa 3/4:</strong></p>
+<div class="formula-card" data-latex="48 \times 6 bits \times (\frac{3}{4}) = 216 bits/símbolo"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>48</mn><mo>&#x000D7;</mo><mn>6</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x000D7;</mo><mo stretchy="false">&#x00028;</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>216</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi></mrow></math></div></div>
+<p><strong>Verificación con tasa 54 Mbps:</strong></p>
+<div class="formula-card" data-latex="Tasa = bits_símbolo / T_{símbolo} = \frac{216}{4}\,\mu\text{s} = 54 \,\text{Mbps} \checkmark (caso b con 64-QAM \frac{3}{4})"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>T</mi><mi>a</mi><mi>s</mi><mi>a</mi><mo>&#x0003D;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>s</mi></msub><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x0002F;</mo><msub><mi>T</mi><mrow><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>216</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo>&#x0003D;</mo><mn>54</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mi>&#x02713;</mi><mo stretchy="false">&#x00028;</mo><mi>c</mi><mi>a</mi><mi>s</mi><mi>o</mi><mi>b</mi><mi>c</mi><mi>o</mi><mi>n</mi><mn>64</mn><mo>&#x02212;</mo><mi>Q</mi><mi>A</mi><mi>M</mi><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 9 — NAV de trama CTS (ejercicios #13)</h3>
+<p><strong>Campo Duración hex = 0x0398</strong></p>
+<div class="formula-card" data-latex="NAV = \texttt{0x0398} = 3 \times 256 + 9 \times 16 + 8 = 920 (decimal) \Rightarrow 920 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mi>A</mi><mi>V</mi><mo>&#x0003D;</mo><mtext mathvariant="monospace">0x0398</mtext><mo>&#x0003D;</mo><mn>3</mn><mo>&#x000D7;</mo><mn>256</mn><mo>&#x0002B;</mo><mn>9</mn><mo>&#x000D7;</mo><mn>16</mn><mo>&#x0002B;</mo><mn>8</mn><mo>&#x0003D;</mo><mn>920</mn><mo stretchy="false">&#x00028;</mo><mi>d</mi><mi>e</mi><mi>c</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>l</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mn>920</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<p>Para CTS, el NAV indica cuánto tiempo estará ocupado el canal para la transmisión de datos subsiguiente.</p>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 10 — NAV del RTS (ejercicio #2 de ejercicios varios)</h3>
+<p><strong>Fórmula típica NAV en RTS:</strong></p>
+<div class="formula-card" data-latex="NAV_RTS = SIFS + T_{CTS} + SIFS + T_{DATA} + SIFS + T_{ACK}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mi>A</mi><msub><mi>V</mi><mi>R</mi></msub><mi>T</mi><mi>S</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>C</mi><mi>T</mi><mi>S</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub></mrow></math></div></div>
+<p>Con 802.11g: SIFS=10 µs, slot=20 µs.</p>
+<p>Necesitas longitudes de trama según PHY rate y tamaño (128 bytes MAC + 34 overhead + PLCP preamble 144 bits + header 48 bits).</p>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 11 — FHSS/MFSK (ejercicios #4-7)</h3>
+<p><strong>Datos comunes:</strong> 20 chips PN, Δf=200 Hz, 8-FSK, 1200 bps</p>
+<div class="formula-card" data-latex="Símbolos/s = 1200 / \log_2(8) = \frac{1200}{3} = 400 sps \\ Chips/símbolo = 20 (dado por secuencia PN) \\ Spreading BW \approx chips/símbolo \times Δf \times símbolos/s (según enunciado)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>S</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mo>&#x0003D;</mo><mn>1200</mn><mo>&#x0002F;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mn>8</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mfrac><mrow><mn>1200</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>400sp</mn><mi>s</mi><mspace linebreak="newline" /><mi>C</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x0003D;</mo><mn>20</mn><mo stretchy="false">&#x00028;</mo><mi>d</mi><mi>a</mi><mi>d</mi><mi>o</mi><mi>p</mi><mi>o</mi><mi>r</mi><mi>s</mi><mi>e</mi><mi>c</mi><mi>u</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>P</mi><mi>N</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>S</mi><mi>p</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>B</mi><mi>W</mi><mo>&#x02248;</mo><mi>c</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x000D7;</mo><mi>Δ</mi><mi>f</mi><mo>&#x000D7;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>s</mi><mi>e</mi><mi>g</mi><mi>ú</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>d</mi><mi>o</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p><strong>Ejercicio 6:</strong> 2400 bps, 8-FSK, spreading=14.4 kcps, Δf=400 Hz</p>
+<div class="formula-card" data-latex="Símbolos/s = \frac{2400}{3} = 800 \\ Chips/símbolo = \frac{14400}{800} = 18 chips"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>S</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mo>&#x0003D;</mo><mfrac><mrow><mn>2400</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>800</mn><mspace linebreak="newline" /><mi>C</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x0003D;</mo><mfrac><mrow><mn>14400</mn></mrow><mrow><mn>800</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>18</mn><mi>c</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 12 — DSSS ganancia procesamiento (ejercicio #8)</h3>
+<div class="formula-card" data-latex="Gp = 512, Vc = 10 Mcps \\ Vb = Vc / Gp = 10 \times 10⁶ / 512 \approx 19.53 kbps"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>G</mi><mi>p</mi><mo>&#x0003D;</mo><mn>512</mn><mo>&#x0002C;</mo><mi>V</mi><mi>c</mi><mo>&#x0003D;</mo><mn>10</mn><mi>M</mi><mi>c</mi><mi>p</mi><mi>s</mi><mspace linebreak="newline" /><mi>V</mi><mi>b</mi><mo>&#x0003D;</mo><mi>V</mi><mi>c</mi><mo>&#x0002F;</mo><mi>G</mi><mi>p</mi><mo>&#x0003D;</mo><mn>10</mn><mo>&#x000D7;</mo><mn>10</mn><mi>⁶</mi><mo>&#x0002F;</mo><mn>512</mn><mo>&#x02248;</mo><mn>19.53</mn><mi>k</mi><mi>b</mi><mi>p</mi><mi>s</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 13 — EIRP en mW (ejercicio #11)</h3>
+<div class="formula-card" data-latex="Pt = 100 mW = 20 dBm \\ Pérdida cable = 3 dB \Rightarrow 17 dBm \\ Ganancia antena = 7 dBi \\ EIRP = 17 + 7 = 24 dBm = 10^(\frac{24}{10}) = 251 mW"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>t</mi><mo>&#x0003D;</mo><mn>100</mn><mi>m</mi><mi>W</mi><mo>&#x0003D;</mo><mn>20</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>P</mi><mi>é</mi><mi>r</mi><mi>d</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>c</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo>&#x0003D;</mo><mn>3</mn><mi>d</mi><mi>B</mi><mo>&#x021D2;</mo><mn>17</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>G</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>a</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>a</mi><mo>&#x0003D;</mo><mn>7</mn><mi>d</mi><mi>B</mi><mi>i</mi><mspace linebreak="newline" /><mi>E</mi><mi>I</mi><mi>R</mi><mi>P</mi><mo>&#x0003D;</mo><mn>17</mn><mo>&#x0002B;</mo><mn>7</mn><mo>&#x0003D;</mo><mn>24</mn><mi>d</mi><mi>B</mi><mi>m</mi><mo>&#x0003D;</mo><msup><mn>10</mn><mo stretchy="false">&#x00028;</mo></msup><mfrac><mrow><mn>24</mn></mrow><mrow><mn>10</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>251</mn><mi>m</mi><mi>W</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 14 — Distancia Wi-Fi 6 (mafia pregunta 42)</h3>
+<p><strong>Datos:</strong> SNR=35 dB, Ruido=−98 dBm, Pt=21 dBm, Gap=3 dBi, pérdidas=5 dB</p>
+<div class="formula-card" data-latex="Pr = Ruido + SNR = −98 + 35 = −63 dBm \\ Pr = Pt + Gap − Lp − pérdidas \\ −63 = 21 + 3 − Lp − 5 \Rightarrow Lp = 92 dB \\ 92 = 32.44 + 20 \cdot \log_{10}(f) + 20 \cdot \log_{10}(d) \\ (Usar f en GHz o MHz según enunciado — típicamente 2400 MHz o 5000 MHz)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>r</mi><mo>&#x0003D;</mo><mi>R</mi><mi>u</mi><mi>i</mi><mi>d</mi><mi>o</mi><mo>&#x0002B;</mo><mi>S</mi><mi>N</mi><mi>R</mi><mo>&#x0003D;</mo><mi>−</mi><mn>98</mn><mo>&#x0002B;</mo><mn>35</mn><mo>&#x0003D;</mo><mi>−</mi><mn>63</mn><mi>d</mi><mi>B</mi><mi>m</mi><mspace linebreak="newline" /><mi>P</mi><mi>r</mi><mo>&#x0003D;</mo><mi>P</mi><mi>t</mi><mo>&#x0002B;</mo><mi>G</mi><mi>a</mi><mi>p</mi><mi>−</mi><mi>L</mi><mi>p</mi><mi>−</mi><mi>p</mi><mi>é</mi><mi>r</mi><mi>d</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>s</mi><mspace linebreak="newline" /><mi>−</mi><mn>63</mn><mo>&#x0003D;</mo><mn>21</mn><mo>&#x0002B;</mo><mn>3</mn><mi>−</mi><mi>L</mi><mi>p</mi><mi>−</mi><mn>5</mn><mo>&#x021D2;</mo><mi>L</mi><mi>p</mi><mo>&#x0003D;</mo><mn>92</mn><mi>d</mi><mi>B</mi><mspace linebreak="newline" /><mn>92</mn><mo>&#x0003D;</mo><mn>32.44</mn><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mi>f</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><mi>d</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mo stretchy="false">&#x00028;</mo><mi>U</mi><mi>s</mi><mi>a</mi><mi>r</mi><mi>f</mi><mi>e</mi><mi>n</mi><mi>G</mi><mi>H</mi><mi>z</mi><mi>o</mi><mi>M</mi><mi>H</mi><mi>z</mi><mi>s</mi><mi>e</mi><mi>g</mi><mi>ú</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>d</mi><mi>o</mi><mi>—</mi><mi>t</mi><mi>í</mi><mi>p</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi><mn>2400</mn><mi>M</mi><mi>H</mi><mi>z</mi><mi>o</mi><mn>5000</mn><mi>M</mi><mi>H</mi><mi>z</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Ejercicio 15 — Decodificar Frame Control 0xd400 (mafia #39)</h3>
+<div class="formula-card" data-latex="\texttt{0xd400} = 1101 0100 0000 0000 \\ Bits 0-1 (versión): 00 \Rightarrow v0 \\ Bits 2-3 (tipo): 10 \Rightarrow Datos \\ Bits 4-7 (subtipo): 0100 \Rightarrow 4 (o según tabla específica) \\ To DS / From DS: revisar bits 8-9 \\ Retry, Protected, etc.: bits 10-15"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext mathvariant="monospace">0xd400</mtext><mo>&#x0003D;</mo><mn>1101</mn><mn>0100</mn><mn>0000</mn><mn>0000</mn><mspace linebreak="newline" /><mi>B</mi><mi>i</mi><mi>t</mi><mi>s</mi><mn>0</mn><mo>&#x02212;</mo><mn>1</mn><mo stretchy="false">&#x00028;</mo><mi>v</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mn>00</mn><mo>&#x021D2;</mo><mi>v</mi><mn>0</mn><mspace linebreak="newline" /><mi>B</mi><mi>i</mi><mi>t</mi><mi>s</mi><mn>2</mn><mo>&#x02212;</mo><mn>3</mn><mo stretchy="false">&#x00028;</mo><mi>t</mi><mi>i</mi><mi>p</mi><mi>o</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mn>10</mn><mo>&#x021D2;</mo><mi>D</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mspace linebreak="newline" /><mi>B</mi><mi>i</mi><mi>t</mi><mi>s</mi><mn>4</mn><mo>&#x02212;</mo><mn>7</mn><mo stretchy="false">&#x00028;</mo><mi>s</mi><mi>u</mi><mi>b</mi><mi>t</mi><mi>i</mi><mi>p</mi><mi>o</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mn>0100</mn><mo>&#x021D2;</mo><mn>4</mn><mo stretchy="false">&#x00028;</mo><mi>o</mi><mi>s</mi><mi>e</mi><mi>g</mi><mi>ú</mi><mi>n</mi><mi>t</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>a</mi><mi>e</mi><mi>s</mi><mi>p</mi><mi>e</mi><mi>c</mi><mi>í</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>a</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>T</mi><mi>o</mi><mi>D</mi><mi>S</mi><mo>&#x0002F;</mo><mi>F</mi><mi>r</mi><mi>o</mi><mi>m</mi><mi>D</mi><mi>S</mi><mi>:</mi><mi>r</mi><mi>e</mi><mi>v</mi><mi>i</mi><mi>s</mi><mi>a</mi><mi>r</mi><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mn>8</mn><mo>&#x02212;</mo><mn>9</mn><mspace linebreak="newline" /><mi>R</mi><mi>e</mi><mi>t</mi><mi>r</mi><mi>y</mi><mo>&#x0002C;</mo><mi>P</mi><mi>r</mi><mi>o</mi><mi>t</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>d</mi><mo>&#x0002C;</mo><mi>e</mi><mi>t</mi><mi>c</mi><mo>&#x0002E;</mo><mi>:</mi><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mn>10</mn><mo>&#x02212;</mo><mn>15</mn></mrow></math></div></div>
+<p>Practica con img/11: <code>0x0A08</code> → Datos, subtipo 0, Retry=1.</p>
+<p>---</p>
+<h3 class="sec-h3">Truco para el examen</h3>
+<ol class='step-list'>
+<li>1. <strong>Siempre convierte mW → dBm primero</strong></li>
+<li>2. <strong>Fresnel: distancia en km, frecuencia en GHz</strong></li>
+<li>3. <strong>FSPL: f en MHz, d en km</strong></li>
+<li>4. <strong>802.11a: siempre 48 subportadoras de datos</strong></li>
+<li>5. <strong>Entre fragmentos y ACK: SIFS</strong></li>
+<li>6. <strong>EDCA usa AIFS, no DIFS</strong></li>
+<li>7. <strong>Si Pr &gt; Sensibilidad → señal OK</strong></li>
+</ol>
+<p>---</p>
+<h3 class="sec-h3">Practica tú (sin respuesta)</h3>
+<ol class='step-list'>
+<li>1. Pt=27 dBm, G=5 dBi, Lp=110 dB → ¿Pr?</li>
+<li>2. r Fresnel a 300 m, 5.8 GHz → ¿r?</li>
+<li>3. 802.11a, 16-QAM tasa 1/2 → ¿bits/símbolo?</li>
+<li>4. 2^k ≥ 79 → ¿k?</li>
+<li>5. 10·log10(13.2) = ?</li>
+</ol>
+<p>&lt;details&gt;</p>
+<p>&lt;summary&gt;Respuestas&lt;/summary&gt;</p>
+<ol class='step-list'>
+<li>1. 27+5−110 = −78 dBm</li>
+<li>2. 8.657·√(0.3/5.8) = 1.97 m</li>
+<li>3. 48×4×0.5 = 96 bits/símbolo</li>
+<li>4. k=7</li>
+<li>5. ≈ 11.21 dB</li>
+</ol>
+<p>&lt;/details&gt;</p>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>

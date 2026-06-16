@@ -2,10 +2,10 @@
 # https://render.com/docs/static-sites
 services:
   - type: web
-    name: wlan-guia-tramas-epn
+    name: wlan-guia-epn-2026a
     runtime: static
     staticPublishPath: .
-    buildCommand: echo "Guia WLAN EPN — sitio estatico listo"
+    buildCommand: echo "Portal WLAN EPN 2026-A — sitio estatico listo"
     headers:
       - path: /*
         name: Cache-Control

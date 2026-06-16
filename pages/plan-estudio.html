@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Cronograma semana a semana para cubrir todo el temario."/>
+<title>Plan de estudio (4 semanas) — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">Plan de estudio (4 semanas)</h1>
+<p class="page-desc">Cronograma semana a semana para cubrir todo el temario.</p>
+<h2 class="sec-h">Plan de estudio WLAN — 4 semanas intensivas</h2>
+<blockquote class="quote">Diseñado para empezar desde cero. Ajusta ritmo según tu tiempo.</blockquote>
+<p>---</p>
+<h3 class="sec-h3">Semana 1 — Fundamentos (no te saltes esto)</h3>
+<h4 class="sec-h4">Día 1-2: ¿Qué es WLAN?</h4>
+<ul class='concept-list'>
+<li>[ ] Leer <code>01_WLAN_DESDE_CERO.md</code> completo</li>
+<li>[ ] PDF: <code>1.Introduccion_wlan.pdf</code></li>
+<li>[ ] Memorizar tabla de generaciones Wi-Fi 1→7</li>
+</ul>
+<h4 class="sec-h4">Día 3-4: Topologías y componentes</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>2.Componentes_Basicos_2025B.pdf</code></li>
+<li>[ ] Dibujar BSS, IBSS, ESS a mano</li>
+<li>[ ] Explicar SSID vs BSSID en voz alta</li>
+</ul>
+<h4 class="sec-h4">Día 5-7: Capa física intro</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>3.Capa Física 802_11.pdf</code></li>
+<li>[ ] Entender FHSS, DSSS, diferencia PLCP/PMD</li>
+<li>[ ] Repasar img/10 (tabla comparativa estándares)</li>
+</ul>
+<p><strong>Mini-quiz semana 1:</strong></p>
+<ol class='step-list'>
+<li>1. ¿Qué es un BSS?</li>
+<li>2. ¿Cuántos canales FHSS en USA?</li>
+<li>3. ¿Qué subcapa adapta MAC a RF?</li>
+</ol>
+<p>---</p>
+<h3 class="sec-h3">Semana 2 — Capa física (la parte más difícil)</h3>
+<h4 class="sec-h4">Día 1-3: b/a/g</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>4.Capa Física 802_11_b_a_g.pdf</code></li>
+<li>[ ] Calcular bits/símbolo 802.11a (ejercicios #12)</li>
+<li>[ ] Memorizar: 48 subportadoras, símbolo 4µs, GI 0.8µs</li>
+</ul>
+<h4 class="sec-h4">Día 4-5: n/ac/ax/be</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>5.Capa Física 802_11_n_ac_ax.pdf</code> (skim, enfócate en tabla)</li>
+<li>[ ] PDF: <code>6. 802_11_be.pdf</code> (lectura rápida)</li>
+</ul>
+<h4 class="sec-h4">Día 6-7: PLCP</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>7.PLCP-1.pdf</code> + <code>8.Subcapa PLCP 2.pdf</code></li>
+<li>[ ] Saber qué lleva preámbulo vs header vs datos</li>
+</ul>
+<p><strong>Práctica:</strong> Resolver ejercicios 4-8, 11-12 de <code>ejercicios varios.pdf</code></p>
+<p>---</p>
+<h3 class="sec-h3">Semana 3 — MAC y acceso al medio</h3>
+<h4 class="sec-h4">Día 1-2: Tramas MAC</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>9.Subcapa_MAC-1.pdf</code></li>
+<li>[ ] Decodificar Frame Control (img/11, mafia #39)</li>
+<li>[ ] Memorizar tipos: 00=Gestión, 01=Control, 10=Datos</li>
+</ul>
+<h4 class="sec-h4">Día 3-5: DCF</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>10.DCF_2025B.pdf</code></li>
+<li>[ ] Dibujar secuencia DIFS→backoff→data→SIFS→ACK (img/8)</li>
+<li>[ ] Entender NAV, RTS/CTS (img/14)</li>
+<li>[ ] Memorizar IFS: SIFS=10µs, DIFS, AIFS</li>
+</ul>
+<h4 class="sec-h4">Día 6-7: PCF + Admin</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>11.PCF_Subcapa_Admin.pdf</code> (skim)</li>
+<li>[ ] PDF: <code>12.Componentes.pdf</code></li>
+</ul>
+<p><strong>Práctica:</strong> Ejercicio #2 (NAV RTS/CTS) de ejercicios varios</p>
+<p>---</p>
+<h3 class="sec-h3">Semana 4 — Seguridad, diseño, QoS + repaso</h3>
+<h4 class="sec-h4">Día 1-2: Seguridad</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>13.Seguridades-1.pdf</code> + <code>14.Seguridades-2.pdf</code></li>
+<li>[ ] WEP→WPA→WPA2→WPA3, RSNA</li>
+</ul>
+<h4 class="sec-h4">Día 3: Diseño</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>15.Diseno_WLAN.pdf</code></li>
+<li>[ ] Survey activo vs pasivo vs predictivo</li>
+</ul>
+<h4 class="sec-h4">Día 4: QoS</h4>
+<ul class='concept-list'>
+<li>[ ] PDF: <code>16.QoS_WLAN.pdf</code></li>
+<li>[ ] HCF, EDCA, AIFS, 802.11p/WAVE</li>
+</ul>
+<h4 class="sec-h4">Día 5-7: Repaso total</h4>
+<ul class='concept-list'>
+<li>[ ] <code>03_FORMULAS_EJERCICIOS.md</code> — todos los ejercicios sin mirar</li>
+<li>[ ] <code>04_TIPOS_PREGUNTA_EXAMEN.md</code> — repasar respuestas P4</li>
+<li>[ ] <code>mafia.pdf</code> — simular examen</li>
+<li>[ ] <strong>`Corrección p1.pdf`</strong> — cuando tengas bases sólidas</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Rutina diaria (2-3 horas)</h3>
+<div class="formula-card" data-latex="30 min \Rightarrow Leer PDF/diapositiva del día \\ 30 min \Rightarrow Leer guía IA correspondiente \\ 45 min \Rightarrow Resolver 2-3 ejercicios numéricos \\ 15 min \Rightarrow Flashcards (SSID, SIFS, NAV, etc.)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>30</mn><mi>m</mi><mi>i</mi><mi>n</mi><mo>&#x021D2;</mo><mi>L</mi><mi>e</mi><mi>e</mi><mi>r</mi><mi>P</mi><mi>D</mi><mi>F</mi><mo>&#x0002F;</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>l</mi><mi>d</mi><mi>í</mi><mi>a</mi><mspace linebreak="newline" /><mn>30</mn><mi>m</mi><mi>i</mi><mi>n</mi><mo>&#x021D2;</mo><mi>L</mi><mi>e</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>u</mi><mi>í</mi><mi>a</mi><mi>I</mi><mi>A</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>d</mi><mi>i</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi><mspace linebreak="newline" /><mn>45</mn><mi>m</mi><mi>i</mi><mi>n</mi><mo>&#x021D2;</mo><mi>R</mi><mi>e</mi><mi>s</mi><mi>o</mi><mi>l</mi><mi>v</mi><mi>e</mi><mi>r</mi><mn>2</mn><mo>&#x02212;</mo><mn>3</mn><mi>e</mi><mi>j</mi><mi>e</mi><mi>r</mi><mi>c</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>o</mi><mi>s</mi><mi>n</mi><mi>u</mi><mi>m</mi><mi>é</mi><mi>r</mi><mi>i</mi><mi>c</mi><mi>o</mi><mi>s</mi><mspace linebreak="newline" /><mn>15</mn><mi>m</mi><mi>i</mi><mi>n</mi><mo>&#x021D2;</mo><mi>F</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>h</mi><mi>c</mi><mi>a</mi><mi>r</mi><mi>d</mi><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>S</mi><mi>S</mi><mi>I</mi><mi>D</mi><mo>&#x0002C;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002C;</mo><mi>N</mi><mi>A</mi><mi>V</mi><mo>&#x0002C;</mo><mi>e</mi><mi>t</mi><mi>c</mi><mo>&#x0002E;</mo><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Flashcards esenciales</h3>
+<table class='dat'><thead><tr>
+<th>Pregunta</th><th>Respuesta</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>¿Qué es NAV?</td><td>Timer virtual en Duration field</td>
+</tr>
+<tr>
+<td>¿SIFS para qué?</td><td>ACK, CTS, respuestas inmediatas</td>
+</tr>
+<tr>
+<td>¿EDCA usa?</td><td>AIFS</td>
+</tr>
+<tr>
+<td>¿802.11p banda?</td><td>5.9 GHz</td>
+</tr>
+<tr>
+<td>¿802.11p basado en?</td><td>802.11a</td>
+</tr>
+<tr>
+<td>¿48 subportadoras?</td><td>Datos en 802.11a OFDM</td>
+</tr>
+<tr>
+<td>¿Fresnel formula?</td><td>r=8.657√(km/GHz)</td>
+</tr>
+<tr>
+<td>¿FSPL formula?</td><td>32.44+20logf+20logd</td>
+</tr>
+<tr>
+<td>¿FHSS k bits?</td><td>2^k ≥ 79 → k=7</td>
+</tr>
+<tr>
+<td>¿Survey activo?</td><td>Requiere asociarse al AP</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">Señales de que vas bien</h3>
+<ul class='concept-list'>
+<li>Puedes explicar CSMA/CA a alguien más en 2 minutos</li>
+<li>Resuelves link budget sin mirar fórmulas</li>
+<li>Diferencias 802.11b de 802.11a sin dudar</li>
+<li>Decodificas un Frame Control hex</li>
+<li>Sabes cuándo usar SIFS vs DIFS vs AIFS</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Próximo paso contigo (profesor IA)</h3>
+<p>Cuando termines Semana 1, dime:</p>
+<blockquote class="quote">"Profesor, explícame el módulo X con ejemplos"</blockquote>
+<p>O:</p>
+<blockquote class="quote">"Hagamos juntos el ejercicio de Fresnel paso a paso"</blockquote>
+<p>O:</p>
+<blockquote class="quote">"Simula un mini-examen de 10 preguntas"</blockquote>
+<p>Estoy aquí para repasar contigo tema por tema.</p>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>

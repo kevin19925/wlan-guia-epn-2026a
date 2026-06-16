@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Completar, V/F, opción múltiple, numéricos — cómo abordarlos."/>
+<title>Tipos de pregunta en examen — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">Tipos de pregunta en examen</h1>
+<p class="page-desc">Completar, V/F, opción múltiple, numéricos — cómo abordarlos.</p>
+<h2 class="sec-h">Tipos de pregunta en exámenes WLAN</h2>
+<blockquote class="quote">Patrones extraídos de <code>mafia.pdf</code>, <code>Pruebas_WLAN_Todo</code>, fotos WhatsApp e imágenes.</blockquote>
+<p>---</p>
+<h3 class="sec-h3">Categoría A — Opción múltiple conceptual (40% del examen)</h3>
+<h4 class="sec-h4">Topología y servicios</h4>
+<ul class='concept-list'>
+<li>Diferencia BSS / IBSS / ESS / MBSS</li>
+<li>SSID vs BSSID</li>
+<li>Qué servicio hace asociación vs autenticación</li>
+<li>Roaming = reasociación a otro AP</li>
+</ul>
+<h4 class="sec-h4">Capa física</h4>
+<ul class='concept-list'>
+<li>¿Qué estándar usa OFDM? → a, g, n, ac, ax</li>
+<li>¿Cuál solo 5 GHz? → a, ac</li>
+<li>¿Cuántas subportadoras 802.11a? → 64 total, 48 datos</li>
+<li>FHSS: 79 canales, 1 MHz, 1-2 Mbps</li>
+<li>DSSS: Barker 11-chip, 11 Mcps</li>
+</ul>
+<h4 class="sec-h4">MAC / DCF</h4>
+<ul class='concept-list'>
+<li>CSMA/CA: escuchar → DIFS → backoff → transmitir</li>
+<li>SIFS entre ACK y fragmento</li>
+<li>NAV = detección virtual de portadora</li>
+<li>RTS/CTS soluciona terminal oculto</li>
+<li>Backoff crece exponencialmente</li>
+</ul>
+<h4 class="sec-h4">Seguridad</h4>
+<ul class='concept-list'>
+<li>WEP roto, WPA2 con AES, WPA3 con SAE</li>
+<li>Ocultar SSID ≠ seguridad</li>
+<li>RSNA = WPA2/WPA3</li>
+</ul>
+<h4 class="sec-h4">QoS</h4>
+<ul class='concept-list'>
+<li>HCF = EDCA + HCCA</li>
+<li>EDCA: 4 AC, 8 TID, usa AIFS</li>
+<li>WMM = certificación QoS</li>
+</ul>
+<h4 class="sec-h4">Diseño</h4>
+<ul class='concept-list'>
+<li>Survey activo = asociado al AP</li>
+<li>Survey pasivo = solo escucha</li>
+<li>&gt;500 APs → switches PoE en borde</li>
+</ul>
+<h4 class="sec-h4">Estándares especiales</h4>
+<ul class='concept-list'>
+<li>802.11p → basado en 802.11a, banda 5.9 GHz, stack WAVE</li>
+<li>802.11ad → 60 GHz (WiGig)</li>
+<li>802.11ah → Sub-1 GHz (Wi-Fi HaLow)</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Categoría B — Desarrollo / completar (20%)</h3>
+<h4 class="sec-h4">MANET (redes móviles ad hoc)</h4>
+<p>Cuatro métricas típicas:</p>
+<ol class='step-list'>
+<li>1. Hop count (saltos)</li>
+<li>2. Latencia</li>
+<li>3. Ancho de banda disponible</li>
+<li>4. Estabilidad de ruta / energía</li>
+</ol>
+<h4 class="sec-h4">DSR (Dynamic Source Routing)</h4>
+<ul class='concept-list'>
+<li>Tipo: <strong>reactivo</strong> (on-demand)</li>
+<li>Tablas: <strong>no mantiene</strong> tablas permanentes (cada nodo guarda rutas en caché)</li>
+<li>Fases: <strong>Route Discovery</strong> + <strong>Route Maintenance</strong></li>
+<li>Paquetes: <strong>RREQ</strong> (Route Request), <strong>RREP</strong> (Route Reply), <strong>RERR</strong> (Route Error)</li>
+</ul>
+<h4 class="sec-h4">802.11p</h4>
+<ul class='concept-list'>
+<li>Vel. máx: <strong>27 Mbps</strong> (típico, OFDM)</li>
+<li>Vel. mín: <strong>6 Mbps</strong></li>
+<li>Ancho canal: <strong>10 MHz</strong></li>
+<li>Modulación máx: <strong>64-QAM</strong> (tasa 3/4)</li>
+</ul>
+<h4 class="sec-h4">Acrónimos IFS</h4>
+<table class='dat'><thead><tr>
+<th>Sigla</th><th>Significado</th><th>Uso</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>RIFS</strong></td><td>Reduced IFS</td><td>802.11n, reemplaza SIFS</td>
+</tr>
+<tr>
+<td><strong>SIFS</strong></td><td>Short IFS</td><td>ACK, CTS, respuestas</td>
+</tr>
+<tr>
+<td><strong>AIFS</strong></td><td>Arbitration IFS</td><td>QoS/EDCA, prioridades</td>
+</tr>
+<tr>
+<td><strong>PIFS</strong></td><td>PCF IFS</td><td>Punto coordinador</td>
+</tr>
+<tr>
+<td><strong>DIFS</strong></td><td>DCF IFS</td><td>Acceso normal</td>
+</tr>
+<tr>
+<td><strong>EIFS</strong></td><td>Extended IFS</td><td>Trama corrupta</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">Categoría C — Ejercicios numéricos (40%)</h3>
+<h4 class="sec-h4">1. Link Budget</h4>
+<div class="formula-card" data-latex="Pr = Pt + Gt + Gr − Lp − pérdidas \\ ¿Pr &gt; Sensibilidad?"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>r</mi><mo>&#x0003D;</mo><mi>P</mi><mi>t</mi><mo>&#x0002B;</mo><mi>G</mi><mi>t</mi><mo>&#x0002B;</mo><mi>G</mi><mi>r</mi><mi>−</mi><mi>L</mi><mi>p</mi><mi>−</mi><mi>p</mi><mi>é</mi><mi>r</mi><mi>d</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>s</mi><mspace linebreak="newline" /><mi>¿</mi><mi>P</mi><mi>r</mi><mo>&#x0003E;</mo><mi>S</mi><mi>e</mi><mi>n</mi><mi>s</mi><mi>i</mi><mi>b</mi><mi>i</mi><mi>l</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>d</mi><mo>&#x0003F;</mo></mrow></math></div></div>
+<h4 class="sec-h4">2. FSPL / Distancia</h4>
+<div class="formula-card" data-latex="Lp = 32.44 + 20 \cdot \log_{10}(f_MHz) + 20 \cdot \log_{10}(d_km)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>L</mi><mi>p</mi><mo>&#x0003D;</mo><mn>32.44</mn><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><msub><mi>f</mi><mi>M</mi></msub><mi>H</mi><mi>z</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000B7;</mo><msub><mi>log</mi><mrow><mn>10</mn></mrow></msub><mo stretchy="false">&#x00028;</mo><msub><mi>d</mi><mi>k</mi></msub><mi>m</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<h4 class="sec-h4">3. Fresnel</h4>
+<div class="formula-card" data-latex="r = 8.657 \cdot √(d_km/f_GHz) \\ h_max = h_antena − 0.8 \cdot r (80% despejada)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>r</mi><mo>&#x0003D;</mo><mn>8.657</mn><mo>&#x000B7;</mo><mi>√</mi><mo stretchy="false">&#x00028;</mo><msub><mi>d</mi><mi>k</mi></msub><mi>m</mi><mo>&#x0002F;</mo><msub><mi>f</mi><mi>G</mi></msub><mi>H</mi><mi>z</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><msub><mi>h</mi><mi>m</mi></msub><mi>a</mi><mi>x</mi><mo>&#x0003D;</mo><msub><mi>h</mi><mi>a</mi></msub><mi>n</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>a</mi><mi>−</mi><mn>0.8</mn><mo>&#x000B7;</mo><mi>r</mi><mo stretchy="false">&#x00028;</mo><mn>80</mn></mrow></math></div></div>
+<h4 class="sec-h4">4. EIRP</h4>
+<div class="formula-card" data-latex="Convertir &quot;veces&quot; a dB, sumar cadena de ganancias/pérdidas"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>C</mi><mi>o</mi><mi>n</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>t</mi><mi>i</mi><mi>r</mi><mi>"</mi><mi>v</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>s</mi><mi>"</mi><mi>a</mi><mi>d</mi><mi>B</mi><mo>&#x0002C;</mo><mi>s</mi><mi>u</mi><mi>m</mi><mi>a</mi><mi>r</mi><mi>c</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>s</mi><mo>&#x0002F;</mo><mi>p</mi><mi>é</mi><mi>r</mi><mi>d</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>s</mi></mrow></math></div></div>
+<h4 class="sec-h4">5. OFDM bits/símbolo</h4>
+<div class="formula-card" data-latex="48 \times N_BPSC \times tasa_codificación"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>48</mn><mo>&#x000D7;</mo><msub><mi>N</mi><mi>B</mi></msub><mi>P</mi><mi>S</mi><mi>C</mi><mo>&#x000D7;</mo><mi>t</mi><mi>a</mi><mi>s</mi><msub><mi>a</mi><mi>c</mi></msub><mi>o</mi><mi>d</mi><mi>i</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi></mrow></math></div></div>
+<h4 class="sec-h4">6. NAV</h4>
+<div class="formula-card" data-latex="Hex del campo Duration \Rightarrow decimal = \,\mu\text{s} de NAV"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>H</mi><mi>e</mi><mi>x</mi><mi>d</mi><mi>e</mi><mi>l</mi><mi>c</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>o</mi><mi>D</mi><mi>u</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo>&#x021D2;</mo><mi>d</mi><mi>e</mi><mi>c</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>l</mi><mo>&#x0003D;</mo><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mi>d</mi><mi>e</mi><mi>N</mi><mi>A</mi><mi>V</mi></mrow></math></div></div>
+<h4 class="sec-h4">7. Frame Control</h4>
+<div class="formula-card" data-latex="Hex \Rightarrow binario \Rightarrow tipo, subtipo, flags (ToDS, FromDS, Retry, Protected)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>H</mi><mi>e</mi><mi>x</mi><mo>&#x021D2;</mo><mi>b</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>r</mi><mi>i</mi><mi>o</mi><mo>&#x021D2;</mo><mi>t</mi><mi>i</mi><mi>p</mi><mi>o</mi><mo>&#x0002C;</mo><mi>s</mi><mi>u</mi><mi>b</mi><mi>t</mi><mi>i</mi><mi>p</mi><mi>o</mi><mo>&#x0002C;</mo><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>T</mi><mi>o</mi><mi>D</mi><mi>S</mi><mo>&#x0002C;</mo><mi>F</mi><mi>r</mi><mi>o</mi><mi>m</mi><mi>D</mi><mi>S</mi><mo>&#x0002C;</mo><mi>R</mi><mi>e</mi><mi>t</mi><mi>r</mi><mi>y</mi><mo>&#x0002C;</mo><mi>P</mi><mi>r</mi><mi>o</mi><mi>t</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>d</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<h4 class="sec-h4">8. FHSS/DSSS</h4>
+<div class="formula-card" data-latex="2^k ≥ num_frecuencias \\ Gp = chips/bit \Rightarrow Vb = Vc/Gp \\ chips/símbolo = spreading_rate / (bps/\log_2(M))"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mn>2</mn><mi>k</mi></msup><mi>≥</mi><mi>n</mi><mi>u</mi><msub><mi>m</mi><mi>f</mi></msub><mi>r</mi><mi>e</mi><mi>c</mi><mi>u</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>s</mi><mspace linebreak="newline" /><mi>G</mi><mi>p</mi><mo>&#x0003D;</mo><mi>c</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><mi>b</mi><mi>i</mi><mi>t</mi><mo>&#x021D2;</mo><mi>V</mi><mi>b</mi><mo>&#x0003D;</mo><mi>V</mi><mi>c</mi><mo>&#x0002F;</mo><mi>G</mi><mi>p</mi><mspace linebreak="newline" /><mi>c</mi><mi>h</mi><mi>i</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x0003D;</mo><mi>s</mi><mi>p</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>i</mi><mi>n</mi><msub><mi>g</mi><mi>r</mi></msub><mi>a</mi><mi>t</mi><mi>e</mi><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mi>b</mi><mi>p</mi><mi>s</mi><mo>&#x0002F;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mi>M</mi><mo stretchy="false">&#x00029;</mo><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<h4 class="sec-h4">9. CSMA/CA timing</h4>
+<div class="formula-card" data-latex="DIFS + (CW \times slot) + T_{frame} + SIFS + T_{ACK} \\ NAV_RTS = 3 \cdot SIFS + T_{CTS} + T_{DATA} + T_{ACK}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mi>C</mi><mi>W</mi><mo>&#x000D7;</mo><mi>s</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>f</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>e</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mspace linebreak="newline" /><mi>N</mi><mi>A</mi><msub><mi>V</mi><mi>R</mi></msub><mi>T</mi><mi>S</mi><mo>&#x0003D;</mo><mn>3</mn><mo>&#x000B7;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>C</mi><mi>T</mi><mi>S</mi></mrow></msub><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi></mrow></msub><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Respuestas confirmadas — Examen P4 (WhatsApp img)</h3>
+<table class='dat'><thead><tr>
+<th>#</th><th>Respuesta</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>22</td><td>b, c, d (HCF: EDCA+HCCA, 4 AC, 8 TID, TID etiquetado)</td>
+</tr>
+<tr>
+<td>23</td><td>a — 5900 MHz (802.11p)</td>
+</tr>
+<tr>
+<td>24</td><td>d — WAVE</td>
+</tr>
+<tr>
+<td>25</td><td>c — 802.11a</td>
+</tr>
+<tr>
+<td>26</td><td>c — SIFS</td>
+</tr>
+<tr>
+<td>27</td><td>e — Activo</td>
+</tr>
+<tr>
+<td>28</td><td>a, d (beacon desactivable, info vendor)</td>
+</tr>
+<tr>
+<td>29</td><td>e — SSID correcto en probe request</td>
+</tr>
+<tr>
+<td>30</td><td>a, c, d (pasivo/activo, AP ignora probe, sigue probando tras asociar)</td>
+</tr>
+<tr>
+<td>31</td><td>a, b — EDCA y HCF</td>
+</tr>
+<tr>
+<td>32</td><td>e — AIFS</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">Errores comunes (¡evítalos!)</h3>
+<ol class='step-list'>
+<li>1. <strong>Usar Lp=150 dB sin calcular</strong> cuando el enunciado da distancia y frecuencia</li>
+<li>2. <strong>Confundir dBm con dB</strong> — dBm es potencia absoluta, dB es relativo</li>
+<li>3. <strong>Olvidar ganancias de AMBAS antenas</strong> en link budget</li>
+<li>4. <strong>Fresnel:</strong> distancia en km, NO en metros dentro de la raíz</li>
+<li>5. <strong>Frame Control:</strong> leer bits de derecha a izquierda (LSB first)</li>
+<li>6. <strong>EDCA → AIFS</strong>, no DIFS</li>
+<li>7. <strong>802.11p → 802.11a</strong>, no ac ni ax</li>
+</ol>
+<p>---</p>
+<h3 class="sec-h3">Cómo prepararte para cada categoría</h3>
+<table class='dat'><thead><tr>
+<th>Categoría</th><th>Estrategia</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>A — Conceptual</td><td>Lee <code>02_MODULOS</code> + repasa tabla img/10</td>
+</tr>
+<tr>
+<td>B — Desarrollo</td><td>Memoriza DSR, 802.11p, acrónimos IFS</td>
+</tr>
+<tr>
+<td>C — Numérico</td><td>Practica <code>03_FORMULAS_EJERCICIOS</code> 3 veces</td>
+</tr>
+</tbody></table>
+<p><strong>Tiempo sugerido en examen:</strong></p>
+<ul class='concept-list'>
+<li>Opción múltiple: 1-2 min/pregunta</li>
+<li>Desarrollo: 5 min/pregunta</li>
+<li>Numérico: 10-15 min/ejercicio (¡muestra pasos!)</li>
+</ul>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>

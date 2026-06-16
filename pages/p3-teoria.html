@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Mapa PDF 1–10, reglas PLCP/MAC/DCF para P3."/>
+<title>Prueba 3 — Teoría resumida — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">Prueba 3 — Teoría resumida</h1>
+<p class="page-desc">Mapa PDF 1–10, reglas PLCP/MAC/DCF para P3.</p>
+<h2 class="sec-h">Prueba 3 — Resumen Teoría 2026-A (lo que la profe dio hasta ahora)</h2>
+<blockquote class="quote">Basado en los 10 PDFs de <code>Teoria/</code> + imágenes internas analizadas.</blockquote>
+<blockquote class="quote"><strong>Enfoque P3:</strong> tramas, PLCP, MAC, DCF, eficiencia, tiempos con distintas velocidades.</blockquote>
+<p>---</p>
+<h3 class="sec-h3">Mapa: qué PDF estudiar para P3</h3>
+<table class='dat'><thead><tr>
+<th>PDF</th><th>Tema</th><th>¿Sale en P3?</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>1 Introducción</td><td>Generaciones Wi-Fi</td><td>Repaso rápido</td>
+</tr>
+<tr>
+<td>2 Componentes</td><td>BSS, SSID, servicios</td><td>Poco</td>
+</tr>
+<tr>
+<td>3 Capas</td><td>PLCP/PMD/MAC/MLME</td><td><strong>Sí — base</strong></td>
+</tr>
+<tr>
+<td>4 PMD 802.11b</td><td>DSSS, CCK, 11 Mcps</td><td>Fórmulas FHSS/DSSS</td>
+</tr>
+<tr>
+<td>5 PMD g/n</td><td>OFDM, MIMO, MCS</td><td><strong>Bits/símbolo</strong></td>
+</tr>
+<tr>
+<td>6 PMD ac/ax/be</td><td>MU-MIMO, OFDMA</td><td>Completar datos</td>
+</tr>
+<tr>
+<td><strong>7 PLCP legacy</strong></td><td>FHSS/DSSS/a PLCP</td><td><strong>★★★ CRÍTICO</strong></td>
+</tr>
+<tr>
+<td><strong>8 PLCP g/ac/ax</strong></td><td>PPDU, preámbulo vs datos</td><td><strong>★★★ CRÍTICO</strong></td>
+</tr>
+<tr>
+<td><strong>9 Subcapa MAC</strong></td><td>Frame Control, NAV, tramas</td><td><strong>★★★ CRÍTICO</strong></td>
+</tr>
+<tr>
+<td><strong>10 DCF1</strong></td><td>CSMA/CA, IFS, RTS/CTS</td><td><strong>★★★ CRÍTICO</strong></td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">Regla de oro que la profe enfatiza</h3>
+<div class="formula-card" data-latex="┌─────────────────────────────────────────────────────────────┐ \\ │ PREÁMBULO + CABECERA PLCP \Rightarrow velocidad BAJA (1 o 2 \,\text{Mbps}) │ \\ │ CUERPO (PSDU / trama MAC) \Rightarrow velocidad de DATOS (ej. 54) │ \\ │ TRAMAS MAC control (ACK…) \Rightarrow misma lógica + overhead MAC │ \\ └─────────────────────────────────────────────────────────────┘"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>┌</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┐</mi><mspace linebreak="newline" /><mi>│</mi><mi>P</mi><mi>R</mi><mi>E</mi><mi>Á</mi><mi>M</mi><mi>B</mi><mi>U</mi><mi>L</mi><mi>O</mi><mo>&#x0002B;</mo><mi>C</mi><mi>A</mi><mi>B</mi><mi>E</mi><mi>C</mi><mi>E</mi><mi>R</mi><mi>A</mi><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x021D2;</mo><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>d</mi><mi>B</mi><mi>A</mi><mi>J</mi><mi>A</mi><mo stretchy="false">&#x00028;</mo><mn>1</mn><mi>o</mi><mn>2</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mo stretchy="false">&#x00029;</mo><mi>│</mi><mspace linebreak="newline" /><mi>│</mi><mi>C</mi><mi>U</mi><mi>E</mi><mi>R</mi><mi>P</mi><mi>O</mi><mo stretchy="false">&#x00028;</mo><mi>P</mi><mi>S</mi><mi>D</mi><mi>U</mi><mo>&#x0002F;</mo><mi>t</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>a</mi><mi>M</mi><mi>A</mi><mi>C</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>d</mi><mi>d</mi><mi>e</mi><mi>D</mi><mi>A</mi><mi>T</mi><mi>O</mi><mi>S</mi><mo stretchy="false">&#x00028;</mo><mi>e</mi><mi>j</mi><mo>&#x0002E;</mo><mn>54</mn><mo stretchy="false">&#x00029;</mo><mi>│</mi><mspace linebreak="newline" /><mi>│</mi><mi>T</mi><mi>R</mi><mi>A</mi><mi>M</mi><mi>A</mi><mi>S</mi><mi>M</mi><mi>A</mi><mi>C</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>l</mi><mo stretchy="false">&#x00028;</mo><mi>A</mi><mi>C</mi><mi>K</mi><mi>…</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mi>m</mi><mi>i</mi><mi>s</mi><mi>m</mi><mi>a</mi><mi>l</mi><mi>ó</mi><mi>g</mi><mi>i</mi><mi>c</mi><mi>a</mi><mo>&#x0002B;</mo><mi>o</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>M</mi><mi>A</mi><mi>C</mi><mi>│</mi><mspace linebreak="newline" /><mi>└</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>─</mi><mi>┘</mi></mrow></math></div></div>
+<p><strong>802.11g — valores que debes memorizar:</strong></p>
+<table class='dat'><thead><tr>
+<th>Parte</th><th>Bits</th><th>Velocidad</th><th>Tiempo</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Preámbulo <strong>largo</strong></td><td>144</td><td>1 Mbps</td><td>144 µs</td>
+</tr>
+<tr>
+<td>Preámbulo <strong>corto</strong></td><td>72</td><td>1 Mbps</td><td>72 µs</td>
+</tr>
+<tr>
+<td>Cabecera PLCP (largo)</td><td>48</td><td>1 Mbps</td><td>48 µs</td>
+</tr>
+<tr>
+<td>Cabecera PLCP (corto)</td><td>48</td><td>2 Mbps</td><td>24 µs</td>
+</tr>
+<tr>
+<td>Datos OFDM máx</td><td>variable</td><td><strong>54 Mbps</strong></td><td>bits/54 µs</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">PLCP — estructura PPDU (802.11g)</h3>
+<div class="formula-card" data-latex="PPDU = [PREAMBULO] + [CABECERA PLCP] + [PSDU = trama MAC completa] \\ 1 \,\text{Mbps} 1 o 2 \,\text{Mbps} velocidad de datos"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0003D;</mo><mo stretchy="false">[</mo><mi>P</mi><mi>R</mi><mi>E</mi><mi>A</mi><mi>M</mi><mi>B</mi><mi>U</mi><mi>L</mi><mi>O</mi><mo stretchy="false">]</mo><mo>&#x0002B;</mo><mo stretchy="false">[</mo><mi>C</mi><mi>A</mi><mi>B</mi><mi>E</mi><mi>C</mi><mi>E</mi><mi>R</mi><mi>A</mi><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mo stretchy="false">]</mo><mo>&#x0002B;</mo><mo stretchy="false">[</mo><mi>P</mi><mi>S</mi><mi>D</mi><mi>U</mi><mo>&#x0003D;</mo><mi>t</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>a</mi><mi>M</mi><mi>A</mi><mi>C</mi><mi>c</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mi>t</mi><mi>a</mi><mo stretchy="false">]</mo><mspace linebreak="newline" /><mn>1</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mn>1</mn><mi>o</mi><mn>2</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>d</mi><mi>d</mi><mi>e</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi></mrow></math></div></div>
+<p><strong>Campo SIGNAL (802.11g) — hex → velocidad:</strong></p>
+<table class='dat'><thead><tr>
+<th>Velocidad</th><th>Hex Signal</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>1 Mbps DSSS</td><td>0x0A</td>
+</tr>
+<tr>
+<td>2 Mbps DSSS</td><td>0x0E</td>
+</tr>
+<tr>
+<td>5.5 Mbps CCK</td><td>0x37</td>
+</tr>
+<tr>
+<td>11 Mbps CCK</td><td>0x6E</td>
+</tr>
+<tr>
+<td>22 Mbps PBCC</td><td>0xDC</td>
+</tr>
+<tr>
+<td>54 Mbps OFDM</td><td>0x30 (DSSS-OFDM tag)</td>
+</tr>
+</tbody></table>
+<p><strong>802.11a PLCP:</strong></p>
+<ul class='concept-list'>
+<li>Preámbulo 16 µs (STF + LTF)</li>
+<li>Campo Signal en 1 símbolo OFDM (4 µs) con Rate + Length</li>
+<li>Símbolo datos 4 µs, GI 0.8 µs</li>
+<li><strong>48 subportadoras de datos</strong> para calcular bits/símbolo</li>
+</ul>
+<p><strong>802.11n Mixed Mode:</strong></p>
+<ul class='concept-list'>
+<li>L-STF, L-LTF, <strong>L-SIG a 6 Mbps</strong> (longitud falsa para protección legacy)</li>
+<li>HT-SIG solo lo entiende 802.11n (velocidad real)</li>
+<li>Datos a MCS indicado</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">MAC — cabecera y tipos de trama</h3>
+<h4 class="sec-h4">Estructura MAC (bytes)</h4>
+<table class='dat'><thead><tr>
+<th>Campo</th><th>Bytes</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Frame Control</td><td>2</td>
+</tr>
+<tr>
+<td>Duration/ID</td><td>2</td>
+</tr>
+<tr>
+<td>Address 1</td><td>6</td>
+</tr>
+<tr>
+<td>Address 2</td><td>6</td>
+</tr>
+<tr>
+<td>Address 3</td><td>6</td>
+</tr>
+<tr>
+<td>Sequence Control</td><td>2</td>
+</tr>
+<tr>
+<td>Address 4 (opcional)</td><td>6</td>
+</tr>
+<tr>
+<td>Body</td><td>0–2312</td>
+</tr>
+<tr>
+<td>FCS</td><td>4</td>
+</tr>
+</tbody></table>
+<p><strong>Overhead típico en ejercicios:</strong></p>
+<ul class='concept-list'>
+<li>MAC mínimo (sin Addr4): <strong>24 + 4 = 28 bytes</strong></li>
+<li>En ejercicios profe: <strong>30 + 4 = 34 bytes</strong> o "overhead 34 bytes"</li>
+<li>RTS: <strong>20 bytes</strong> total</li>
+<li>CTS / ACK: <strong>14 bytes</strong> total</li>
+</ul>
+<h4 class="sec-h4">Frame Control (2 bytes) — leer LSB primero</h4>
+<table class='dat'><thead><tr>
+<th>Bits</th><th>Campo</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0–1</td><td>Versión (0)</td>
+</tr>
+<tr>
+<td>2–3</td><td><strong>Tipo:</strong> 00=Gestión, 01=Control, 10=Datos</td>
+</tr>
+<tr>
+<td>4–7</td><td><strong>Subtipo</strong></td>
+</tr>
+<tr>
+<td>8</td><td>To DS</td>
+</tr>
+<tr>
+<td>9</td><td>From DS</td>
+</tr>
+<tr>
+<td>10</td><td>More Frag</td>
+</tr>
+<tr>
+<td>11</td><td>Retry</td>
+</tr>
+<tr>
+<td>12</td><td>Pwr Mgmt</td>
+</tr>
+<tr>
+<td>13</td><td>More Data</td>
+</tr>
+<tr>
+<td>14</td><td>Protected (WPA)</td>
+</tr>
+<tr>
+<td>15</td><td>Order</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">To DS / From DS → tipo de red</h4>
+<table class='dat'><thead><tr>
+<th>To DS</th><th>From DS</th><th>Red</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0</td><td>0</td><td><strong>Ad-hoc (IBSS)</strong></td>
+</tr>
+<tr>
+<td>0</td><td>1</td><td>Infra: AP → STA</td>
+</tr>
+<tr>
+<td>1</td><td>0</td><td>Infra: STA → AP</td>
+</tr>
+<tr>
+<td>1</td><td>1</td><td>WDS (bridge)</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">Subtipos importantes</h4>
+<p><strong>Control (tipo 01):</strong></p>
+<ul class='concept-list'>
+<li>1011 = RTS</li>
+<li>1100 = CTS</li>
+<li>1101 = ACK</li>
+</ul>
+<p><strong>Gestión (tipo 00):</strong></p>
+<ul class='concept-list'>
+<li>1000 = Beacon</li>
+<li>0100 = Probe Request</li>
+<li>0101 = Probe Response</li>
+<li>1011 = Authentication</li>
+<li>0000/0001 = Association req/resp</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">NAV (Network Allocation Vector)</h3>
+<ul class='concept-list'>
+<li>Campo <strong>Duration/ID</strong> en cabecera MAC (µs)</li>
+<li>Todas las STAs actualizan NAV → escucha virtual</li>
+</ul>
+<p><strong>En trama RTS:</strong></p>
+<div class="formula-card" data-latex="NAV_RTS = SIFS + T_{CTS} + SIFS + T_{DATA} + SIFS + T_{ACK}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mi>A</mi><msub><mi>V</mi><mi>R</mi></msub><mi>T</mi><mi>S</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>C</mi><mi>T</mi><mi>S</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub></mrow></math></div></div>
+<p><strong>En trama CTS (lo que ve A):</strong></p>
+<div class="formula-card" data-latex="NAV_CTS = SIFS + T_{DATA} + SIFS + T_{ACK}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mi>A</mi><msub><mi>V</mi><mi>C</mi></msub><mi>T</mi><mi>S</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub></mrow></math></div></div>
+<p><strong>En trama DATA:</strong></p>
+<div class="formula-card" data-latex="Duration = SIFS + T_{ACK}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>D</mi><mi>u</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub></mrow></math></div></div>
+<p><strong>Conversión hex → NAV:</strong> <code>0x0398 = 920 µs</code></p>
+<p><strong>Casos especiales Duration/ID:</strong></p>
+<ul class='concept-list'>
+<li>Bit 15 = 0 → NAV normal en µs</li>
+<li>Bits 15,14 = 01 → período CF, NAV = 32768</li>
+<li>PS-Poll: bits 14,15 = 11, incluye AID</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">DCF — tiempos 802.11g (ejercicios)</h3>
+<table class='dat'><thead><tr>
+<th>Parámetro</th><th>Valor típico en ejercicios</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>SIFS</strong></td><td>10 µs</td>
+</tr>
+<tr>
+<td><strong>Slot</strong></td><td>20 µs (b) o 9 µs (g OFDM puro)</td>
+</tr>
+<tr>
+<td><strong>PIFS</strong></td><td>SIFS + 1 slot</td>
+</tr>
+<tr>
+<td><strong>DIFS</strong></td><td>SIFS + 2 slots = <strong>50 µs</strong> (con slot 20)</td>
+</tr>
+<tr>
+<td><strong>RIFS</strong></td><td>2 µs (802.11n, sustituye SIFS para eficiencia)</td>
+</tr>
+</tbody></table>
+<h4 class="sec-h4">Secuencia CSMA/CA simple</h4>
+<div class="formula-card" data-latex="DIFS \Rightarrow Backoff (CW \times slot) \Rightarrow DATA \Rightarrow SIFS \Rightarrow ACK"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>B</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>f</mi><mi>f</mi><mo stretchy="false">&#x00028;</mo><mi>C</mi><mi>W</mi><mo>&#x000D7;</mo><mi>s</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo stretchy="false">&#x00029;</mo><mo>&#x021D2;</mo><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi><mo>&#x021D2;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>A</mi><mi>C</mi><mi>K</mi></mrow></math></div></div>
+<h4 class="sec-h4">Secuencia RTS/CTS</h4>
+<div class="formula-card" data-latex="DIFS \Rightarrow Backoff \Rightarrow RTS \Rightarrow SIFS \Rightarrow CTS \Rightarrow SIFS \Rightarrow DATA \Rightarrow SIFS \Rightarrow ACK"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>B</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>f</mi><mi>f</mi><mo>&#x021D2;</mo><mi>R</mi><mi>T</mi><mi>S</mi><mo>&#x021D2;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>C</mi><mi>T</mi><mi>S</mi><mo>&#x021D2;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi><mo>&#x021D2;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x021D2;</mo><mi>A</mi><mi>C</mi><mi>K</mi></mrow></math></div></div>
+<p><strong>Backoff:</strong> valor aleatorio en [0, CW−1]. Si dice "CW=5 y le toca 5" → 5 × slot.</p>
+<p>---</p>
+<h3 class="sec-h3">EFICIENCIA — fórmulas de la profe</h3>
+<h4 class="sec-h4">Eficiencia de encapsulamiento MAC</h4>
+<div class="formula-card" data-latex="\eta_MAC = bytes_payload / bytes_MPDU_total \\ bytes_MPDU = payload + cabecera_MAC + FCS \\ = payload + 30 + 4 (según enunciado)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>&#x003B7;</mi><mi>M</mi></msub><mi>A</mi><mi>C</mi><mo>&#x0003D;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><msub><mi>s</mi><mi>p</mi></msub><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002F;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><msub><mi>U</mi><mi>t</mi></msub><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mspace linebreak="newline" /><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0003D;</mo><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002B;</mo><mi>c</mi><mi>a</mi><mi>b</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>r</mi><msub><mi>a</mi><mi>M</mi></msub><mi>A</mi><mi>C</mi><mo>&#x0002B;</mo><mi>F</mi><mi>C</mi><mi>S</mi><mspace linebreak="newline" /><mo>&#x0003D;</mo><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002B;</mo><mn>30</mn><mo>&#x0002B;</mo><mn>4</mn><mo stretchy="false">&#x00028;</mo><mi>s</mi><mi>e</mi><mi>g</mi><mi>ú</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>d</mi><mi>o</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p><strong>Ejemplo:</strong> payload 400 B → η = 400/(400+34) = <strong>92.2%</strong></p>
+<h4 class="sec-h4">Eficiencia de encapsulamiento PLCP</h4>
+<div class="formula-card" data-latex="\eta_PLCP = bits_MPDU / (bits_MPDU + bits_overhead_PLCP) \\ bits_overhead_PLCP = bits_preámbulo + bits_cabecera_PLCP \\ = 72 + 48 = 120 bits (preámbulo corto) \\ = 144 + 48 = 192 bits (preámbulo largo)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>&#x003B7;</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0002B;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>o</mi></msub><mi>v</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>e</mi><mi>a</mi><msub><mi>d</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>o</mi></msub><mi>v</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>e</mi><mi>a</mi><msub><mi>d</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>p</mi></msub><mi>r</mi><mi>e</mi><mi>á</mi><mi>m</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>o</mi><mo>&#x0002B;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>c</mi></msub><mi>a</mi><mi>b</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>r</mi><msub><mi>a</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>72</mn><mo>&#x0002B;</mo><mn>48</mn><mo>&#x0003D;</mo><mn>120</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>p</mi><mi>r</mi><mi>e</mi><mi>á</mi><mi>m</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>t</mi><mi>o</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>144</mn><mo>&#x0002B;</mo><mn>48</mn><mo>&#x0003D;</mo><mn>192</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>p</mi><mi>r</mi><mi>e</mi><mi>á</mi><mi>m</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>o</mi><mi>l</mi><mi>a</mi><mi>r</mi><mi>g</mi><mi>o</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p><strong>Ejemplo:</strong> MPDU 434 bytes = 3472 bits, overhead 120 bits:</p>
+<p>η = 3472/(3472+120) = <strong>96.7%</strong></p>
+<h4 class="sec-h4">Eficiencia temporal (throughput real)</h4>
+<div class="formula-card" data-latex="\eta_tiempo = T_{útil} / T_{total} \\ T_{útil} = (payload \times 8) / tasa_datos_bps \\ T_{total} = T_{PLCP} + T_{MAC_frame} + SIFS + T_{ACK} + contención..."><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>&#x003B7;</mi><mi>t</mi></msub><mi>i</mi><mi>e</mi><mi>m</mi><mi>p</mi><mi>o</mi><mo>&#x0003D;</mo><msub><mi>T</mi><mrow><mi>ú</mi><mi>t</mi><mi>i</mi><mi>l</mi></mrow></msub><mo>&#x0002F;</mo><msub><mi>T</mi><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msub><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>ú</mi><mi>t</mi><mi>i</mi><mi>l</mi></mrow></msub><mo>&#x0003D;</mo><mo stretchy="false">&#x00028;</mo><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x000D7;</mo><mn>8</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0002F;</mo><mi>t</mi><mi>a</mi><mi>s</mi><msub><mi>a</mi><mi>d</mi></msub><mi>a</mi><mi>t</mi><mi>o</mi><msub><mi>s</mi><mi>b</mi></msub><mi>p</mi><mi>s</mi><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>&#x0003D;</mo><msub><mi>T</mi><mrow><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>M</mi><mi>A</mi><msub><mi>C</mi><mi>f</mi></msub><mi>r</mi><mi>a</mi><mi>m</mi><mi>e</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mo>&#x0002B;</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo>&#x0002E;</mo><mo>&#x0002E;</mo><mo>&#x0002E;</mo></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Tiempo de transmisión de una trama</h3>
+<h4 class="sec-h4">Fórmula general</h4>
+<div class="formula-card" data-latex="T_{trama} = T_{preámbulo} + T_{cabecera_PLCP} + T_{cuerpo} \\ T_{preámbulo} = bits_preamble / tasa_preamble \\ T_{cabecera} = bits_header / tasa_header \\ T_{cuerpo} = bytes_MPDU \times 8 / tasa_datos_\,\text{Mbps}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mi>t</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>a</mi></mrow></msub><mo>&#x0003D;</mo><msub><mi>T</mi><mrow><mi>p</mi><mi>r</mi><mi>e</mi><mi>á</mi><mi>m</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>o</mi></mrow></msub><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>c</mi><mi>a</mi><mi>b</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>r</mi><msub><mi>a</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>c</mi><mi>u</mi><mi>e</mi><mi>r</mi><mi>p</mi><mi>o</mi></mrow></msub><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>p</mi><mi>r</mi><mi>e</mi><mi>á</mi><mi>m</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>o</mi></mrow></msub><mo>&#x0003D;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>p</mi></msub><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo>&#x0002F;</mo><mi>t</mi><mi>a</mi><mi>s</mi><msub><mi>a</mi><mi>p</mi></msub><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>l</mi><mi>e</mi><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>c</mi><mi>a</mi><mi>b</mi><mi>e</mi><mi>c</mi><mi>e</mi><mi>r</mi><mi>a</mi></mrow></msub><mo>&#x0003D;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>h</mi></msub><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mo>&#x0002F;</mo><mi>t</mi><mi>a</mi><mi>s</mi><msub><mi>a</mi><mi>h</mi></msub><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>c</mi><mi>u</mi><mi>e</mi><mi>r</mi><mi>p</mi><mi>o</mi></mrow></msub><mo>&#x0003D;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x000D7;</mo><mn>8</mn><mo>&#x0002F;</mo><mi>t</mi><mi>a</mi><mi>s</mi><msub><mi>a</mi><mi>d</mi></msub><mi>a</mi><mi>t</mi><mi>o</mi><msub><mi>s</mi><mspace width="0.167em" /></msub><mtext>Mbps</mtext></mrow></math></div></div>
+<h4 class="sec-h4">802.11g preámbulo largo + 54 Mbps datos</h4>
+<div class="formula-card" data-latex="T_{PLCP} = \frac{144}{1} + \frac{48}{1} = 192 \,\mu\text{s} \\ T_{datos} = bytes \times \frac{8}{54} \,\mu\text{s} (porque 1 byte a 54 \,\text{Mbps} \approx \frac{8}{54} \,\mu\text{s})"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>144</mn></mrow><mrow><mn>1</mn></mrow></mfrac><mo>&#x0002B;</mo><mfrac><mrow><mn>48</mn></mrow><mrow><mn>1</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>192</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi></mrow></msub><mo>&#x0003D;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>s</mi><mo>&#x000D7;</mo><mfrac><mrow><mn>8</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo stretchy="false">&#x00028;</mo><mi>p</mi><mi>o</mi><mi>r</mi><mi>q</mi><mi>u</mi><mi>e</mi><mn>1</mn><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>a</mi><mn>54</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mo>&#x02248;</mo><mfrac><mrow><mn>8</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<h4 class="sec-h4">Trama control pequeña (ACK 14 B a 54 Mbps)</h4>
+<div class="formula-card" data-latex="T_{ACK} = 192 + (14 \times 8)/54 = 192 + 2.07 \approx 194 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>14</mn><mo>&#x000D7;</mo><mn>8</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0002F;</mo><mn>54</mn><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mn>2.07</mn><mo>&#x02248;</mo><mn>194</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">Bits por símbolo OFDM (802.11a/g/n)</h3>
+<div class="formula-card" data-latex="Nbits = 48 \times N_BPSC \times R_coding \\ QPSK (2 bits), tasa \frac{1}{2}: 48 \times 2 \times \frac{1}{2} = 48 bits/símbolo \\ 64-QAM (6 bits), tasa \frac{3}{4}: 48 \times 6 \times \frac{3}{4} = 216 bits/símbolo \\ 16-QAM (4 bits), tasa \frac{1}{2}: 48 \times 4 \times \frac{1}{2} = 96 bits/símbolo"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><msub><mi>N</mi><mi>B</mi></msub><mi>P</mi><mi>S</mi><mi>C</mi><mo>&#x000D7;</mo><msub><mi>R</mi><mi>c</mi></msub><mi>o</mi><mi>d</mi><mi>i</mi><mi>n</mi><mi>g</mi><mspace linebreak="newline" /><mi>Q</mi><mi>P</mi><mi>S</mi><mi>K</mi><mo stretchy="false">&#x00028;</mo><mn>2</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002C;</mo><mi>t</mi><mi>a</mi><mi>s</mi><mi>a</mi><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mi>:</mi><mn>48</mn><mo>&#x000D7;</mo><mn>2</mn><mo>&#x000D7;</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>48</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mspace linebreak="newline" /><mn>64</mn><mo>&#x02212;</mo><mi>Q</mi><mi>A</mi><mi>M</mi><mo stretchy="false">&#x00028;</mo><mn>6</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002C;</mo><mi>t</mi><mi>a</mi><mi>s</mi><mi>a</mi><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mi>:</mi><mn>48</mn><mo>&#x000D7;</mo><mn>6</mn><mo>&#x000D7;</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>216</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mspace linebreak="newline" /><mn>16</mn><mo>&#x02212;</mo><mi>Q</mi><mi>A</mi><mi>M</mi><mo stretchy="false">&#x00028;</mo><mn>4</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002C;</mo><mi>t</mi><mi>a</mi><mi>s</mi><mi>a</mi><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mi>:</mi><mn>48</mn><mo>&#x000D7;</mo><mn>4</mn><mo>&#x000D7;</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>96</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi></mrow></math></div></div>
+<p>Verificación: <code>Tasa = Nbits / 4µs</code> → 216/4 = <strong>54 Mbps</strong> ✓</p>
+<p>---</p>
+<h3 class="sec-h3">Agregación MAC (802.11n — repaso)</h3>
+<table class='dat'><thead><tr>
+<th>Método</th><th>Qué agrega</th><th>ACK</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>A-MSDU</strong></td><td>Varios MSDU en 1 trama</td><td>ACK normal</td>
+</tr>
+<tr>
+<td><strong>A-MPDU</strong></td><td>Varios MPDU en 1 PPDU</td><td>Block ACK</td>
+</tr>
+</tbody></table>
+<p>802.11ac usa solo <strong>A-MPDU</strong>.</p>
+<p>---</p>
+<h3 class="sec-h3">Datos para completar (Prueba3-3)</h3>
+<table class='dat'><thead><tr>
+<th>Pregunta</th><th>Respuesta</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Modulación máx 802.11be</td><td><strong>4096-QAM</strong></td>
+</tr>
+<tr>
+<td>Canales no solapados 802.11n 2.4 GHz</td><td><strong>3</strong> (1, 6, 11)</td>
+</tr>
+<tr>
+<td>AB máximo 802.11be</td><td><strong>320 MHz</strong></td>
+</tr>
+<tr>
+<td>Antenas máx 802.11ax MU-MIMO</td><td><strong>8</strong></td>
+</tr>
+<tr>
+<td>MU-MIMO ax dirección</td><td><strong>UL y DL</strong></td>
+</tr>
+<tr>
+<td>MU-MIMO ac dirección</td><td><strong>Solo DL</strong></td>
+</tr>
+<tr>
+<td>Subportadoras OFDMA 20 MHz ax</td><td><strong>256</strong></td>
+</tr>
+<tr>
+<td>AB máximo 802.11n</td><td><strong>40 MHz</strong></td>
+</tr>
+<tr>
+<td>WPA3 Personal auth</td><td><strong>SAE</strong></td>
+</tr>
+<tr>
+<td>MIMO debut en ac</td><td><strong>MU-MIMO DL</strong></td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">Checklist pre-examen (30 min antes)</h3>
+<ul class='concept-list'>
+<li>[ ] Sé calcular T_PLCP con preámbulo 144@1Mbps + header 48@1Mbps</li>
+<li>[ ] Sé calcular η_MAC y η_PLCP</li>
+<li>[ ] Sé la fórmula NAV en RTS y CTS</li>
+<li>[ ] Conozco tamaños RTS=20, CTS=ACK=14 bytes</li>
+<li>[ ] SIFS=10, slot=20, DIFS=50 µs</li>
+<li>[ ] Decodifico Frame Control hex</li>
+<li>[ ] To DS/From DS → infra vs ad-hoc</li>
+<li>[ ] 48 subportadoras, QPSK 1/2 = 48 bits, 64-QAM 3/4 = 216 bits</li>
+</ul>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>

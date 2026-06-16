@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Banco de ejercicios tipo examen (tramas, tiempos, NAV)."/>
+<title>Prueba 3 — Ejercicios completos — WLAN EPN 2026-A</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<link rel="stylesheet" href="../assets/portal.css"/>
+</head>
+<body>
+<nav class="nav-top">
+<a href="../">Portal</a>
+<a href="../guia/">Guía interactiva</a>
+<a href="formulas.html">Fórmulas</a>
+<a href="desde-cero.html">Desde cero</a>
+</nav>
+<div class="container page-content">
+<h1 class="page-title">Prueba 3 — Ejercicios completos</h1>
+<p class="page-desc">Banco de ejercicios tipo examen (tramas, tiempos, NAV).</p>
+<h2 class="sec-h">Parte 2 — Ejercicios resueltos + práctica (Tramas P3)</h2>
+<blockquote class="quote">Basado en: <code>ejercicios varios.pdf</code>, <code>Prueba3-3</code>, <code>Prueba 3-WLAN-1</code>, PDFs Teoria 2026A  </blockquote>
+<blockquote class="quote"><strong>Cómo usar:</strong> Lee los resueltos → haz la Sección D sin mirar → revisa respuestas al final</blockquote>
+<p>---</p>
+<h3 class="sec-h3">Índice</h3>
+<table class='dat'><thead><tr>
+<th>Sección</th><th>Contenido</th>
+</tr>
+</tr></thead><tbody><tr>
+<td><strong>A</strong></td><td>Ejercicios numéricos resueltos paso a paso</td>
+</tr>
+<tr>
+<td><strong>B</strong></td><td>Preguntas teóricas de tramas (tipo examen)</td>
+</tr>
+<tr>
+<td><strong>C</strong></td><td>Wireshark — tramas reales resueltas</td>
+</tr>
+<tr>
+<td><strong>D</strong></td><td><strong>Tú resuelves</strong> (sin respuestas aquí)</td>
+</tr>
+<tr>
+<td><strong>E</strong></td><td>Respuestas de la Sección D</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 class="sec-h">SECCIÓN A — Ejercicios resueltos</h2>
+<p>---</p>
+<h3 class="sec-h3">A1. Eficiencia MAC y PLCP + tiempo RTS/CTS (Prueba3-3)</h3>
+<p><strong>Enunciado (PDF Prueba3-3):</strong> Estaciones A y B, 802.11g, CSMA/CA con RTS/CTS.</p>
+<ul class='concept-list'>
+<li>A: payload <strong>400 B</strong>, CW=3</li>
+<li>B: payload <strong>200 B</strong>, CW=1; tras pérdida recalcula <strong>CW=5</strong></li>
+<li>PLCP: preámbulo <strong>72 bits</strong> (corto), cabecera <strong>48 bits</strong></li>
+<li>MAC: cabecera <strong>30 B</strong>, FCS <strong>4 B</strong></li>
+<li>Tasa datos: <strong>22 Mbps</strong>, SIFS=<strong>10 µs</strong>, slot=<strong>20 µs</strong></li>
+</ul>
+<h4 class="sec-h4">a) Eficiencia encapsulamiento MAC</h4>
+<div class="formula-card" data-latex="Overhead MAC = 30 + 4 = 34 bytes \\ \eta_MAC = payload / (payload + 34) \\ Estación A: \frac{400}{434} = 0.9217 \Rightarrow 92.17% \\ Estación B: \frac{200}{234} = 0.8547 \Rightarrow 85.47%"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>O</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>M</mi><mi>A</mi><mi>C</mi><mo>&#x0003D;</mo><mn>30</mn><mo>&#x0002B;</mo><mn>4</mn><mo>&#x0003D;</mo><mn>34</mn><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>s</mi><mspace linebreak="newline" /><msub><mi>&#x003B7;</mi><mi>M</mi></msub><mi>A</mi><mi>C</mi><mo>&#x0003D;</mo><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002B;</mo><mn>34</mn><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mi>E</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mi>A</mi><mi>:</mi><mfrac><mrow><mn>400</mn></mrow><mrow><mn>434</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>0.9217</mn><mo>&#x021D2;</mo><mn>92.17</mn></mrow></math></div></div>
+<h4 class="sec-h4">b) Eficiencia encapsulamiento PLCP</h4>
+<div class="formula-card" data-latex="Overhead PLCP = 72 + 48 = 120 bits \\ Estación A: MPDU = 434 B = 3472 bits \\ \eta_PLCP = 3472 / (3472 + 120) = 96.66% \\ Estación B: MPDU = 234 B = 1872 bits \\ \eta_PLCP = 1872 / (1872 + 120) = 93.98%"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>O</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mn>72</mn><mo>&#x0002B;</mo><mn>48</mn><mo>&#x0003D;</mo><mn>120</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mspace linebreak="newline" /><mi>E</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mi>A</mi><mi>:</mi><mi>M</mi><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0003D;</mo><mn>434</mn><mi>B</mi><mo>&#x0003D;</mo><mn>3472</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mspace linebreak="newline" /><msub><mi>&#x003B7;</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mn>3472</mn><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mn>3472</mn><mo>&#x0002B;</mo><mn>120</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>96.66</mn></mrow></math></div></div>
+<h4 class="sec-h4">c) Tiempo para B enviar trama y recibir ACK (CW=5)</h4>
+<p><strong>Paso 1 — PLCP corto:</strong></p>
+<div class="formula-card" data-latex="T_{preamble} = \frac{72}{1} \,\text{Mbps} = 72 \,\mu\text{s} \\ T_{header} = \frac{48}{2} \,\text{Mbps} = 24 \,\mu\text{s} \\ T_{PLCP} = 96 \,\mu\text{s} (se suma a CADA trama física)"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mi>p</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>72</mn></mrow><mrow><mn>1</mn></mrow></mfrac><mspace width="0.167em" /><mtext>Mbps</mtext><mo>&#x0003D;</mo><mn>72</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>48</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.167em" /><mtext>Mbps</mtext><mo>&#x0003D;</mo><mn>24</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0003D;</mo><mn>96</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo stretchy="false">&#x00028;</mo><mi>s</mi><mi>e</mi><mi>s</mi><mi>u</mi><mi>m</mi><mi>a</mi><mi>a</mi><mi>C</mi><mi>A</mi><mi>D</mi><mi>A</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>a</mi><mi>f</mi><mi>í</mi><mi>s</mi><mi>i</mi><mi>c</mi><mi>a</mi><mo stretchy="false">&#x00029;</mo></mrow></math></div></div>
+<p><strong>Paso 2 — Cuerpo @ 22 Mbps:</strong></p>
+<div class="formula-card" data-latex="T(x B) = x \times \frac{8}{22} \,\mu\text{s} \\ RTS (20 B): 96 + 7.27 = 103.3 \,\mu\text{s} \\ CTS (14 B): 96 + 5.09 = 101.1 \,\mu\text{s} \\ DATA (234 B):96 + 85.09 = 181.2 \,\mu\text{s} \\ ACK (14 B): 96 + 5.09 = 101.1 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>T</mi><mo stretchy="false">&#x00028;</mo><mi>x</mi><mi>B</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mi>x</mi><mo>&#x000D7;</mo><mfrac><mrow><mn>8</mn></mrow><mrow><mn>22</mn></mrow></mfrac><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><mi>R</mi><mi>T</mi><mi>S</mi><mo stretchy="false">&#x00028;</mo><mn>20</mn><mi>B</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mn>96</mn><mo>&#x0002B;</mo><mn>7.27</mn><mo>&#x0003D;</mo><mn>103.3</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><mi>C</mi><mi>T</mi><mi>S</mi><mo stretchy="false">&#x00028;</mo><mn>14</mn><mi>B</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mn>96</mn><mo>&#x0002B;</mo><mn>5.09</mn><mo>&#x0003D;</mo><mn>101.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi><mo stretchy="false">&#x00028;</mo><mn>234</mn><mi>B</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mn>96</mn><mo>&#x0002B;</mo><mn>85.09</mn><mo>&#x0003D;</mo><mn>181.2</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><mi>A</mi><mi>C</mi><mi>K</mi><mo stretchy="false">&#x00028;</mo><mn>14</mn><mi>B</mi><mo stretchy="false">&#x00029;</mo><mi>:</mi><mn>96</mn><mo>&#x0002B;</mo><mn>5.09</mn><mo>&#x0003D;</mo><mn>101.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<p><strong>Paso 3 — Secuencia:</strong></p>
+<div class="formula-card" data-latex="DIFS = SIFS + 2 \times slot = 10 + 40 = 50 \,\mu\text{s} \\ Backoff = CW \times slot = 5 \times 20 = 100 \,\mu\text{s} \\ T_{total} = DIFS + Backoff + RTS + SIFS + CTS + SIFS + DATA + SIFS + ACK \\ = 50 + 100 + 103.3 + 10 + 101.1 + 10 + 181.2 + 10 + 101.1 \\ = 666.7 \,\mu\text{s} \approx 0.67 ms"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mn>2</mn><mo>&#x000D7;</mo><mi>s</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo>&#x0003D;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>40</mn><mo>&#x0003D;</mo><mn>50</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><mi>B</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>f</mi><mi>f</mi><mo>&#x0003D;</mo><mi>C</mi><mi>W</mi><mo>&#x000D7;</mo><mi>s</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo>&#x0003D;</mo><mn>5</mn><mo>&#x000D7;</mo><mn>20</mn><mo>&#x0003D;</mo><mn>100</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>&#x0003D;</mo><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mi>B</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>f</mi><mi>f</mi><mo>&#x0002B;</mo><mi>R</mi><mi>T</mi><mi>S</mi><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mi>C</mi><mi>T</mi><mi>S</mi><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mi>A</mi><mi>C</mi><mi>K</mi><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>50</mn><mo>&#x0002B;</mo><mn>100</mn><mo>&#x0002B;</mo><mn>103.3</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>101.1</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>181.2</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>101.1</mn><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>666.7</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo>&#x02248;</mo><mn>0.67</mn><mi>m</mi><mi>s</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">A2. NAV RTS/CTS (ejercicios varios #2)</h3>
+<p><strong>Enunciado:</strong> 802.11g, RTS/CTS, tramas MAC <strong>128 B</strong> a máxima velocidad.</p>
+<ul class='concept-list'>
+<li>Overhead MAC = <strong>34 B</strong></li>
+<li>PLCP: preámbulo <strong>144 bits</strong>, header <strong>48 bits</strong></li>
+<li>CW A=5, B=3</li>
+</ul>
+<p><strong>Datos asumidos del PDF:</strong> 128 B = payload → MPDU = 162 B. Máxima velocidad g = <strong>54 Mbps</strong>.</p>
+<p><strong>PLCP largo @ 1 Mbps:</strong></p>
+<div class="formula-card" data-latex="T_{PLCP} = (144 + 48) / 1 = 192 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0003D;</mo><mo stretchy="false">&#x00028;</mo><mn>144</mn><mo>&#x0002B;</mo><mn>48</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0002F;</mo><mn>1</mn><mo>&#x0003D;</mo><mn>192</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<p><strong>Tramas @ 54 Mbps:</strong></p>
+<div class="formula-card" data-latex="T_{CTS} = 192 + 14 \times \frac{8}{54} = 194.1 \,\mu\text{s} \\ T_{DATA} = 192 + 162 \times \frac{8}{54} = 216.0 \,\mu\text{s} \\ T_{ACK} = 194.1 \,\mu\text{s} \\ SIFS = 10 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mi>C</mi><mi>T</mi><mi>S</mi></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mn>14</mn><mo>&#x000D7;</mo><mfrac><mrow><mn>8</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>194.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mn>162</mn><mo>&#x000D7;</mo><mfrac><mrow><mn>8</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>216.0</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mo>&#x0003D;</mo><mn>194.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0003D;</mo><mn>10</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<h4 class="sec-h4">a) NAV del RTS enviado por A</h4>
+<div class="formula-card" data-latex="NAV_RTS = SIFS + T_{CTS} + SIFS + T_{DATA} + SIFS + T_{ACK} \\ = 10 + 194.1 + 10 + 216.0 + 10 + 194.1 \\ = 640.2 \,\mu\text{s} \approx 640 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mi>A</mi><msub><mi>V</mi><mi>R</mi></msub><mi>T</mi><mi>S</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>C</mi><mi>T</mi><mi>S</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>216.0</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>640.2</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo>&#x02248;</mo><mn>640</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<h4 class="sec-h4">b) NAV del CTS recibido en A</h4>
+<div class="formula-card" data-latex="NAV_CTS = SIFS + T_{DATA} + SIFS + T_{ACK} \\ = 10 + 216.0 + 10 + 194.1 \\ = 430.1 \,\mu\text{s} \approx 430 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mi>A</mi><msub><mi>V</mi><mi>C</mi></msub><mi>T</mi><mi>S</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>216.0</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>430.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo>&#x02248;</mo><mn>430</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<h4 class="sec-h4">c) Tiempo total para A (CW=5)</h4>
+<div class="formula-card" data-latex="Backoff = 5 \times 20 = 100 \,\mu\text{s} \\ T_{RTS} = 192 + 20 \times \frac{8}{54} = 195 \,\mu\text{s} \\ T_{total} = 50 + 100 + 195 + 10 + 194 + 10 + 216 + 10 + 194 \\ = 979 \,\mu\text{s} \approx 0.98 ms"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>B</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>f</mi><mi>f</mi><mo>&#x0003D;</mo><mn>5</mn><mo>&#x000D7;</mo><mn>20</mn><mo>&#x0003D;</mo><mn>100</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>R</mi><mi>T</mi><mi>S</mi></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mn>20</mn><mo>&#x000D7;</mo><mfrac><mrow><mn>8</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>195</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>&#x0003D;</mo><mn>50</mn><mo>&#x0002B;</mo><mn>100</mn><mo>&#x0002B;</mo><mn>195</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>216</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194</mn><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>979</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo>&#x02248;</mo><mn>0.98</mn><mi>m</mi><mi>s</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">A3. NAV de trama CTS — hex 0x0398 (ejercicios varios #13)</h3>
+<div class="formula-card" data-latex="NAV = \texttt{0x0398} \\ = 3 \times 256 + 9 \times 16 + 8 \\ = 768 + 144 + 8 \\ = 920 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>N</mi><mi>A</mi><mi>V</mi><mo>&#x0003D;</mo><mtext mathvariant="monospace">0x0398</mtext><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>3</mn><mo>&#x000D7;</mo><mn>256</mn><mo>&#x0002B;</mo><mn>9</mn><mo>&#x000D7;</mo><mn>16</mn><mo>&#x0002B;</mo><mn>8</mn><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>768</mn><mo>&#x0002B;</mo><mn>144</mn><mo>&#x0002B;</mo><mn>8</mn><mspace linebreak="newline" /><mo>&#x0003D;</mo><mn>920</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<blockquote class="quote">El campo Duration en una trama CTS indica cuánto tiempo estarán ocupadas las otras STAs (NAV).</blockquote>
+<p>---</p>
+<h3 class="sec-h3">A4. Bits por símbolo 802.11a (Prueba3-3 / ejercicios #12)</h3>
+<p><strong>Datos PDF:</strong> 48 subportadoras de datos, símbolo = 4 µs.</p>
+<h4 class="sec-h4">a) QPSK, tasa 1/2</h4>
+<div class="formula-card" data-latex="bits/símbolo = 48 \times \log_2(4) \times (\frac{1}{2}) = 48 \times 2 \times 0.5 = 48 bits/símbolo"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mn>4</mn><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><mo stretchy="false">&#x00028;</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><mn>2</mn><mo>&#x000D7;</mo><mn>0.5</mn><mo>&#x0003D;</mo><mn>48</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi></mrow></math></div></div>
+<h4 class="sec-h4">b) 64-QAM, tasa 3/4</h4>
+<div class="formula-card" data-latex="bits/símbolo = 48 \times \log_2(64) \times (\frac{3}{4}) = 48 \times 6 \times 0.75 = 216 bits/símbolo \\ Verificación: 216 bits / 4 \,\mu\text{s} = 54 \,\text{Mbps} \checkmark"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><msub><mi>log</mi><mn>2</mn></msub><mo stretchy="false">&#x00028;</mo><mn>64</mn><mo stretchy="false">&#x00029;</mo><mo>&#x000D7;</mo><mo stretchy="false">&#x00028;</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mn>48</mn><mo>&#x000D7;</mo><mn>6</mn><mo>&#x000D7;</mo><mn>0.75</mn><mo>&#x0003D;</mo><mn>216</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mi>s</mi><mi>í</mi><mi>m</mi><mi>b</mi><mi>o</mi><mi>l</mi><mi>o</mi><mspace linebreak="newline" /><mi>V</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mi>:</mi><mn>216</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mo>&#x0002F;</mo><mn>4</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mo>&#x0003D;</mo><mn>54</mn><mspace width="0.167em" /><mtext>Mbps</mtext><mi>&#x02713;</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">A5. Eficiencia PLCP solo (tipo examen múltiple)</h3>
+<p><strong>Enunciado típico:</strong> Estación A envía <strong>345 bytes</strong> de datos a <strong>1 Mbps</strong>.</p>
+<p>PLCP: cabecera <strong>48 bits</strong>, preámbulo <strong>144 bits</strong>. Overhead MAC = <strong>34 B</strong>.</p>
+<div class="formula-card" data-latex="MPDU = 345 + 34 = 379 bytes = 3032 bits \\ Overhead PLCP = 144 + 48 = 192 bits \\ \eta_PLCP = 3032 / (3032 + 192) = \frac{3032}{3224} = 0.9404 \Rightarrow 94.04%"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>M</mi><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0003D;</mo><mn>345</mn><mo>&#x0002B;</mo><mn>34</mn><mo>&#x0003D;</mo><mn>379</mn><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>s</mi><mo>&#x0003D;</mo><mn>3032</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mspace linebreak="newline" /><mi>O</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mn>144</mn><mo>&#x0002B;</mo><mn>48</mn><mo>&#x0003D;</mo><mn>192</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mspace linebreak="newline" /><msub><mi>&#x003B7;</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mn>3032</mn><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mn>3032</mn><mo>&#x0002B;</mo><mn>192</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mfrac><mrow><mn>3032</mn></mrow><mrow><mn>3224</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>0.9404</mn><mo>&#x021D2;</mo><mn>94.04</mn></mrow></math></div></div>
+<blockquote class="quote"><strong>Truco:</strong> A 1 Mbps, preámbulo y datos van a la misma velocidad, pero la fórmula de eficiencia PLCP sigue siendo bits_MPDU / (bits_MPDU + overhead_PLCP).</blockquote>
+<p>---</p>
+<h3 class="sec-h3">A6. Eficiencia PLCP con preámbulo corto (72 bits)</h3>
+<p><strong>Enunciado típico:</strong> Trama de <strong>1225 bytes</strong> payload, preámbulo <strong>72 bits</strong>, header <strong>48 bits</strong>.</p>
+<div class="formula-card" data-latex="MPDU = 1225 + 34 = 1259 B = 10072 bits \\ Overhead PLCP = 72 + 48 = 120 bits \\ \eta_PLCP = 10072 / (10072 + 120) = \frac{10072}{10192} = 98.82%"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>M</mi><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0003D;</mo><mn>1225</mn><mo>&#x0002B;</mo><mn>34</mn><mo>&#x0003D;</mo><mn>1259</mn><mi>B</mi><mo>&#x0003D;</mo><mn>10072</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mspace linebreak="newline" /><mi>O</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mn>72</mn><mo>&#x0002B;</mo><mn>48</mn><mo>&#x0003D;</mo><mn>120</mn><mi>b</mi><mi>i</mi><mi>t</mi><mi>s</mi><mspace linebreak="newline" /><msub><mi>&#x003B7;</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mn>10072</mn><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mn>10072</mn><mo>&#x0002B;</mo><mn>120</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mfrac><mrow><mn>10072</mn></mrow><mrow><mn>10192</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>98.82</mn></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">A7. To DS / From DS (Prueba 3-WLAN-1)</h3>
+<table class='dat'><thead><tr>
+<th>To DS</th><th>From DS</th><th>Tipo de red</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0</td><td>0</td><td><strong>Ad-hoc</strong> (IBSS)</td>
+</tr>
+<tr>
+<td>1</td><td>0</td><td><strong>Infraestructura</strong> — STA → AP</td>
+</tr>
+<tr>
+<td>0</td><td>1</td><td><strong>Infraestructura</strong> — AP → STA</td>
+</tr>
+<tr>
+<td>1</td><td>1</td><td><strong>WDS</strong> (bridge inalámbrico)</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">A8. Decodificar Frame Control</h3>
+<p><strong>Método (PDF 9.Subcapa_MAC):</strong> Campo de 16 bits, leer bits 0-15:</p>
+<table class='dat'><thead><tr>
+<th>Bits</th><th>Campo</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0-1</td><td>Versión</td>
+</tr>
+<tr>
+<td>2-3</td><td>Tipo</td>
+</tr>
+<tr>
+<td>4-7</td><td>Subtipo</td>
+</tr>
+<tr>
+<td>8-15</td><td>Flags</td>
+</tr>
+</tbody></table>
+<p><strong>Ejemplo 0x080A:</strong></p>
+<div class="formula-card" data-latex="\texttt{0x080A} = 0000 1000 0000 1010 \\ Versión (0-1): 10 \Rightarrow v2? \Rightarrow revisar: en little-endian wire order: \\ Byte bajo \texttt{0x0A} = 00001010 \Rightarrow versión 00, tipo 10 (Datos), subtipo 0010 \\ Byte alto \texttt{0x08} \Rightarrow flags \\ Práctica rápida: \\ \texttt{0xb000} \Rightarrow Gestión, Authentication \\ \texttt{0x0000} \Rightarrow Gestión, Association Request \\ \texttt{0x1000} \Rightarrow Gestión, Association Response \\ \texttt{0x2000} \Rightarrow Gestión, Reassociation Request"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext mathvariant="monospace">0x080A</mtext><mo>&#x0003D;</mo><mn>0000</mn><mn>1000</mn><mn>0000</mn><mn>1010</mn><mspace linebreak="newline" /><mi>V</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo stretchy="false">&#x00028;</mo><mn>0</mn><mo>&#x02212;</mo><mn>1</mn><mo stretchy="false">&#x00029;</mo><mi>:</mi><mn>10</mn><mo>&#x021D2;</mo><mi>v</mi><mn>2</mn><mo>&#x0003F;</mo><mo>&#x021D2;</mo><mi>r</mi><mi>e</mi><mi>v</mi><mi>i</mi><mi>s</mi><mi>a</mi><mi>r</mi><mi>:</mi><mi>e</mi><mi>n</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>t</mi><mi>l</mi><mi>e</mi><mo>&#x02212;</mo><mi>e</mi><mi>n</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>w</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>e</mi><mi>r</mi><mi>:</mi><mspace linebreak="newline" /><mi>B</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>b</mi><mi>a</mi><mi>j</mi><mi>o</mi><mtext mathvariant="monospace">0x0A</mtext><mo>&#x0003D;</mo><mn>00001010</mn><mo>&#x021D2;</mo><mi>v</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mn>00</mn><mo>&#x0002C;</mo><mi>t</mi><mi>i</mi><mi>p</mi><mi>o</mi><mn>10</mn><mo stretchy="false">&#x00028;</mo><mi>D</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002C;</mo><mi>s</mi><mi>u</mi><mi>b</mi><mi>t</mi><mi>i</mi><mi>p</mi><mi>o</mi><mn>0010</mn><mspace linebreak="newline" /><mi>B</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>a</mi><mi>l</mi><mi>t</mi><mi>o</mi><mtext mathvariant="monospace">0x08</mtext><mo>&#x021D2;</mo><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mi>s</mi><mspace linebreak="newline" /><mi>P</mi><mi>r</mi><mi>á</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>r</mi><mi>á</mi><mi>p</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>:</mi><mspace linebreak="newline" /><mtext mathvariant="monospace">0xb000</mtext><mo>&#x021D2;</mo><mi>G</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo>&#x0002C;</mo><mi>A</mi><mi>u</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mspace linebreak="newline" /><mtext mathvariant="monospace">0x0000</mtext><mo>&#x021D2;</mo><mi>G</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo>&#x0002C;</mo><mi>A</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>R</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>s</mi><mi>t</mi><mspace linebreak="newline" /><mtext mathvariant="monospace">0x1000</mtext><mo>&#x021D2;</mo><mi>G</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo>&#x0002C;</mo><mi>A</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>R</mi><mi>e</mi><mi>s</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>e</mi><mspace linebreak="newline" /><mtext mathvariant="monospace">0x2000</mtext><mo>&#x021D2;</mo><mi>G</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>ó</mi><mi>n</mi><mo>&#x0002C;</mo><mi>R</mi><mi>e</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>R</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>s</mi><mi>t</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">A9. Tiempos DCF — valores 802.11b (PDF 10.DCF1)</h3>
+<table class='dat'><thead><tr>
+<th>Parámetro</th><th>Valor</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>SIFS</td><td>10 µs</td>
+</tr>
+<tr>
+<td>Slot</td><td>20 µs</td>
+</tr>
+<tr>
+<td>PIFS</td><td>30 µs</td>
+</tr>
+<tr>
+<td>DIFS</td><td>50 µs</td>
+</tr>
+</tbody></table>
+<p><strong>Fórmulas PDF:</strong></p>
+<div class="formula-card" data-latex="PIFS = SIFS + 1 slot \\ DIFS = PIFS + 1 slot = SIFS + 2 slots \\ Backoff = contador \times slot"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mn>1</mn><mi>s</mi><mi>l</mi><mi>o</mi><mi>t</mi><mspace linebreak="newline" /><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0003D;</mo><mi>P</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mn>1</mn><mi>s</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mn>2</mn><mi>s</mi><mi>l</mi><mi>o</mi><mi>t</mi><mi>s</mi><mspace linebreak="newline" /><mi>B</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>f</mi><mi>f</mi><mo>&#x0003D;</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>a</mi><mi>d</mi><mi>o</mi><mi>r</mi><mo>&#x000D7;</mo><mi>s</mi><mi>l</mi><mi>o</mi><mi>t</mi></mrow></math></div></div>
+<p>---</p>
+<h3 class="sec-h3">A10. Tamaños tramas control (memorizar)</h3>
+<table class='dat'><thead><tr>
+<th>Trama</th><th>Bytes MAC (sin PLCP)</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>RTS</td><td>20</td>
+</tr>
+<tr>
+<td>CTS</td><td>14</td>
+</tr>
+<tr>
+<td>ACK</td><td>14</td>
+</tr>
+<tr>
+<td>Data mínima</td><td>28 + payload</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 class="sec-h">SECCIÓN B — Preguntas teóricas (tipo examen)</h2>
+<p>Respuestas basadas en PDFs Teoria 2026A.</p>
+<p>---</p>
+<p><strong>B1.</strong> ¿Cuáles son las tres funciones principales del preámbulo PLCP?  </p>
+<p>→ Sincronización, indicar inicio de trama, preparar receptor.</p>
+<p><strong>B2.</strong> ¿A qué velocidad se transmiten preámbulo y cabecera PLCP en DSSS/802.11g?  </p>
+<p>→ <strong>Siempre a 1 Mbps</strong> (PDF 7 y 8). Header corto puede ir a 2 Mbps.</p>
+<p><strong>B3.</strong> ¿Qué indica el campo Duration en una trama?  </p>
+<p>→ Microsegundos que el medio estará ocupado → <strong>NAV</strong> para otras STAs.</p>
+<p><strong>B4.</strong> ¿Para qué sirve RTS/CTS?  </p>
+<p>→ Resolver <strong>terminal oculto</strong>: reservar canal antes de enviar datos largos.</p>
+<p><strong>B5.</strong> ¿Cuántos bytes tiene el FCS de la trama MAC?  </p>
+<p>→ <strong>4 bytes</strong> (CRC-32).</p>
+<p><strong>B6.</strong> ¿Cuál es el overhead MAC típico en ejercicios?  </p>
+<p>→ <strong>34 bytes</strong> (30 cabecera + 4 FCS).</p>
+<p><strong>B7.</strong> ¿Qué diferencia A-MSDU de A-MPDU? (PDF 9)  </p>
+<p>→ A-MSDU agrega MSDUs con un ACK; A-MPDU agrega MPDUs con Block ACK (obligatorio en ac).</p>
+<p><strong>B8.</strong> ¿Qué tipo de trama es Authentication?  </p>
+<p>→ <strong>Gestión</strong> (tipo 00), subtipo 1011.</p>
+<p><strong>B9.</strong> ¿Qué tramas NO llevan Sequence Control?  </p>
+<p>→ Tramas de <strong>control</strong> (ACK, RTS, CTS).</p>
+<p><strong>B10.</strong> En 802.11g PPDU, ¿cuántos bits tiene preámbulo + cabecera PLCP?  </p>
+<p>→ <strong>192 bits</strong> (144 + 48) en modo largo.</p>
+<p><strong>B11.</strong> ¿Qué es el NAV?  </p>
+<p>→ Network Allocation Vector — contador virtual que indica cuándo el canal estará libre.</p>
+<p><strong>B12.</strong> ¿Cuál IFS usa DCF para acceder al medio?  </p>
+<p>→ <strong>DIFS</strong> (después espera backoff si hubo contención).</p>
+<p><strong>B13.</strong> ¿Cuánto tiempo entre DATA y ACK?  </p>
+<p>→ <strong>SIFS</strong> (10 µs en 802.11b/g).</p>
+<p><strong>B14.</strong> Campo SIGNAL 802.11g para 54 Mbps equivalente OFDM — ¿qué hex?  </p>
+<p>→ 0x1E (30) indica DSSS-OFDM; para OFDM puro ver tabla 802.11a Rate.</p>
+<p><strong>B15.</strong> ¿Qué bits del Frame Control indican tipo de trama?  </p>
+<p>→ <strong>Bits 2-3</strong> (00=Gestión, 01=Control, 10=Datos).</p>
+<p>---</p>
+<h2 class="sec-h">SECCIÓN C — Wireshark resuelto (tramas reales)</h2>
+<blockquote class="quote">Fuente: <code>MAFIAS/MAT/Tramas WLAN/</code> — Tramas #871, 873, 875, 877</blockquote>
+<p>---</p>
+<h3 class="sec-h3">C1. Trama #871 — Authentication Request</h3>
+<table class='dat'><thead><tr>
+<th>Campo</th><th>Valor</th><th>Interpretación</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Frame Control</td><td>0xb000</td><td>Gestión, Authentication</td>
+</tr>
+<tr>
+<td>To DS / From DS</td><td>0 / 0</td><td>No WDS</td>
+</tr>
+<tr>
+<td>Source</td><td>Samsung…</td><td><strong>Cliente (STA)</strong></td>
+</tr>
+<tr>
+<td>Destination / BSSID</td><td>Extreme…</td><td><strong>Access Point</strong></td>
+</tr>
+<tr>
+<td>Duration</td><td>60 µs</td><td>NAV</td>
+</tr>
+<tr>
+<td>Data Rate</td><td>6 Mb/s</td><td>OFDM mínimo (802.11a/g)</td>
+</tr>
+<tr>
+<td>Channel</td><td>5180 MHz</td><td>Banda <strong>5 GHz</strong>, canal 36</td>
+</tr>
+<tr>
+<td>Auth Algorithm</td><td>Open System (0)</td><td>Autenticación abierta</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">C2. Trama #873 — Authentication Response</h3>
+<table class='dat'><thead><tr>
+<th>Campo</th><th>Valor</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Source</td><td>Extreme… (<strong>AP responde</strong>)</td>
+</tr>
+<tr>
+<td>Destination</td><td>Samsung… (cliente)</td>
+</tr>
+<tr>
+<td>Status</td><td>Successful (0)</td>
+</tr>
+<tr>
+<td>Delta vs #871</td><td>~203 µs</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">C3. Trama #875 — Association Request</h3>
+<table class='dat'><thead><tr>
+<th>Campo</th><th>Valor</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Frame Control</td><td>0x0000</td>
+</tr>
+<tr>
+<td>SSID</td><td><strong>"CWNA"</strong></td>
+</tr>
+<tr>
+<td>Tipo</td><td>Gestión, Association Request</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">C4. Trama #877 — Association Response</h3>
+<table class='dat'><thead><tr>
+<th>Campo</th><th>Valor</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>Frame Control</td><td>0x1000</td>
+</tr>
+<tr>
+<td>AID</td><td>0x0001</td>
+</tr>
+<tr>
+<td>Status</td><td>Successful</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">C5. Flujo completo conexión</h3>
+<div class="formula-card" data-latex="STA AP \\ |--- Auth Request (#871) ----&gt;| \\ |&lt;-- Auth Response (#873) ----| \\ |--- Assoc Request (#875) ----&gt;| \\ |&lt;-- Assoc Response (#877) ----| \\ |======== Datos ===============|"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>S</mi><mi>T</mi><mi>A</mi><mi>A</mi><mi>P</mi><mspace linebreak="newline" /><mo stretchy="false">&#x0007C;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mi>A</mi><mi>u</mi><mi>t</mi><mi>h</mi><mi>R</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo stretchy="false">&#x00028;</mo><mi>#</mi><mn>871</mn><mo stretchy="false">&#x00029;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x0003E;</mo><mo stretchy="false">&#x0007C;</mo><mspace linebreak="newline" /><mo stretchy="false">&#x0007C;</mo><mo>&#x0003C;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mi>A</mi><mi>u</mi><mi>t</mi><mi>h</mi><mi>R</mi><mi>e</mi><mi>s</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>e</mi><mo stretchy="false">&#x00028;</mo><mi>#</mi><mn>873</mn><mo stretchy="false">&#x00029;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo stretchy="false">&#x0007C;</mo><mspace linebreak="newline" /><mo stretchy="false">&#x0007C;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mi>A</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mi>R</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo stretchy="false">&#x00028;</mo><mi>#</mi><mn>875</mn><mo stretchy="false">&#x00029;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x0003E;</mo><mo stretchy="false">&#x0007C;</mo><mspace linebreak="newline" /><mo stretchy="false">&#x0007C;</mo><mo>&#x0003C;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mi>A</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>c</mi><mi>R</mi><mi>e</mi><mi>s</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>e</mi><mo stretchy="false">&#x00028;</mo><mi>#</mi><mn>877</mn><mo stretchy="false">&#x00029;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo>&#x02212;</mo><mo stretchy="false">&#x0007C;</mo><mspace linebreak="newline" /><mo stretchy="false">&#x0007C;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mi>D</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo>&#x0003D;</mo><mo stretchy="false">&#x0007C;</mo></mrow></math></div></div>
+<p>---</p>
+<h2 class="sec-h">SECCIÓN D — PRACTICA TÚ (no mires respuestas aún)</h2>
+<p>---</p>
+<h3 class="sec-h3">D1. Eficiencia MAC</h3>
+<p>Estación envía payload de <strong>512 bytes</strong>. Overhead MAC = 34 B.</p>
+<p>Calcula η_MAC. Expresa en %.</p>
+<p>---</p>
+<h3 class="sec-h3">D2. Eficiencia PLCP</h3>
+<p>Mismo caso D1. PLCP: preámbulo <strong>144 bits</strong>, header <strong>48 bits</strong>.</p>
+<p>Calcula η_PLCP.</p>
+<p>---</p>
+<h3 class="sec-h3">D3. Tiempo de trama DATA</h3>
+<p>MPDU total = <strong>546 bytes</strong>. PLCP largo (192 µs). Tasa datos = <strong>11 Mbps</strong>.</p>
+<p>¿Cuánto dura la trama DATA completa (PLCP + cuerpo)?</p>
+<p>---</p>
+<h3 class="sec-h3">D4. NAV del RTS</h3>
+<p>802.11g, SIFS=10 µs, PLCP largo (192 µs), tasa <strong>54 Mbps</strong>.</p>
+<ul class='concept-list'>
+<li>Payload = 100 B → MPDU = 134 B</li>
+<li>Secuencia: RTS → CTS → DATA → ACK</li>
+</ul>
+<p>Calcula <strong>NAV_RTS</strong>.</p>
+<p>---</p>
+<h3 class="sec-h3">D5. NAV del CTS</h3>
+<p>Con los mismos datos de D4, calcula <strong>NAV_CTS</strong>.</p>
+<p>---</p>
+<h3 class="sec-h3">D6. Hex a NAV</h3>
+<p>Trama CTS con Duration = <strong>0x01F4</strong> (hex).</p>
+<p>¿Cuántos µs de NAV?</p>
+<p>---</p>
+<h3 class="sec-h3">D7. Bits por símbolo</h3>
+<p>802.11a, 48 subportadoras:</p>
+<ul class='concept-list'>
+<li>a) 16-QAM, tasa 1/2</li>
+<li>b) BPSK, tasa 1/2</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">D8. To DS / From DS</h3>
+<p>Completa la tabla:</p>
+<table class='dat'><thead><tr>
+<th>To DS</th><th>From DS</th><th>¿Qué tipo de red?</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0</td><td>0</td><td>?</td>
+</tr>
+<tr>
+<td>1</td><td>0</td><td>?</td>
+</tr>
+<tr>
+<td>0</td><td>1</td><td>?</td>
+</tr>
+<tr>
+<td>1</td><td>1</td><td>?</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h3 class="sec-h3">D9. Frame Control</h3>
+<p>¿Qué tipo y subtipo representa <strong>0x1000</strong>?</p>
+<p>---</p>
+<h3 class="sec-h3">D10. Tiempos DCF</h3>
+<p>802.11b/g: SIFS=10, slot=20.</p>
+<ul class='concept-list'>
+<li>¿Cuánto es DIFS?</li>
+<li>Si CW=7, ¿cuánto es el backoff si el contador queda en 7?</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">D11. Tamaño tramas</h3>
+<p>¿Cuántos bytes tiene un <strong>RTS</strong>? ¿Y un <strong>ACK</strong>?</p>
+<p>---</p>
+<h3 class="sec-h3">D12. PLCP 802.11g</h3>
+<p>¿Cuántos µs dura el PLCP en modo <strong>preámbulo largo</strong> @ 1 Mbps?</p>
+<p>(144 bits preámb + 48 bits header)</p>
+<p>---</p>
+<h3 class="sec-h3">D13. Wireshark</h3>
+<p>En trama #875:</p>
+<ul class='concept-list'>
+<li>a) ¿Cuál es el SSID?</li>
+<li>b) ¿Es tráfico hacia el AP o desde el AP?</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">D14. Secuencia RTS/CTS</h3>
+<p>Ordena mentalmente (sin calcular tiempos):</p>
+<p>DIFS, Backoff, RTS, SIFS, CTS, SIFS, DATA, SIFS, ACK</p>
+<p>¿Cuál va primero y cuál último?</p>
+<p>---</p>
+<h3 class="sec-h3">D15. Teoría rápida</h3>
+<p>Responde con una frase:</p>
+<ul class='concept-list'>
+<li>¿Para qué sirve el NAV?</li>
+<li>¿Por qué el preámbulo PLCP va a velocidad baja?</li>
+</ul>
+<p>---</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;br&gt;</p>
+<h2 class="sec-h">═══════════════════════════════════════</h2>
+<h2 class="sec-h">SECCIÓN E — RESPUESTAS (solo después de intentar D)</h2>
+<h2 class="sec-h">═══════════════════════════════════════</h2>
+<p>---</p>
+<p><strong>D1.</strong> η_MAC = 512 / (512+34) = 512/546 = <strong>0.9377 → 93.77%</strong></p>
+<p><strong>D2.</strong> MPDU = 546 B = 4368 bits. Overhead PLCP = 192 bits.  </p>
+<p>η_PLCP = 4368 / (4368+192) = 4368/4560 = <strong>0.9579 → 95.79%</strong></p>
+<p><strong>D3.</strong> T_cuerpo = 546×8/11 = 397.1 µs. T_total = 192 + 397.1 = <strong>589.1 µs</strong></p>
+<p><strong>D4.</strong></p>
+<div class="formula-card" data-latex="T_{CTS} = 192 + 14 \times \frac{8}{54} = 194.1 \,\mu\text{s} \\ T_{DATA} = 192 + 134 \times \frac{8}{54} = 211.9 \,\mu\text{s} \\ T_{ACK} = 194.1 \,\mu\text{s} \\ NAV_RTS = 10 + 194.1 + 10 + 211.9 + 10 + 194.1 = 640.1 \,\mu\text{s}"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mrow><mi>C</mi><mi>T</mi><mi>S</mi></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mn>14</mn><mo>&#x000D7;</mo><mfrac><mrow><mn>8</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>194.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>D</mi><mi>A</mi><mi>T</mi><mi>A</mi></mrow></msub><mo>&#x0003D;</mo><mn>192</mn><mo>&#x0002B;</mo><mn>134</mn><mo>&#x000D7;</mo><mfrac><mrow><mn>8</mn></mrow><mrow><mn>54</mn></mrow></mfrac><mo>&#x0003D;</mo><mn>211.9</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><msub><mi>T</mi><mrow><mi>A</mi><mi>C</mi><mi>K</mi></mrow></msub><mo>&#x0003D;</mo><mn>194.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext><mspace linebreak="newline" /><mi>N</mi><mi>A</mi><msub><mi>V</mi><mi>R</mi></msub><mi>T</mi><mi>S</mi><mo>&#x0003D;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>211.9</mn><mo>&#x0002B;</mo><mn>10</mn><mo>&#x0002B;</mo><mn>194.1</mn><mo>&#x0003D;</mo><mn>640.1</mn><mspace width="0.167em" /><mi>&#x003BC;</mi><mtext>s</mtext></mrow></math></div></div>
+<p><strong>D5.</strong> NAV_CTS = 10 + 211.9 + 10 + 194.1 = <strong>426.0 µs</strong></p>
+<p><strong>D6.</strong> 0x01F4 = 1×256 + 15×16 + 4 = 256+240+4 = <strong>500 µs</strong></p>
+<p><strong>D7.</strong></p>
+<ul class='concept-list'>
+<li>a) 48 × 4 × 0.5 = <strong>96 bits/símbolo</strong></li>
+<li>b) 48 × 1 × 0.5 = <strong>24 bits/símbolo</strong></li>
+</ul>
+<p><strong>D8.</strong></p>
+<table class='dat'><thead><tr>
+<th>To DS</th><th>From DS</th><th>Red</th>
+</tr>
+</tr></thead><tbody><tr>
+<td>0</td><td>0</td><td>Ad-hoc</td>
+</tr>
+<tr>
+<td>1</td><td>0</td><td>Infra — STA→AP</td>
+</tr>
+<tr>
+<td>0</td><td>1</td><td>Infra — AP→STA</td>
+</tr>
+<tr>
+<td>1</td><td>1</td><td>WDS</td>
+</tr>
+</tbody></table>
+<p><strong>D9.</strong> 0x1000 → <strong>Gestión, Association Response</strong> (subtipo 0001)</p>
+<p><strong>D10.</strong> DIFS = 50 µs. Backoff = 7×20 = <strong>140 µs</strong></p>
+<p><strong>D11.</strong> RTS = <strong>20 B</strong>, ACK = <strong>14 B</strong></p>
+<p><strong>D12.</strong> (144+48)/1 Mbps = <strong>192 µs</strong></p>
+<p><strong>D13.</strong> a) SSID = <strong>"CWNA"</strong>. b) Hacia el AP (Association Request del cliente).</p>
+<p><strong>D14.</strong> Primero: <strong>DIFS + Backoff</strong>. Último: <strong>ACK</strong></p>
+<p><strong>D15.</strong></p>
+<ul class='concept-list'>
+<li>NAV: reservar el medio virtualmente para que otras STAs no transmitan.</li>
+<li>Preámbulo a velocidad baja: todas las STAs (aun las viejas) pueden sincronizarse; solo el header indica la velocidad real de los datos.</li>
+</ul>
+<p>---</p>
+<h3 class="sec-h3">Plantilla para el examen (copia en borrador)</h3>
+<div class="formula-card" data-latex="1. ¿Preámbulo largo (144) o corto (72)? \\ 2. T_{PLCP} = bits_pream/\,\text{Mbps}_pream + bits_header/\,\text{Mbps}_header \\ 3. bytes_MPDU = payload + 34 \\ 4. \eta_MAC = payload / bytes_MPDU \\ 5. \eta_PLCP = (bytes_MPDU \times 8) / (bytes_MPDU \times 8 + bits_overhead_PLCP) \\ 6. T_{cuerpo} = bytes \times 8 / \,\text{Mbps}_datos \\ 7. T_{trama} = T_{PLCP} + T_{cuerpo} \\ 8. NAV = SIFS + T_{siguiente} + SIFS + ... (sin incluir RTS ni DIFS) \\ 9. T_{total} = DIFS + backoff + secuencia completa"><div class="formula-inner math-display"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>1</mn><mo>&#x0002E;</mo><mi>¿</mi><mi>P</mi><mi>r</mi><mi>e</mi><mi>á</mi><mi>m</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>o</mi><mi>l</mi><mi>a</mi><mi>r</mi><mi>g</mi><mi>o</mi><mo stretchy="false">&#x00028;</mo><mn>144</mn><mo stretchy="false">&#x00029;</mo><mi>o</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>t</mi><mi>o</mi><mo stretchy="false">&#x00028;</mo><mn>72</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0003F;</mo><mspace linebreak="newline" /><mn>2</mn><mo>&#x0002E;</mo><msub><mi>T</mi><mrow><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0003D;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>p</mi></msub><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mo>&#x0002F;</mo><mspace width="0.167em" /><msub><mtext>Mbps</mtext><mi>p</mi></msub><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mo>&#x0002B;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>h</mi></msub><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mo>&#x0002F;</mo><mspace width="0.167em" /><msub><mtext>Mbps</mtext><mi>h</mi></msub><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mspace linebreak="newline" /><mn>3</mn><mo>&#x0002E;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x0003D;</mo><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002B;</mo><mn>34</mn><mspace linebreak="newline" /><mn>4</mn><mo>&#x0002E;</mo><msub><mi>&#x003B7;</mi><mi>M</mi></msub><mi>A</mi><mi>C</mi><mo>&#x0003D;</mo><mi>p</mi><mi>a</mi><mi>y</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&#x0002F;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><mi>U</mi><mspace linebreak="newline" /><mn>5</mn><mo>&#x0002E;</mo><msub><mi>&#x003B7;</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mo>&#x0003D;</mo><mo stretchy="false">&#x00028;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x000D7;</mo><mn>8</mn><mo stretchy="false">&#x00029;</mo><mo>&#x0002F;</mo><mo stretchy="false">&#x00028;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><msub><mi>s</mi><mi>M</mi></msub><mi>P</mi><mi>D</mi><mi>U</mi><mo>&#x000D7;</mo><mn>8</mn><mo>&#x0002B;</mo><mi>b</mi><mi>i</mi><mi>t</mi><msub><mi>s</mi><mi>o</mi></msub><mi>v</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>e</mi><mi>a</mi><msub><mi>d</mi><mi>P</mi></msub><mi>L</mi><mi>C</mi><mi>P</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mn>6</mn><mo>&#x0002E;</mo><msub><mi>T</mi><mrow><mi>c</mi><mi>u</mi><mi>e</mi><mi>r</mi><mi>p</mi><mi>o</mi></mrow></msub><mo>&#x0003D;</mo><mi>b</mi><mi>y</mi><mi>t</mi><mi>e</mi><mi>s</mi><mo>&#x000D7;</mo><mn>8</mn><mo>&#x0002F;</mo><mspace width="0.167em" /><msub><mtext>Mbps</mtext><mi>d</mi></msub><mi>a</mi><mi>t</mi><mi>o</mi><mi>s</mi><mspace linebreak="newline" /><mn>7</mn><mo>&#x0002E;</mo><msub><mi>T</mi><mrow><mi>t</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>a</mi></mrow></msub><mo>&#x0003D;</mo><msub><mi>T</mi><mrow><mi>P</mi><mi>L</mi><mi>C</mi><mi>P</mi></mrow></msub><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>c</mi><mi>u</mi><mi>e</mi><mi>r</mi><mi>p</mi><mi>o</mi></mrow></msub><mspace linebreak="newline" /><mn>8</mn><mo>&#x0002E;</mo><mi>N</mi><mi>A</mi><mi>V</mi><mo>&#x0003D;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><msub><mi>T</mi><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>u</mi><mi>i</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi></mrow></msub><mo>&#x0002B;</mo><mi>S</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mo>&#x0002E;</mo><mo>&#x0002E;</mo><mo>&#x0002E;</mo><mo stretchy="false">&#x00028;</mo><mi>s</mi><mi>i</mi><mi>n</mi><mi>i</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>u</mi><mi>i</mi><mi>r</mi><mi>R</mi><mi>T</mi><mi>S</mi><mi>n</mi><mi>i</mi><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo stretchy="false">&#x00029;</mo><mspace linebreak="newline" /><mn>9</mn><mo>&#x0002E;</mo><msub><mi>T</mi><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>&#x0003D;</mo><mi>D</mi><mi>I</mi><mi>F</mi><mi>S</mi><mo>&#x0002B;</mo><mi>b</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>f</mi><mi>f</mi><mo>&#x0002B;</mo><mi>s</mi><mi>e</mi><mi>c</mi><mi>u</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>c</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mi>t</mi><mi>a</mi></mrow></math></div></div>
+<h3 class="sec-h3">Errores que te bajan la nota</h3>
+<ol class='step-list'>
+<li>1. Misma velocidad para preámbulo y datos</li>
+<li>2. Olvidar los <strong>34 bytes</strong> MAC</li>
+<li>3. No sumar <strong>SIFS</strong> entre tramas en NAV</li>
+<li>4. Confundir <strong>payload</strong> con <strong>MPDU total</strong></li>
+<li>5. NAV hex → convertir a <strong>decimal µs</strong></li>
+</ol>
+</div>
+<footer class="site-footer">WLAN EPN 2026-A · PhD. Soraya Sinche · <a href="../">Volver al portal</a></footer>
+</body></html>
